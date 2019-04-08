@@ -1,0 +1,7 @@
+#boost is unnecessary to store 
+lib/boost/
+!lib/boost/.placeholder
+
+#visual studio trash 
+project/.vs
+.*CMakeSettings.json
