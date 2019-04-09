@@ -1,4 +1,4 @@
 
-set(LEXER_SOURSES )
+#file(LEXER_SOURSES Lexar.cpp)
 
-add_library( LibLexar STATIC LEXER_SOURSES)
+add_library( LibLexar STATIC Lexar.cpp)
