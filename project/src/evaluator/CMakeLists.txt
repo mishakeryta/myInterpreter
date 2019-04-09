@@ -1,1 +1,1 @@
-add_library( LibSquare STATIC square.c )
+add_library( LibEvaluator STATIC )

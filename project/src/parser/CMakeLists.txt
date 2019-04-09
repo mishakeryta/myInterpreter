@@ -1,3 +1,3 @@
-file (GLOB EXTRAS *.c)
+file (GLOB EXTRAS *.cpp)
 add_library( LibExtras STATIC ${EXTRAS} )
-target_link_libraries( LibExtras LibSquare LibCubic )
+target_link_libraries( LibParser )
