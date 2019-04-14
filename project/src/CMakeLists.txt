@@ -1,1 +1,1 @@
-add_subdirectory( lexar )
+add_subdirectory( lexer )
