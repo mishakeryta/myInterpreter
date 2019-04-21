@@ -24,12 +24,21 @@ namespace Intr
 		{
             ID_DOUBLE_NUMBER = lex::min_token_id + 1,
             ID_INT_NUMBER,
+
             ID_IF_STATEMENT,
             ID_WHILE_STATEMENT,
+
             ID_SCOPE_BEGIN,
             ID_SCOPE_END,
             ID_PARENTHESIS_BEGIN,
             ID_PARENTHESIS_END,
+            ID_STATEMENT_END,
+
+            ID_ADDITION,
+            ID_SUBTRACTION,
+            ID_MULTIPLICATION,
+            ID_DIVISION,
+
             ID_IDENTIFIER,
             ID_ANY
 		};
@@ -41,6 +50,9 @@ namespace Intr
         lex::token_def<> ifStatement, whileStatement;
         lex::token_def<> scopeBegin, scopeEnd;
         lex::token_def<> parenthesisBegin, parenthesisEnd;
+        lex::token_def<> statementEnd;
+        lex::token_def<> addition, subtraction;
+        lex::token_def<> division, multiplication;
         lex::token_def<std::string>  identifier;
         lex::token_def<std::string> any;
 	};
