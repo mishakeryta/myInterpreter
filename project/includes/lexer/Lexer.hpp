@@ -13,30 +13,31 @@
 namespace intr
 {
 	using namespace boost::spirit;
+
 	using TokenType = lex::lexertl::token<std::string::iterator>;
-	template <typename LexerType>
-	class Lexer : public lex::lexer<LexerType>
+    using LexerType = lex::lexertl::actor_lexer<TokenType>;
+    class Lexer : public lex::lexer<LexerType>
 	{
 	public:
 		enum Id
 		{
-			NUMBER = lex::min_token_id + 1,
-			IDENTIFIER,
-			ANY
+            ID_NUMBER = lex::min_token_id + 1,
+            ID_IDENTIFIER,
+            ID_ANY
 		};
 		Lexer()
 		{
 			using boost::phoenix::ref;
 			using boost::phoenix::construct;
-			using boost::spirit::lex::_start;
-			using boost::spirit::lex::_end;
+            using lex::_start;
+            using lex::_end;
 
-			number = lex::token_def<std::string>("[0-9]+", NUMBER);
-			identifier = lex::token_def <std::string> ("[_a-zA-Z][_a-zA-Z0-9]*", IDENTIFIER);
-			any = lex::token_def <std::string>(".", ANY);
-			// print = [](std::string::iterator first, std::string::iterator last) { std::cout << std::string(first, last); };
+            number = lex::token_def<std::string>("[0-9]+", ID_NUMBER);
+            identifier = lex::token_def <std::string> ("[_a-zA-Z][_a-zA-Z0-9]*", ID_IDENTIFIER);
+            any = lex::token_def <std::string>(".", ID_ANY);
+
 			auto print = std::cout << construct<std::string>(_start, _end);
-			 this->self = number[print] | identifier[print]| any;
+            this->self = number[print] | identifier[print]| any;
 		}
 		lex::token_def<std::string>  number, identifier, any;
 	};
