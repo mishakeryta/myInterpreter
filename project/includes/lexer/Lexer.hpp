@@ -28,6 +28,8 @@ namespace Intr
             ID_WHILE_STATEMENT,
             ID_SCOPE_BEGIN,
             ID_SCOPE_END,
+            ID_PARENTHESIS_BEGIN,
+            ID_PARENTHESIS_END,
             ID_IDENTIFIER,
             ID_ANY
 		};
@@ -38,6 +40,7 @@ namespace Intr
         lex::token_def<std::int32_t> intNumber;
         lex::token_def<> ifStatement, whileStatement;
         lex::token_def<> scopeBegin, scopeEnd;
+        lex::token_def<> parenthesisBegin, parenthesisEnd;
         lex::token_def<std::string>  identifier;
         lex::token_def<std::string> any;
 	};

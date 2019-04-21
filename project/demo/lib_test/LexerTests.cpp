@@ -23,6 +23,10 @@ std::string IdToStr(Intr::Lexer::id_type id)
         return ENUM_TO_CSTR(Lexer::ID_SCOPE_BEGIN);
     case Lexer::ID_SCOPE_END:
         return ENUM_TO_CSTR(Lexer::ID_SCOPE_END);
+    case Lexer::ID_PARENTHESIS_BEGIN:
+        return ENUM_TO_CSTR(Lexer::ID_PARENTHESIS_BEGIN);
+    case Lexer::ID_PARENTHESIS_END:
+        return ENUM_TO_CSTR(Lexer::ID_PARENTHESIS_END);
     case Lexer::ID_ANY:
         return ENUM_TO_CSTR(Lexer::ID_ANY);
 
@@ -42,7 +46,7 @@ int main()
         std::cout << " "  << IdToStr(t.id()) << " ";
 		return true;
 	};
-    std::string str = "-123_ad{12}dde2112{if}while";
+    std::string str = "-123_ad{12}ife2112{if}while";
 
     auto begin = std::begin(str);
     tokenize(begin, std::end(str), lexerFunctor, tokenProcessor);
