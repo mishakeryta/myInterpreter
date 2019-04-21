@@ -34,6 +34,9 @@ namespace Intr
             ID_PARENTHESIS_END,
             ID_STATEMENT_END,
 
+            ID_ASSIGNMENT,
+            ID_EQUALITY,
+
             ID_ADDITION,
             ID_SUBTRACTION,
             ID_MULTIPLICATION,
@@ -51,9 +54,10 @@ namespace Intr
         lex::token_def<> scopeBegin, scopeEnd;
         lex::token_def<> parenthesisBegin, parenthesisEnd;
         lex::token_def<> statementEnd;
+        lex::token_def<> assignment, equality;
         lex::token_def<> addition, subtraction;
         lex::token_def<> division, multiplication;
-        lex::token_def<std::string>  identifier;
+        lex::token_def<std::string> identifier;
         lex::token_def<std::string> any;
 	};
 };

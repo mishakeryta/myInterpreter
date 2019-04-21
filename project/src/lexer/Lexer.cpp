@@ -25,6 +25,9 @@ Lexer::Lexer()
     multiplication = lex::token_def<>("\\*", ID_MULTIPLICATION);
     division = lex::token_def<>("\\/", ID_DIVISION);
 
+    assignment = lex::token_def<>("=", ID_ASSIGNMENT);
+    equality = lex::token_def<>("==", ID_EQUALITY);
+
     identifier = lex::token_def <std::string> ("[_a-zA-Z][_a-zA-Z0-9]*", ID_IDENTIFIER);
     any = lex::token_def <std::string>(".", ID_ANY);
 
@@ -35,6 +38,7 @@ Lexer::Lexer()
             scopeBegin | scopeEnd |
             parenthesisBegin | parenthesisEnd |
             statementEnd |
+            assignment | equality |
             addition | subtraction |
             multiplication | division |
             identifier | any;

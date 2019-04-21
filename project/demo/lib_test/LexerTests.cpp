@@ -28,6 +28,10 @@ std::string IdToStr(Intr::Lexer::id_type id)
         return ENUM_TO_CSTR(Lexer::ID_PARENTHESIS_END);
     case Lexer::ID_STATEMENT_END:
         return ENUM_TO_CSTR(Lexer::ID_STATEMENT_END);
+    case Lexer::ID_ASSIGNMENT:
+        return ENUM_TO_CSTR(Lexer::ID_ASSIGNMENT);
+    case Lexer::ID_EQUALITY:
+        return ENUM_TO_CSTR(Lexer::ID_EQUALITY);
     case Lexer::ID_ADDITION:
         return ENUM_TO_CSTR(Lexer::ID_ADDITION);
     case Lexer::ID_SUBTRACTION:
@@ -48,15 +52,13 @@ int main()
 {
 	using namespace Intr::lex;
 
-	
     Intr::Lexer lexerFunctor;
     auto tokenProcessor = [] (Intr::TokenType t)
 	{
-
         std::cout << " "  << IdToStr(t.id()) << " ";
 		return true;
 	};
-    std::string str = "-12a123_ad{12}ife2112{if}12while";
+    std::string str = "-12a123_ad{12}ife2112{if}12while===";
 
     auto begin = std::begin(str);
     tokenize(begin, std::end(str), lexerFunctor, tokenProcessor);
