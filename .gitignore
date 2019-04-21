@@ -5,3 +5,9 @@ lib/boost/
 #visual studio trash 
 project/.vs
 .*CMakeSettings.json
+
+#build folder
+build/*
+
+#QtCretator project files 
+*.user

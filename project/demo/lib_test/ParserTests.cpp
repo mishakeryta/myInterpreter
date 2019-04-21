@@ -1,9 +1,3 @@
-Boost C++ Libraries
-...one of the most highly regarded and expertly designed C++ library projects in the world.
-— Herb Sutter and Andrei Alexandrescu, C++ Coding Standards
-
-This is the documentation for an old version of Boost.Click here to view this page for the latest version.
-libs / spirit / example / lex / word_count.cpp
 //  Copyright (c) 2001-2010 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <cstdint>
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
@@ -10,7 +11,7 @@
 #include <boost/spirit/include/phoenix.hpp>
 #include <boost/phoenix/object/construct.hpp>
 
-namespace intr
+namespace Intr
 {
 	using namespace boost::spirit;
 
@@ -21,25 +22,24 @@ namespace intr
 	public:
 		enum Id
 		{
-            ID_NUMBER = lex::min_token_id + 1,
+            ID_DOUBLE_NUMBER = lex::min_token_id + 1,
+            ID_INT_NUMBER,
+            ID_IF_STATEMENT,
+            ID_WHILE_STATEMENT,
+            ID_SCOPE_BEGIN,
+            ID_SCOPE_END,
             ID_IDENTIFIER,
             ID_ANY
 		};
-		Lexer()
-		{
-			using boost::phoenix::ref;
-			using boost::phoenix::construct;
-            using lex::_start;
-            using lex::_end;
 
-            number = lex::token_def<std::string>("[0-9]+", ID_NUMBER);
-            identifier = lex::token_def <std::string> ("[_a-zA-Z][_a-zA-Z0-9]*", ID_IDENTIFIER);
-            any = lex::token_def <std::string>(".", ID_ANY);
+        Lexer();
 
-			auto print = std::cout << construct<std::string>(_start, _end);
-            this->self = number[print] | identifier[print]| any;
-		}
-		lex::token_def<std::string>  number, identifier, any;
+        lex::token_def<double> doubleNumber;
+        lex::token_def<std::int32_t> intNumber;
+        lex::token_def<> ifStatement, whileStatement;
+        lex::token_def<> scopeBegin, scopeEnd;
+        lex::token_def<std::string>  identifier;
+        lex::token_def<std::string> any;
 	};
 };
 
