@@ -2,7 +2,6 @@
 
 using namespace Intr;
 
-
 Lexer::Lexer()
 {
     doubleNumber = lex::token_def<double>("\\d+\\.\\d+", ID_DOUBLE_NUMBER);

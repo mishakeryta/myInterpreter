@@ -5,11 +5,7 @@
 #include <string>
 #include <cstdint>
 
-#include <boost/config/warning_disable.hpp>
-#include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/lex_lexertl.hpp>
-#include <boost/spirit/include/phoenix.hpp>
-#include <boost/phoenix/object/construct.hpp>
 
 namespace Intr
 {

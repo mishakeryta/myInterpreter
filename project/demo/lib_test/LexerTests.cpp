@@ -56,6 +56,7 @@ int main()
     auto tokenProcessor = [] (Intr::TokenType t)
 	{
         std::cout << " "  << IdToStr(t.id()) << " ";
+
 		return true;
 	};
     std::string str = "-12a123_ad{12}ife2112{if}12while===";
