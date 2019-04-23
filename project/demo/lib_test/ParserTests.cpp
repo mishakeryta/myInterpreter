@@ -1,3 +1,5 @@
+#ifdef COMMENT_INCLUDE
+
 //  Copyright (c) 2001-2010 Hartmut Kaiser
 // 
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying 
@@ -164,3 +166,20 @@ else {
 return 0;
 }
 //]
+#endif
+
+#include "parser/Parser.hpp"
+
+
+
+
+int main()
+{
+    std::string str = "asds2";
+
+    Intr::Lexer lexerFunctor;
+    Intr::Parser parserFunctor;
+    auto begin = std::begin(str);
+    Intr::lex::tokenize_and_parse(begin, std::end(str), lexerFunctor, parserFunctor);
+    return 0;
+}
