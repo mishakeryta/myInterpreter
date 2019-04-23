@@ -12,9 +12,9 @@
 
 using namespace Intr;
 typedef ExpressionAST expression_ast;
-typedef BinaryOp binary_op;
-typedef UnaryOp unary_op;
-typedef NegateExpr negate_expr;
+typedef BinaryOperation binary_op;
+typedef UnaryOperation unary_op;
+typedef NegateExpression negate_expr;
 namespace client
 {
 namespace qi = boost::spirit::qi;
