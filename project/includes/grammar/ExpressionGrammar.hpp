@@ -13,10 +13,10 @@ namespace Intr
     class Parser :
             public qi::grammar<Lexer::iterator_type>
     {
-        public:
         using RuleType = qi::rule<iterator_type>;
+        public:
             Parser();
-
+    private:
         RuleType test, start;
 
     };

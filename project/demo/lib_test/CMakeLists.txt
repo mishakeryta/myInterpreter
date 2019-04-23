@@ -4,4 +4,4 @@
 
 
 add_executable( ParserTests ParserTests.cpp )
-target_link_libraries( ParserTests LibParser )
+target_link_libraries( ParserTests LibGrammar )
