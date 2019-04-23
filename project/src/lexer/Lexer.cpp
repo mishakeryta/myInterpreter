@@ -34,7 +34,7 @@ Lexer::Lexer()
 
     //order is important due to mutually exclusive regex
     //for example number could be a part of indetifier
-    this->self = doubleNumber |intNumber |
+    this->self = doubleNumber | intNumber |
             ifStatement |  whileStatement |
             scopeBegin | scopeEnd |
             parenthesisBegin | parenthesisEnd |

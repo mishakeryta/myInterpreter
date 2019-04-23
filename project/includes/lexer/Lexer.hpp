@@ -45,7 +45,8 @@ namespace Intr
 		};
 
         Lexer();
-private:
+
+    private:
         lex::token_def<double> doubleNumber;
         lex::token_def<std::int32_t> intNumber;
         lex::token_def<> ifStatement, whileStatement;

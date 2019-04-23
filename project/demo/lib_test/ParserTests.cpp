@@ -178,7 +178,7 @@ int main()
     std::string str = "asds2";
 
     Intr::Lexer lexerFunctor;
-    Intr::Parser parserFunctor;
+    Intr::ExpressionGrammar parserFunctor;
     auto begin = std::begin(str);
     Intr::lex::tokenize_and_parse(begin, std::end(str), lexerFunctor, parserFunctor);
     return 0;

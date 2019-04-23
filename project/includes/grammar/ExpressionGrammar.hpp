@@ -10,12 +10,12 @@ namespace Intr
 {
     namespace  qi = boost::spirit::qi;
 
-    class Parser :
+    class ExpressionGrammar :
             public qi::grammar<Lexer::iterator_type>
     {
         using RuleType = qi::rule<iterator_type>;
-        public:
-            Parser();
+    public:
+        ExpressionGrammar();
     private:
         RuleType test, start;
 
