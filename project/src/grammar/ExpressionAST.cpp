@@ -2,44 +2,44 @@
 
 using namespace Intr;
 ExpressionAST::ExpressionAST()
-    : expr(Nil()) {}
+    : m_expression(Nil()) {}
 
-ExpressionAST& ExpressionAST::addition(const ExpressionAST &rightValue)
+ExpressionAST& ExpressionAST::addition(const ExpressionAST &right)
 {
-    expr = BinaryOp(Lexer::ID_ADDITION, expr, rightValue);
+    m_expression = BinaryOperation(Lexer::ID_ADDITION, m_expression, right);
     return *this;
 }
 
-ExpressionAST& ExpressionAST::subtraction(const ExpressionAST &rightValue)
+ExpressionAST& ExpressionAST::subtraction(const ExpressionAST &right)
 {
-    expr = BinaryOp(Lexer::ID_SUBTRACTION, expr, rightValue);
+    m_expression = BinaryOperation(Lexer::ID_SUBTRACTION, m_expression, right);
     return *this;
 }
 
-ExpressionAST& ExpressionAST::multiplication(const ExpressionAST &rightValue)
+ExpressionAST& ExpressionAST::multiplication(const ExpressionAST &right)
 {
-    expr = BinaryOp(Lexer::ID_MULTIPLICATION, expr, rightValue);
+    m_expression = BinaryOperation(Lexer::ID_MULTIPLICATION, m_expression, right);
     return *this;
 }
 
-ExpressionAST& ExpressionAST::division(const ExpressionAST& rightValue)
+ExpressionAST& ExpressionAST::division(const ExpressionAST& right)
 {
-    expr = BinaryOp(Lexer::ID_DIVISION, expr, rightValue);
+    m_expression = BinaryOperation(Lexer::ID_DIVISION, m_expression, right);
     return *this;
 }
 
 
 
-BinaryOp::BinaryOp(BinaryOp::Type op, const ExpressionAST &left, const ExpressionAST &right)
+BinaryOperation::BinaryOperation(BinaryOperation::Type op, const ExpressionAST &left, const ExpressionAST &right)
     : op(op), left(left), right(right) {}
 
-UnaryOp::UnaryOp(UnaryOp::Type op, const ExpressionAST &subject)
+UnaryOperation::UnaryOperation(UnaryOperation::Type op, const ExpressionAST &subject)
     : op(op), subject(subject) {}
 
-static boost::phoenix::function<NegateExpr> neg;
+static boost::phoenix::function<NegateExpression> neg;
 
-ExpressionAST NegateExpr::operator()(const ExpressionAST &expr) const
+ExpressionAST NegateExpression::operator()(const ExpressionAST &expr) const
 {
-    return ExpressionAST(UnaryOp(Lexer::ID_SUBTRACTION, expr));
+    return ExpressionAST(UnaryOperation(Lexer::ID_SUBTRACTION, expr));
 }
 

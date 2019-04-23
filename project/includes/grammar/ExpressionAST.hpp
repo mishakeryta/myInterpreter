@@ -15,40 +15,41 @@
 
 namespace Intr
 {
-    class BinaryOp;
-    class UnaryOp;
+    class BinaryOperation;
+    class UnaryOperation;
     class Nil {};
 
     class ExpressionAST
     {
-        using type =
+        using ExpressionType =
             boost::variant<
                 Nil // can't happen!
               , unsigned int
               , boost::recursive_wrapper<ExpressionAST>
-              , boost::recursive_wrapper<BinaryOp>
-              , boost::recursive_wrapper<UnaryOp>
+              , boost::recursive_wrapper<BinaryOperation>
+              , boost::recursive_wrapper<UnaryOperation>
             >;
     public:
         ExpressionAST();
 
         template <typename Expr>
-        ExpressionAST(Expr const& expr)
-          : expr(expr) {}
+        ExpressionAST(const Expr &expr)
+          : m_expression(expr) {}
 
-        ExpressionAST& addition(const ExpressionAST &rightValue);
-        ExpressionAST& subtraction(const ExpressionAST &rightValue);
-        ExpressionAST& multiplication(const ExpressionAST &rightValue);
-        ExpressionAST& division(const ExpressionAST &rightValue);
+        ExpressionAST& addition(const ExpressionAST &rightExpression);
+        ExpressionAST& subtraction(const ExpressionAST &rightExpression);
+        ExpressionAST& multiplication(const ExpressionAST &rightExpression);
+        ExpressionAST& division(const ExpressionAST &rightExpression);
 
-        type expr;
+
+        ExpressionType m_expression;
     };
 
-    class BinaryOp
+    class BinaryOperation
     {
     public:
         using Type = Lexer::Id;
-        BinaryOp(
+        BinaryOperation(
             Type op
           , ExpressionAST const& left
           , ExpressionAST const& right);
@@ -58,11 +59,11 @@ namespace Intr
         ExpressionAST right;
     };
 
-    class UnaryOp
+    class UnaryOperation
     {
     public:
         using Type = Lexer::Id;
-        UnaryOp(
+        UnaryOperation(
             Type op
           , ExpressionAST const& subject);
 
@@ -70,7 +71,7 @@ namespace Intr
         ExpressionAST subject;
     };
 
-    class NegateExpr
+    class NegateExpression
     {
     public:
         template <typename T>
