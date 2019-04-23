@@ -1,6 +1,10 @@
+#include "parser/Parser.hpp"
+
+using namespace  Intr;
 
 
-int Parse()
+Parser::Parser() :
+    Parser::base_type(start)
 {
-    return 0;
+
 }

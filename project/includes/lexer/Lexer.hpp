@@ -1,7 +1,6 @@
 #ifndef LEXER_HPP
 #define LEXER_HPP
 
-#include <iostream>
 #include <string>
 #include <cstdint>
 
@@ -9,11 +8,14 @@
 
 namespace Intr
 {
-	using namespace boost::spirit;
 
-	using TokenType = lex::lexertl::token<std::string::iterator>;
+    namespace lex = boost::spirit::lex;
+
+    using TokenType = lex::lexertl::token<std::string::iterator>;
     using LexerType = lex::lexertl::actor_lexer<TokenType>;
-    class Lexer : public lex::lexer<LexerType>
+
+    class Lexer :
+            public lex::lexer<LexerType>
 	{
 	public:
 		enum Id
@@ -43,7 +45,7 @@ namespace Intr
 		};
 
         Lexer();
-
+private:
         lex::token_def<double> doubleNumber;
         lex::token_def<std::int32_t> intNumber;
         lex::token_def<> ifStatement, whileStatement;
@@ -58,4 +60,4 @@ namespace Intr
 	};
 };
 
-#endif
+#endif //LEXER_HPP

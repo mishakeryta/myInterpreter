@@ -4,6 +4,8 @@ using namespace Intr;
 
 Lexer::Lexer()
 {
+    //some of it require modifications
+    //https://stackoverflow.com/questions/13395453/how-to-combine-boostspiritlex-boostspiritqi
     doubleNumber = lex::token_def<double>("\\d+\\.\\d+", ID_DOUBLE_NUMBER);
     intNumber = lex::token_def<std::int32_t>("\\d+", ID_INT_NUMBER);
 
