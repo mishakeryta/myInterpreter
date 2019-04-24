@@ -13,3 +13,5 @@ build/*
 *.user
 *.autosave
 *.diff
+compile_commands.json
+

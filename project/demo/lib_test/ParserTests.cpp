@@ -1,185 +1,144 @@
-#ifdef COMMENT_INCLUDE
-
-//  Copyright (c) 2001-2010 Hartmut Kaiser
-// 
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying 
-//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-
-//  This example is the equivalent to the following lex program:
-/*
-//[wcp_flex_version
-	%{
-		int c = 0, w = 0, l = 0;
-	%}
-	word   [^ \t\n]+
-	eol    \n
-	%%
-	{word} { ++w; c += yyleng; }
-	{eol}  { ++c; ++l; }
-	.      { ++c; }
-	%%
-	main()
-	{
-		yylex();
-		printf("%d %d %d\n", l, w, c);
-	}
-//]
-*/
-//  Its purpose is to do the word count function of the wc command in UNIX. It 
-//  prints the number of lines, words and characters in a file. 
-//
-//  The example additionally demonstrates how to use the add_pattern(...)(...)
-//  syntax to define lexer patterns. These patterns are essentially parameter-
-//  less 'macros' for regular expressions, allowing to simplify their 
-//  definition.
-
-// #define BOOST_SPIRIT_LEXERTL_DEBUG
-#define BOOST_VARIANT_MINIMIZE_SIZE
+#include "grammar/ExpressionAST.hpp"
 #include <boost/config/warning_disable.hpp>
-//[wcp_includes
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/lex_lexertl.hpp>
+#include <boost/variant/recursive_variant.hpp>
+#include <boost/variant/apply_visitor.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_statement.hpp>
-#include <boost/spirit/include/phoenix_container.hpp>
-//]
-
+#include <boost/spirit/include/phoenix_function.hpp>
+#include <boost/test/utils/named_params.hpp>
 #include <iostream>
+#include <vector>
 #include <string>
 
-#include "example.hpp"
-
-//[wcp_namespaces
-using namespace boost::spirit;
-using namespace boost::spirit::ascii;
-//]
-
-///////////////////////////////////////////////////////////////////////////////
-//  Token definition: We use the lexertl based lexer engine as the underlying 
-//                    lexer type.
-///////////////////////////////////////////////////////////////////////////////
-//[wcp_token_ids
-enum tokenids
+using namespace Intr;
+typedef ExpressionAST expression_ast;
+typedef BinaryOp binary_op;
+typedef UnaryOp unary_op;
+typedef NegateExpr negate_expr;
+namespace client
 {
-	IDANY = lex::min_token_id + 10
-};
-//]
+namespace qi = boost::spirit::qi;
+    namespace ascii = boost::spirit::ascii;
 
-//[wcp_token_definition
-template <typename Lexer>
-struct word_count_tokens : lex::lexer<Lexer>
-{
-	word_count_tokens()
-	{
-		// define patterns (lexer macros) to be used during token definition 
-		// below
-		this->self.add_pattern
-		("WORD", "[^ \t\n]+")
-			;
+    boost::phoenix::function<negate_expr> neg;
 
-		// define tokens and associate them with the lexer
-		word = "{WORD}";    // reference the pattern 'WORD' as defined above
+struct ast_print
+   {
+       typedef void result_type;
 
-		// this lexer will recognize 3 token types: words, newlines, and 
-		// everything else
-		this->self.add
-		(word)          // no token id is needed here
-			('\n')          // characters are usable as tokens as well
-			(".", IDANY)    // string literals will not be escaped by the library
-			;
-	}
+       void operator()(boost::nfp::nil) const {}
+       void operator()(int n) const { std::cout << n; }
 
-	// the token 'word' exposes the matched string as its parser attribute
-	lex::token_def<std::string> word;
-};
-//]
+       void operator()(expression_ast const& ast) const
+       {
+           boost::apply_visitor(*this, ast.expr);
+       }
 
-///////////////////////////////////////////////////////////////////////////////
-//  Grammar definition
-///////////////////////////////////////////////////////////////////////////////
-//[wcp_grammar_definition
+       void operator()(binary_op const& expr) const
+       {
+           std::cout << "op:" << expr.op << "(";
+           boost::apply_visitor(*this, expr.left.expr);
+           std::cout << ", ";
+           boost::apply_visitor(*this, expr.right.expr);
+           std::cout << ')';
+       }
+
+       void operator()(unary_op const& expr) const
+       {
+           std::cout << "op:" << expr.op << "(";
+           boost::apply_visitor(*this, expr.subject.expr);
+           std::cout << ')';
+       }
+   };
+
+   ///////////////////////////////////////////////////////////////////////////
+   //  Our calculator grammar
+   ///////////////////////////////////////////////////////////////////////////
 template <typename Iterator>
-struct word_count_grammar : qi::grammar<Iterator>
-{
-	template <typename TokenDef>
-	word_count_grammar(TokenDef const& tok)
-		: word_count_grammar::base_type(start)
-		, c(0), w(0), l(0)
-	{
-		using boost::phoenix::ref;
-		using boost::phoenix::size;
+    struct calculator : qi::grammar<Iterator, expression_ast(), ascii::space_type>
+    {
+        calculator() : calculator::base_type(expression)
+        {
+            using qi::_val;
+            using qi::_1;
+            using qi::uint_;
 
-		start = *(tok.word[++ref(w), ref(c) += size(_1)]
-			| lit('\n')[++ref(c), ++ref(l)]
-			| qi::token(IDANY)[++ref(c)]
-			)
-			;
-	}
+            expression =
+                term                            [_val = _1]
+                >> *(   ('+' >> term            [_val += _1])
+                    |   ('-' >> term            [_val -= _1])
+                    )
+                ;
 
-	std::size_t c, w, l;
-	qi::rule<Iterator> start;
-};
-//]
+            term =
+                factor                          [_val = _1]
+                >> *(   ('*' >> factor          [_val *= _1])
+                    |   ('/' >> factor          [_val /= _1])
+                    )
+                ;
+
+            factor =
+                uint_                           [_val = _1]
+                |   '(' >> expression           [_val = _1] >> ')'
+                |   ('-' >> factor              [_val = neg(_1)])
+                |   ('+' >> factor              [_val = _1])
+                ;
+        }
+
+        qi::rule<Iterator, expression_ast(), ascii::space_type>
+        expression, term, factor;
+    };
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
-//[wcp_main
-//[wcp_main
-int main(int argc, char* argv[])
-{
-	/*<  Define the token type to be used: `std::string` is available as the
-		 type of the token attribute
-	>*/  typedef lex::lexertl::token<
-	char const*, boost::mpl::vector<std::string>
-	> token_type;
-
-/*<  Define the lexer type to use implementing the state machine
->*/  typedef lex::lexertl::lexer<token_type> lexer_type;
-
-// Define the iterator type exposed by the lexer type
-  typedef word_count_tokens<lexer_type>::iterator_type iterator_type;
-
-// now we use the types defined above to create the lexer and grammar
-// object instances needed to invoke the parsing process
-word_count_tokens<lexer_type> word_count;          // Our lexer
-word_count_grammar<iterator_type> g(word_count);  // Our parser 
-
-// read in the file int memory
-std::string str("aaa ss ddd ");
-char const* first = str.c_str();
-char const* last = &first[str.size()];
-
-/*<  Parsing is done based on the token stream, not the character
-	 stream read from the input. The function `tokenize_and_parse()` wraps
-	 the passed iterator range `[first, last)` by the lexical analyzer and
-	 uses its exposed iterators to parse the token stream.
->*/  bool r = lex::tokenize_and_parse(first, last, word_count, g);
-
-if (r) {
-	std::cout << "lines: " << g.l << ", words: " << g.w
-		<< ", characters: " << g.c << "\n";
-}
-else {
-	std::string rest(first, last);
-	std::cerr << "Parsing failed\n" << "stopped at: \""
-		<< rest << "\"\n";
-}
-return 0;
-}
-//]
-#endif
-
-#include "grammar/ExpressionGrammar.hpp"
-
-
-
+//  Main program
+///////////////////////////////////////////////////////////////////////////////
 
 int main()
 {
-    std::string str = "asds2";
+   std::cout << "/////////////////////////////////////////////////////////\n\n";
+   std::cout << "Expression parser...\n\n";
+   std::cout << "/////////////////////////////////////////////////////////\n\n";
+   std::cout << "Type an expression...or [q or Q] to quit\n\n";
 
-    Intr::Lexer lexerFunctor;
-    Intr::ExpressionGrammar parserFunctor;
-    auto begin = std::begin(str);
-    Intr::lex::tokenize_and_parse(begin, std::end(str), lexerFunctor, parserFunctor);
-    return 0;
+   using boost::spirit::ascii::space;
+   using client::ast_print;
+
+   typedef std::string::const_iterator iterator_type;
+   typedef client::calculator<iterator_type> calculator;
+
+   calculator calc; // Our grammar
+
+   std::string str;
+   while (std::getline(std::cin, str))
+   {
+       if (str.empty() || str[0] == 'q' || str[0] == 'Q')
+           break;
+
+       std::string::const_iterator iter = str.begin();
+       std::string::const_iterator end = str.end();
+       expression_ast ast;
+       ast_print printer;
+       bool r = phrase_parse(iter, end, calc, space, ast);
+
+       if (r && iter == end)
+       {
+           std::cout << "-------------------------\n";
+           std::cout << "Parsing succeeded\n";
+           printer(ast);
+           std::cout << "\n-------------------------\n";
+       }
+       else
+       {
+           std::string rest(iter, end);
+           std::cout << "-------------------------\n";
+           std::cout << "Parsing failed\n";
+           std::cout << "stopped at: \": " << rest << "\"\n";
+           std::cout << "-------------------------\n";
+       }
+   }
+
+   std::cout << "Bye... :-) \n\n";
+   return 0;
 }
