@@ -1,0 +1,11 @@
+#ifndef INCLUDESGRAMMARSTATEMENTSGRAMMAR_HPP
+#define INCLUDESGRAMMARSTATEMENTSGRAMMAR_HPP
+
+
+class StatementsGrammar
+{
+public:
+    StatementsGrammar();
+};
+
+#endif // INCLUDESGRAMMARSTATEMENTSGRAMMAR_HPP
