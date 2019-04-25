@@ -32,6 +32,7 @@ namespace Intr
               , boost::recursive_wrapper<BinaryOperation>
               , boost::recursive_wrapper<UnaryOperation>
             >;
+        using value_type = type;//don't know if is it required
 
 
         ExpressionAST();
@@ -57,33 +58,21 @@ namespace Intr
             return leftExpression = rightExpression;
         }
 
-        ExpressionAST &CreateAdditionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
-        {
-            return leftExpression.addition(rightExpression);
-        }
+        ExpressionAST &CreateAdditionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression);
 
-        ExpressionAST &CreateSubtractionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
-        {
-            return leftExpression.subtraction(rightExpression);
-        }
+        ExpressionAST &CreateSubtractionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression);
 
-        ExpressionAST &CreateMultiplicationNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
-        {
-            return leftExpression.multiplication(rightExpression);
-        }
+        ExpressionAST &CreateMultiplicationNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression);
 
-        ExpressionAST &CreateDivisionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
-        {
-            return leftExpression.division(rightExpression);
-        }
+        ExpressionAST &CreateDivisionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression);
 
     };
-
-    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateRegularNode, Detail::CreateAdditionNode, 2);
-    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateAdditionNode, Detail::CreateAdditionNode, 2);
-    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateSubtractionNode, Detail::CreateAdditionNode, 2);
-    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateMultiplicationNode, Detail::CreateAdditionNode, 2);
-    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateDivisionNode, Detail::CreateAdditionNode, 2);
+//FIXME: Need to uncomment all of them , but only in process of finishing ExpressionGrammar
+    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateRegularNode, Detail::CreateRegularNode, 2);
+//    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateAdditionNode, Detail::CreateAdditionNode, 2);
+ //   BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateSubtractionNode, Detail::CreateSubtractionNode, 2);
+  //  BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateMultiplicationNode, Detail::CreateMultiplicationNode, 2);
+  //  BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateDivisionNode, Detail::CreateDivisionNode, 2);
 
     class BinaryOperation
     {

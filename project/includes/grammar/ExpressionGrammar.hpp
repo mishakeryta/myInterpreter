@@ -16,8 +16,8 @@ namespace Intr
     {
         using RuleType = qi::rule<iterator_type, ExpressionAST()>;
     public:
-
-        ExpressionGrammar();
+	//change now instead of tonen(ID...) we will use lexer.space(any lexer property)
+        ExpressionGrammar(const Lexer& lexer);
 
 
     private:

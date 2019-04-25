@@ -58,7 +58,10 @@ int main()
     auto tokenProcessor = [] (Intr::TokenType t)
 	{
         std::cout << " "  << IdToStr(t.id()) << " ";
-
+        if(t.id() = Intr::Lexer::ID_INT_NUMBER)
+        {
+            int val  = t.value();
+        }
 		return true;
 	};
     std::string str = "  00 1.2   - 12 a 123 _ ad {0012}ife2112{if}12while===";
