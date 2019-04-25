@@ -9,7 +9,8 @@
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_function.hpp>
-#include <boost/test/utils/named_params.hpp>
+
+#include <boost/phoenix/function/adapt_function.hpp>
 
 #include <memory>
 
@@ -19,31 +20,70 @@ namespace Intr
     class UnaryOperation;
     class Nil {};
 
+
+
     class ExpressionAST
     {
-        using ExpressionType =
-            boost::variant<
+    public:
+       using type = boost::variant<
                 Nil // can't happen!
-              , unsigned int
+              , int
               , boost::recursive_wrapper<ExpressionAST>
               , boost::recursive_wrapper<BinaryOperation>
               , boost::recursive_wrapper<UnaryOperation>
             >;
-    public:
+
+
         ExpressionAST();
 
         template <typename Expr>
         ExpressionAST(const Expr &expr)
           : m_expression(expr) {}
 
-        ExpressionAST& addition(const ExpressionAST &rightExpression);
-        ExpressionAST& subtraction(const ExpressionAST &rightExpression);
-        ExpressionAST& multiplication(const ExpressionAST &rightExpression);
-        ExpressionAST& division(const ExpressionAST &rightExpression);
+        ExpressionAST &addition(const ExpressionAST &rightExpression);
+        ExpressionAST &subtraction(const ExpressionAST &rightExpression);
+        ExpressionAST &multiplication(const ExpressionAST &rightExpression);
+        ExpressionAST &division(const ExpressionAST &rightExpression);
 
 
-        ExpressionType m_expression;
+        type m_expression;
     };
+
+    namespace Detail
+    {
+        template<class Expr>
+        ExpressionAST &CreateRegularNode(ExpressionAST &leftExpression, const Expr &rightExpression)
+        {
+            return leftExpression = rightExpression;
+        }
+
+        ExpressionAST &CreateAdditionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
+        {
+            return leftExpression.addition(rightExpression);
+        }
+
+        ExpressionAST &CreateSubtractionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
+        {
+            return leftExpression.subtraction(rightExpression);
+        }
+
+        ExpressionAST &CreateMultiplicationNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
+        {
+            return leftExpression.multiplication(rightExpression);
+        }
+
+        ExpressionAST &CreateDivisionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
+        {
+            return leftExpression.division(rightExpression);
+        }
+
+    };
+
+    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateRegularNode, Detail::CreateAdditionNode, 2);
+    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateAdditionNode, Detail::CreateAdditionNode, 2);
+    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateSubtractionNode, Detail::CreateAdditionNode, 2);
+    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateMultiplicationNode, Detail::CreateAdditionNode, 2);
+    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateDivisionNode, Detail::CreateAdditionNode, 2);
 
     class BinaryOperation
     {

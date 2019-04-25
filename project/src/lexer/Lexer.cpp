@@ -29,10 +29,8 @@ Lexer::Lexer()
     assignment = lex::token_def<>("=", ID_ASSIGNMENT);
     equality = lex::token_def<>("==", ID_EQUALITY);
 
-    space = lex::token_def<std::string>("(\\s)*", ID_SPACE);
-
-    identifier = lex::token_def <std::string> ("[_a-zA-Z][_a-zA-Z0-9]*", ID_IDENTIFIER);
-    any = lex::token_def <std::string>(".", ID_ANY);
+    //identifier = lex::token_def <std::string> ("[_a-zA-Z][_a-zA-Z0-9]*", ID_IDENTIFIER);
+    //any = lex::token_def <std::string>(".", ID_ANY);
 
     //order is important due to mutually exclusive regex
     //for example number could be a part of indetifier

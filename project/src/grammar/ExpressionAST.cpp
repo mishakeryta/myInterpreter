@@ -43,3 +43,29 @@ ExpressionAST NegateExpression::operator()(const ExpressionAST &expr) const
     return ExpressionAST(UnaryOperation(Lexer::ID_SUBTRACTION, expr));
 }
 
+
+//ExpressionAST &Detail::CreateRegularNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
+//{
+//    return leftExpression = rightExpression;
+//}
+
+//ExpressionAST &Detail::CreateAdditionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
+//{
+//    return leftExpression.addition(rightExpression);
+//}
+
+//ExpressionAST &Detail::CreateSubtractionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
+//{
+//    return leftExpression.subtraction(rightExpression);
+//}
+
+//ExpressionAST &Detail::CreateMultiplicationNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
+//{
+//    return leftExpression.multiplication(rightExpression);
+//}
+
+//ExpressionAST &Detail::CreateDivisionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
+//{
+//    return leftExpression.division(rightExpression);
+//}
+
