@@ -40,6 +40,8 @@ namespace Intr
             ID_MULTIPLICATION,
             ID_DIVISION,
 
+            ID_SPACE,
+
             ID_IDENTIFIER,
             ID_ANY
 		};
@@ -56,6 +58,7 @@ namespace Intr
         lex::token_def<> assignment, equality;
         lex::token_def<> addition, subtraction;
         lex::token_def<> division, multiplication;
+        lex::token_def<std::string> space;
         lex::token_def<std::string> identifier;
         lex::token_def<std::string> any;
 	};

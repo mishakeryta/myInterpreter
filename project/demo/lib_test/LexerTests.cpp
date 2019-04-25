@@ -40,12 +40,14 @@ std::string IdToStr(Intr::Lexer::id_type id)
         return ENUM_TO_CSTR(Lexer::ID_MULTIPLICATION);
     case Lexer::ID_DIVISION:
         return ENUM_TO_CSTR(Lexer::ID_DIVISION);
+    case Lexer::ID_SPACE:
+        return ENUM_TO_CSTR(Lexer::ID_SPACE);
     case Lexer::ID_IDENTIFIER:
         return ENUM_TO_CSTR(Lexer::ID_IDENTIFIER);
     case Lexer::ID_ANY:
         return ENUM_TO_CSTR(Lexer::ID_ANY);
     }
-    throw std::runtime_error("Unknown lex id");
+    throw std::runtime_error("Unknown Lexer ID");
 }
 
 int main()
@@ -59,7 +61,7 @@ int main()
 
 		return true;
 	};
-    std::string str = "-12a123_ad{12}ife2112{if}12while===";
+    std::string str = "  00 1.2   - 12 a 123 _ ad {0012}ife2112{if}12while===";
 
     auto begin = std::begin(str);
     tokenize(begin, std::end(str), lexerFunctor, tokenProcessor);

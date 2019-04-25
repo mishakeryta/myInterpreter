@@ -6,8 +6,8 @@ Lexer::Lexer()
 {
     //some of it require modifications
     //https://stackoverflow.com/questions/13395453/how-to-combine-boostspiritlex-boostspiritqi
-    doubleNumber = lex::token_def<double>("\\d+\\.\\d+", ID_DOUBLE_NUMBER);
-    intNumber = lex::token_def<std::int32_t>("\\d+", ID_INT_NUMBER);
+    doubleNumber = lex::token_def<double>("(([1-9][0-9]*)|0)(\\.\\d+)", ID_DOUBLE_NUMBER);
+    intNumber = lex::token_def<std::int32_t>("([1-9][0-9]*)|0{1}", ID_INT_NUMBER);
 
     ifStatement = lex::token_def<>("if", ID_IF_STATEMENT);
     whileStatement = lex::token_def<>("while", ID_WHILE_STATEMENT);
@@ -29,6 +29,8 @@ Lexer::Lexer()
     assignment = lex::token_def<>("=", ID_ASSIGNMENT);
     equality = lex::token_def<>("==", ID_EQUALITY);
 
+    space = lex::token_def<std::string>("(\\s)*", ID_SPACE);
+
     identifier = lex::token_def <std::string> ("[_a-zA-Z][_a-zA-Z0-9]*", ID_IDENTIFIER);
     any = lex::token_def <std::string>(".", ID_ANY);
 
@@ -42,5 +44,6 @@ Lexer::Lexer()
             assignment | equality |
             addition | subtraction |
             multiplication | division |
+            space |
             identifier | any;
 }
