@@ -13,5 +13,6 @@ build/*
 *.user
 *.autosave
 *.diff
+*.orig
 compile_commands.json
 

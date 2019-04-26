@@ -1,6 +1,6 @@
-
 #include "grammar/ExpressionGrammar.hpp"
 #include "grammar/LiteralGrammar.hpp"
+#include "lexer/Helper.hpp"
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/variant/recursive_variant.hpp>
@@ -8,6 +8,7 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_function.hpp>
 #include <boost/test/utils/named_params.hpp>
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -30,7 +31,7 @@ struct ast_print
 
         void operator()(binary_op const& expr) const
         {
-            std::cout << "op:" << expr.op << "(";
+            std::cout << "op:" << LexerIdToString(expr.op) << "(";
             boost::apply_visitor(*this, expr.left.m_expression);
             std::cout << ", ";
             boost::apply_visitor(*this, expr.right.m_expression);
@@ -39,19 +40,21 @@ struct ast_print
 
         void operator()(unary_op const& expr) const
         {
-            std::cout << "op:" << expr.op << "(";
+            std::cout << "op:" << LexerIdToString(expr.op) << "(";
             boost::apply_visitor(*this, expr.subject.m_expression);
             std::cout << ')';
         }
     };
+
 int main()
 {
-    std::string str = "-2";
+    std::string str = "2+(3*2)";
     Intr::Lexer lexerFunctor;
     Intr::ExpressionGrammar exprGrammar(lexerFunctor);
     auto begin = std::begin(str);
     ExpressionAST val;
     Intr::lex::tokenize_and_parse(begin, std::end(str), lexerFunctor, exprGrammar, val);
+    std::cout << (begin == std::end(str));
     boost::apply_visitor(ast_print(), val.m_expression);
     return 0;
 }

@@ -48,7 +48,7 @@ namespace Intr
 
         Lexer();
 	//FIXME: will uncomment this when it will be suporrted on grammar 
-        //lex::token_def<double> doubleNumber;
+        lex::token_def<double> doubleNumber;
         lex::token_def<std::int32_t> intNumber;
         lex::token_def<> ifStatement, whileStatement;
         lex::token_def<> scopeBegin, scopeEnd;
@@ -57,9 +57,9 @@ namespace Intr
         lex::token_def<> assignment, equality;
         lex::token_def<> addition, subtraction;
         lex::token_def<> division, multiplication;
-        //lex::token_def<std::string> space;
-        //lex::token_def<std::string> identifier;
-        //lex::token_def<std::string> any;
+        lex::token_def<> space;
+        lex::token_def<std::string> identifier;
+        lex::token_def<std::string> any;
 	};
 };
 
