@@ -9,6 +9,9 @@
 
 namespace Intr
 {
-    std::string LexerIdToString(Intr::Lexer::id_type id);
+    namespace  Helper
+    {
+        std::string LexerIdToString(Intr::Lexer::id_type id);
+    }
 }
 #endif // HELPER_HPP

@@ -1,6 +1,6 @@
 
-#add_executable( LexerTests LexerTests.cpp )
-#target_link_libraries( LexerTests  LibLexer )
+add_executable( LexerTests LexerTests.cpp )
+target_link_libraries( LexerTests  LibLexer )
 
 
 

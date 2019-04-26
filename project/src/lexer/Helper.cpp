@@ -2,7 +2,7 @@
 
 #define ENUM_TO_CSTR(enum_id) (#enum_id)
 
-std::string Intr::LexerIdToString(Lexer::id_type id)
+std::string Intr::Helper::LexerIdToString(Lexer::id_type id)
 {
     using Lexer = Intr::Lexer;
 

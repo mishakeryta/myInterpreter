@@ -1,5 +1,7 @@
 #include "grammar/ExpressionGrammar.hpp"
 #include "grammar/LiteralGrammar.hpp"
+#include "grammar/helper/ExpressionASTPrinter.hpp"
+
 #include "lexer/Helper.hpp"
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
@@ -14,37 +16,8 @@
 #include <string>
 
 using namespace Intr;
-using UnaryOperation = UnaryOperation;
 
 
-struct ast_print
-    {
-        typedef void result_type;
-
-        void operator()(Nil) const {}
-        void operator()(int n) const { std::cout << n; }
-
-        void operator()(const ExpressionAST &ast) const
-        {
-            boost::apply_visitor(*this, ast.expression());
-        }
-
-        void operator()(const BinaryOperation &expr) const
-        {
-            std::cout << "op:" << LexerIdToString(expr.operatrion()) << "(";
-            boost::apply_visitor(*this, expr.left().expression());
-            std::cout << ", ";
-            boost::apply_visitor(*this, expr.right().expression());
-            std::cout << ')';
-        }
-
-        void operator()(UnaryOperation &expr) const
-        {
-            std::cout << "op:" << LexerIdToString(expr.operation()) << "(";
-            boost::apply_visitor(*this, expr.subject().expression());
-            std::cout << ')';
-        }
-    };
 
 int main()
 {
@@ -55,6 +28,6 @@ int main()
     ExpressionAST val;
     Intr::lex::tokenize_and_parse(begin, std::end(str), lexerFunctor, exprGrammar, val);
     std::cout << (begin == std::end(str));
-    boost::apply_visitor(ast_print(), val.expression());
+    boost::apply_visitor(Helper::ExpressionASTPrinter(), val.expression());
     return 0;
 }
