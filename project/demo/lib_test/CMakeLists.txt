@@ -4,5 +4,5 @@
 
 
 
-add_executable( ParserTests ParserTests.cpp )
+add_executable( ParserTests ParserTests.cpp LexerTests.cpp)
 target_link_libraries( ParserTests LibGrammar )

@@ -1,1 +1,1 @@
-add_library( LibLexer STATIC Lexer.cpp )
+add_library( LibLexer STATIC Lexer.cpp Helper.cpp )

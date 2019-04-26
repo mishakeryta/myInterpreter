@@ -6,11 +6,11 @@ Lexer::Lexer()
 {
     //some of it require modifications
     //https://stackoverflow.com/questions/13395453/how-to-combine-boostspiritlex-boostspiritqi
-    //doubleNumber = lex::token_def<double>("(([1-9][0-9]*)|0)(\\.\\d+)", ID_DOUBLE_NUMBER);
+    doubleNumber = lex::token_def<double>("(([1-9][0-9]*)|0)(\\.\\d+)", ID_DOUBLE_NUMBER);
     intNumber = lex::token_def<std::int32_t>("([1-9][0-9]*)|0{1}", ID_INT_NUMBER);
 
-    //ifStatement = lex::token_def<>("if", ID_IF_STATEMENT);
-    //whileStatement = lex::token_def<>("while", ID_WHILE_STATEMENT);
+    ifStatement = lex::token_def<>("if", ID_IF_STATEMENT);
+    whileStatement = lex::token_def<>("while", ID_WHILE_STATEMENT);
 
     scopeBegin = lex::token_def<>("\\{", ID_SCOPE_BEGIN);
     scopeEnd = lex::token_def<>("\\}", ID_SCOPE_END);
@@ -34,16 +34,28 @@ Lexer::Lexer()
 
     //order is important due to mutually exclusive regex
     //for example number could be a part of indetifier
-    this->self = intNumber |
+<<<<<<< HEAD
+    this->self = doubleNumber | intNumber |
+            ifStatement |  whileStatement |
+            scopeBegin | scopeEnd |
+            parenthesisBegin | parenthesisEnd |
+            statementEnd |
+            assignment | equality |
+            addition | subtraction |
+            multiplication | division |
+            space |
+            identifier | any;
+=======
+    this->self = intNumber;
+
             //doubleNumber | intNumber |
             //ifStatement |  whileStatement |
             //scopeBegin | scopeEnd |
-            parenthesisBegin | parenthesisEnd |
+            //parenthesisBegin | parenthesisEnd |
             //statementEnd |
             //assignment | equality |
-            //addition
-            subtraction ;
+            //addition | subtraction |
             //multiplication | division |
-            //space |
             //identifier | any;
+>>>>>>> Finish alpha working version of combination of lexer ,grammar and ast
 }

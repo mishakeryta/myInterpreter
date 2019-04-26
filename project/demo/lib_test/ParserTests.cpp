@@ -46,7 +46,7 @@ struct ast_print
     };
 int main()
 {
-    std::string str = "2";
+    std::string str = "-2";
     Intr::Lexer lexerFunctor;
     Intr::ExpressionGrammar exprGrammar(lexerFunctor);
     auto begin = std::begin(str);

@@ -36,14 +36,12 @@ BinaryOperation::BinaryOperation(BinaryOperation::Type op, const ExpressionAST &
 UnaryOperation::UnaryOperation(UnaryOperation::Type op, const ExpressionAST &subject)
     : op(op), subject(subject) {}
 
-static boost::phoenix::function<NegateExpression> neg;
 
-ExpressionAST NegateExpression::operator()(const ExpressionAST &expr) const
+
+ExpressionAST &Detail::CreateNegativeNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
 {
-    return ExpressionAST(UnaryOperation(Lexer::ID_SUBTRACTION, expr));
+    return leftExpression = ExpressionAST(UnaryOperation(Lexer::ID_SUBTRACTION, rightExpression));
 }
-
-
 
 ExpressionAST &Detail::CreateAdditionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
 {
