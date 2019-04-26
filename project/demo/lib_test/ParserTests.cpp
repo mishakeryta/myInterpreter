@@ -14,9 +14,9 @@
 #include <string>
 
 using namespace Intr;
-using unary_op = UnaryOperation;
-using binary_op = BinaryOperation;
-using expression_ast = ExpressionAST;
+using UnaryOperation = UnaryOperation;
+
+
 struct ast_print
     {
         typedef void result_type;
@@ -24,24 +24,24 @@ struct ast_print
         void operator()(Nil) const {}
         void operator()(int n) const { std::cout << n; }
 
-        void operator()(expression_ast const& ast) const
+        void operator()(const ExpressionAST &ast) const
         {
-            boost::apply_visitor(*this, ast.m_expression);
+            boost::apply_visitor(*this, ast.expression());
         }
 
-        void operator()(binary_op const& expr) const
+        void operator()(const BinaryOperation &expr) const
         {
-            std::cout << "op:" << LexerIdToString(expr.op) << "(";
-            boost::apply_visitor(*this, expr.left.m_expression);
+            std::cout << "op:" << LexerIdToString(expr.operatrion()) << "(";
+            boost::apply_visitor(*this, expr.left().expression());
             std::cout << ", ";
-            boost::apply_visitor(*this, expr.right.m_expression);
+            boost::apply_visitor(*this, expr.right().expression());
             std::cout << ')';
         }
 
-        void operator()(unary_op const& expr) const
+        void operator()(UnaryOperation &expr) const
         {
-            std::cout << "op:" << LexerIdToString(expr.op) << "(";
-            boost::apply_visitor(*this, expr.subject.m_expression);
+            std::cout << "op:" << LexerIdToString(expr.operation()) << "(";
+            boost::apply_visitor(*this, expr.subject().expression());
             std::cout << ')';
         }
     };
@@ -55,6 +55,6 @@ int main()
     ExpressionAST val;
     Intr::lex::tokenize_and_parse(begin, std::end(str), lexerFunctor, exprGrammar, val);
     std::cout << (begin == std::end(str));
-    boost::apply_visitor(ast_print(), val.m_expression);
+    boost::apply_visitor(ast_print(), val.expression());
     return 0;
 }

@@ -20,20 +20,16 @@ namespace Intr
     class UnaryOperation;
     class Nil {};
 
-
-
     class ExpressionAST
     {
     public:
-       using type = boost::variant<
+       using Type = boost::variant<
                 Nil // can't happen!
               , int
               , boost::recursive_wrapper<ExpressionAST>
               , boost::recursive_wrapper<BinaryOperation>
               , boost::recursive_wrapper<UnaryOperation>
             >;
-        using value_type = type;//don't know if is it required
-
 
         ExpressionAST();
 
@@ -46,8 +42,10 @@ namespace Intr
         ExpressionAST &multiplication(const ExpressionAST &rightExpression);
         ExpressionAST &division(const ExpressionAST &rightExpression);
 
+        const Type& expression() const { return m_expression; }
 
-        type m_expression;
+    private:
+        Type m_expression;
     };
 
     namespace Detail
@@ -81,35 +79,32 @@ namespace Intr
     {
     public:
         using Type = Lexer::Id;
-        BinaryOperation(
-            Type op
-          , ExpressionAST const& left
-          , ExpressionAST const& right);
 
-        Type op;
-        ExpressionAST left;
-        ExpressionAST right;
+        BinaryOperation(Type op, const ExpressionAST &left, const ExpressionAST &right);
+
+        Type operatrion() const { return m_op; }
+        const ExpressionAST &left() const { return m_left; }
+        const ExpressionAST &right() const { return m_right; }
+
+    private:
+        Type m_op;
+        ExpressionAST m_left;
+        ExpressionAST m_right;
     };
 
     class UnaryOperation
     {
     public:
         using Type = Lexer::Id;
-        UnaryOperation(
-            Type op
-          , ExpressionAST const& subject);
 
-        Type op;
-        ExpressionAST subject;
-    };
+        UnaryOperation(Type op, const ExpressionAST& subject);
 
-    class NegateExpression
-    {
-    public:
-        template <typename T>
-        struct result { typedef T type; };
+        Type operation() const { return m_op; }
+        const ExpressionAST &subject() const { return m_subject; }
 
-        ExpressionAST operator()(ExpressionAST const& expr) const;
+    private:
+        Type m_op;
+        ExpressionAST m_subject;
     };
 };
 #endif // EXPRESSIONAST_HPP

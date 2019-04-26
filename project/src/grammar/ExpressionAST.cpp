@@ -31,10 +31,10 @@ ExpressionAST& ExpressionAST::division(const ExpressionAST& right)
 
 
 BinaryOperation::BinaryOperation(BinaryOperation::Type op, const ExpressionAST &left, const ExpressionAST &right)
-    : op(op), left(left), right(right) {}
+    : m_op(op), m_left(left), m_right(right) {}
 
 UnaryOperation::UnaryOperation(UnaryOperation::Type op, const ExpressionAST &subject)
-    : op(op), subject(subject) {}
+    : m_op(op), m_subject(subject) {}
 
 
 
