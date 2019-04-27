@@ -9,16 +9,15 @@ namespace Intr
     {
         class ExpressionASTPrinter
         {
-            typedef void result_type;
         public:
             void operator()(Nil) const { }
             void operator()(int n) const;
 
             void operator()(const ExpressionAST &ast) const;
 
-            void operator()(const BinaryOperation &expr) const;
+            void operator()(const BinaryOperation &binary) const;
 
-            void operator()(UnaryOperation &expr) const;
+            void operator()(UnaryOperation &unary) const;
         };
     };
 };

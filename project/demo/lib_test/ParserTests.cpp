@@ -1,8 +1,9 @@
+#include "lexer/Helper.hpp"
 #include "grammar/ExpressionGrammar.hpp"
 #include "grammar/LiteralGrammar.hpp"
 #include "grammar/helper/ExpressionASTPrinter.hpp"
+#include "evaluator/ExpressionEvaluator.hpp"
 
-#include "lexer/Helper.hpp"
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/variant/recursive_variant.hpp>
@@ -27,7 +28,10 @@ int main()
     auto begin = std::begin(str);
     ExpressionAST val;
     Intr::lex::tokenize_and_parse(begin, std::end(str), lexerFunctor, exprGrammar, val);
+
     std::cout << (begin == std::end(str));
+
     boost::apply_visitor(Helper::ExpressionASTPrinter(), val.expression());
+    std::cout << boost::apply_visitor(ExpressionEvaluator(), val.expression());
     return 0;
 }
