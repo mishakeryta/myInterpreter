@@ -1,4 +1,4 @@
-#include "grammar/ExpressionAST.hpp"
+#include "ast/ExpressionAST.hpp"
 
 using namespace Intr;
 ExpressionAST::ExpressionAST()

@@ -2,7 +2,7 @@
 #define PARSER_HPP
 
 #include "lexer/Lexer.hpp"
-#include "grammar/ExpressionAST.hpp"
+#include "ast/ExpressionAST.hpp"
 
 #include <boost/spirit/include/qi_grammar.hpp>
 #include <boost/spirit/include/qi_rule.hpp>

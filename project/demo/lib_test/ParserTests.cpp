@@ -1,7 +1,7 @@
 #include "lexer/Helper.hpp"
 #include "grammar/ExpressionGrammar.hpp"
 #include "grammar/LiteralGrammar.hpp"
-#include "grammar/helper/ExpressionASTPrinter.hpp"
+#include "ast/helper/ExpressionASTPrinter.hpp"
 #include "evaluator/ExpressionEvaluator.hpp"
 
 #include <boost/config/warning_disable.hpp>
@@ -17,8 +17,6 @@
 #include <string>
 
 using namespace Intr;
-
-
 
 int main()
 {

@@ -9,7 +9,6 @@
 #include <boost/variant/apply_visitor.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_function.hpp>
-
 #include <boost/phoenix/function/adapt_function.hpp>
 
 #include <memory>
@@ -67,7 +66,7 @@ namespace Intr
         ExpressionAST &CreateDivisionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression);
 
     };
-//FIXME: Need to uncomment all of them , but only in process of finishing ExpressionGrammar
+
     BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateRegularNode, Detail::CreateRegularNode, 2);
     BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateNegativeNode, Detail::CreateNegativeNode, 2);
     BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateAdditionNode, Detail::CreateAdditionNode, 2);

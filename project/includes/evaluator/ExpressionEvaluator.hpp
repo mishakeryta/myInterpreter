@@ -1,15 +1,18 @@
 #ifndef EXPRESSIONASTEVALUATOR_HPP
 #define EXPRESSIONASTEVALUATOR_HPP
 
-#include "grammar/ExpressionAST.hpp"
 
+#include "ast/ExpressionAST.hpp"
+
+#include <boost/variant/static_visitor.hpp>
 
 namespace Intr
 {
-    class ExpressionEvaluator
+    class ExpressionEvaluator :
+            boost::static_visitor<int>
     {
     public:
-        using ResultType = int;
+        using ResultType = result_type;
 
         ResultType operator()(Nil) const;
         ResultType operator()(int value) const;

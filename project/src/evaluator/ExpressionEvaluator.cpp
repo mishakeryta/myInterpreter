@@ -1,4 +1,4 @@
-#include "grammar/ExpressionAST.hpp"
+#include "ast/ExpressionAST.hpp"
 #include "evaluator/ExpressionEvaluator.hpp"
 
 #include <boost/variant/apply_visitor.hpp>

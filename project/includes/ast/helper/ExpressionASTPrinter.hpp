@@ -1,7 +1,7 @@
 #ifndef EXPRESSIONASTPRINTER_HPP
 #define EXPRESSIONASTPRINTER_HPP
 
-#include "grammar/ExpressionAST.hpp"
+#include "ast/ExpressionAST.hpp"
 
 namespace Intr
 {

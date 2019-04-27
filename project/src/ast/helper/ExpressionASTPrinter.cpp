@@ -1,6 +1,6 @@
 #include "lexer/Helper.hpp"
-#include "grammar/helper/ExpressionASTPrinter.hpp"
-#include "grammar/ExpressionAST.hpp"
+#include "ast/helper/ExpressionASTPrinter.hpp"
+#include "ast/ExpressionAST.hpp"
 
 #include <boost/variant/apply_visitor.hpp>
 

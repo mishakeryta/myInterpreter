@@ -1,9 +1,8 @@
-file (GLOB GRAMMAR_SOURCES
-    ExpressionAST.cpp
+file( GLOB GRAMMAR_SOURCES
     ExpressionGrammar.cpp
     LiteralGrammar.cpp
-    StatementsGrammar.cpp
-    helper/ExpressionASTPrinter.cpp)
+    StatementsGrammar.cpp )
 
 add_library( LibGrammar STATIC ${GRAMMAR_SOURCES} )
-target_link_libraries( LibGrammar LibLexer )
+target_link_libraries( LibGrammar LibAST
+    )
