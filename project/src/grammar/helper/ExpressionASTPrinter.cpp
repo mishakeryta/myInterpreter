@@ -17,7 +17,7 @@ void Helper::ExpressionASTPrinter::operator()(const Intr::ExpressionAST &ast) co
 
 void Helper::ExpressionASTPrinter::operator()(const Intr::BinaryOperation &expr) const
 {
-    std::cout << "op:" << LexerIdToString(expr.operatrion()) << "(";
+    std::cout << "op:" << LexerIdToString(expr.operatrion()) << '(';
     boost::apply_visitor(*this, expr.left().expression());
     std::cout << ", ";
     boost::apply_visitor(*this, expr.right().expression());

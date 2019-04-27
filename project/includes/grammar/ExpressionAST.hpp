@@ -18,7 +18,7 @@ namespace Intr
 {
     class BinaryOperation;
     class UnaryOperation;
-    class Nil {};
+    class Nil { };
 
     class ExpressionAST
     {

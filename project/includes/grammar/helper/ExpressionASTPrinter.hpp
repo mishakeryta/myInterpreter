@@ -1,15 +1,10 @@
 #ifndef EXPRESSIONASTPRINTER_HPP
 #define EXPRESSIONASTPRINTER_HPP
 
-class ExpressionAST;
-class Nil;
-class BinaryOperation;
-class UnaryOperation;
+#include "grammar/ExpressionAST.hpp"
 
 namespace Intr
 {
-    class Nil {};
-
     namespace  Helper
     {
         class ExpressionASTPrinter
@@ -25,6 +20,6 @@ namespace Intr
 
             void operator()(UnaryOperation &expr) const;
         };
-    }
+    };
 };
 #endif //EXPRESSIONASTPRINTER_HPP
