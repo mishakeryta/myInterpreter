@@ -8,6 +8,8 @@ class UnaryOperation;
 
 namespace Intr
 {
+    class Nil {};
+
     namespace  Helper
     {
         class ExpressionASTPrinter
