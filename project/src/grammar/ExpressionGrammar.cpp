@@ -2,6 +2,7 @@
 #include <boost/phoenix.hpp>
 #include <boost/spirit/include/qi_action.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/phoenix/core/value.hpp>
 
 #include <iostream>
 
@@ -13,18 +14,20 @@ ExpressionGrammar::ExpressionGrammar(const Lexer& lexer) : ExpressionGrammar::ba
 {
     using qi::_val;
     using qi::_1;
+    using boost::phoenix::val;
+
 
     m_expression =
-            m_term                                     [CreateRegularNode(_val, _1)]
-            >> *( (lexer.addition >> m_term            [CreateAdditionNode(_val, _1)])
-               |   (lexer.subtraction >> m_term        [CreateSubtractionNode(_val, _1)])
+            m_arithmeticTerm                                     [CreateRegularNode(_val, _1)]
+            >> *( (lexer.addition >> m_arithmeticTerm            [CreateBinaryNode(_val, _1, val(Lexer::ID_ADDITION))])
+               |   (lexer.subtraction >> m_arithmeticTerm        [CreateBinaryNode(_val, _1, val(Lexer::ID_SUBTRACTION))])
             )
             ;
 
-    m_term =
+    m_arithmeticTerm =
             m_factor                                     [CreateRegularNode(_val, _1)]
-            >> *(   (lexer.multiplication >> m_factor    [CreateMultiplicationNode(_val, _1)])
-               |   (lexer.division >> m_factor              [CreateDivisionNode(_val, _1)])
+            >> *(   (lexer.multiplication >> m_factor    [CreateBinaryNode(_val, _1, val(Lexer::ID_MULTIPLICATION))])
+               |   (lexer.division >> m_factor           [CreateBinaryNode(_val, _1,val(Lexer::ID_DIVISION))])
             )
             ;
 
@@ -34,5 +37,6 @@ ExpressionGrammar::ExpressionGrammar(const Lexer& lexer) : ExpressionGrammar::ba
             |   (lexer.subtraction >> m_factor                   [CreateNegativeNode(_val, _1)])
             |   (lexer.addition >> m_factor                      [CreateRegularNode(_val, _1)])
             ;
-    m_literal = lexer.intLiteral|lexer.boolLiteral [CreateRegularNode(_val, _1)];
+
+    m_literal = (lexer.intLiteral|lexer.boolLiteral) [CreateRegularNode(_val, _1)];
 }

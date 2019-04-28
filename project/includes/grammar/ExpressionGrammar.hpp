@@ -16,13 +16,12 @@ namespace Intr
     {
         using RuleType = qi::rule<iterator_type, ExpressionAST()>;
     public:
-	//change now instead of tonen(ID...) we will use lexer.space(any lexer property)
         ExpressionGrammar(const Lexer& lexer);
 
 
     private:
 
-        RuleType m_expression, m_term, m_factor, m_literal;
+        RuleType m_expression, logicalTerm ,m_arithmeticTerm, m_factor, m_literal;
     };
 };
 

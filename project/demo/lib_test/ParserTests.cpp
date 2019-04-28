@@ -20,7 +20,7 @@ using namespace Intr;
 
 int main()
 {
-    std::string str = "true";
+    std::string str = "2";
     Intr::Lexer lexerFunctor;
     Intr::ExpressionGrammar exprGrammar(lexerFunctor);
     auto begin = std::begin(str);

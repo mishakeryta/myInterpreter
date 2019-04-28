@@ -37,8 +37,8 @@ namespace Intr
             ID_ASSIGNMENT,
             ID_LOGICAL_OR,
             ID_LOGICAL_AND,
-            ID_GRAETER,
-            ID_LESSER,
+            ID_IS_GRAETER,
+            ID_IS_LESSER,
             ID_EQUALITY,
 
             ID_ADDITION,

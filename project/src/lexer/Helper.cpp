@@ -33,10 +33,10 @@ std::string Intr::Helper::LexerIdToString(Lexer::id_type id)
         return ENUM_TO_CSTR(Lexer::ID_LOGICAL_OR);
     case Lexer::ID_LOGICAL_AND:
         return ENUM_TO_CSTR(Lexer::ID_LOGICAL_AND);
-    case Lexer::ID_GRAETER:
-        return ENUM_TO_CSTR(Lexer::ID_GRAETER);
-    case Lexer::ID_LESSER:
-        return ENUM_TO_CSTR(Lexer::ID_LESSER);
+    case Lexer::ID_IS_GRAETER:
+        return ENUM_TO_CSTR(Lexer::ID_IS_GRAETER);
+    case Lexer::ID_IS_LESSER:
+        return ENUM_TO_CSTR(Lexer::ID_IS_LESSER);
     case Lexer::ID_EQUALITY:
         return ENUM_TO_CSTR(Lexer::ID_EQUALITY);
     case Lexer::ID_ADDITION:

@@ -1,34 +1,14 @@
 #include "ast/ExpressionAST.hpp"
-
+#include <iostream>
 using namespace Intr;
 ExpressionAST::ExpressionAST()
     : m_expression(Nil()) {}
 
-ExpressionAST& ExpressionAST::addition(const ExpressionAST &right)
+ExpressionAST &ExpressionAST::binaryOperation(const ExpressionAST &right, Lexer::Id operation)
 {
-    m_expression = BinaryOperation(Lexer::ID_ADDITION, m_expression, right);
+    m_expression = BinaryOperation(operation, m_expression, right);
     return *this;
 }
-
-ExpressionAST& ExpressionAST::subtraction(const ExpressionAST &right)
-{
-    m_expression = BinaryOperation(Lexer::ID_SUBTRACTION, m_expression, right);
-    return *this;
-}
-
-ExpressionAST& ExpressionAST::multiplication(const ExpressionAST &right)
-{
-    m_expression = BinaryOperation(Lexer::ID_MULTIPLICATION, m_expression, right);
-    return *this;
-}
-
-ExpressionAST& ExpressionAST::division(const ExpressionAST& right)
-{
-    m_expression = BinaryOperation(Lexer::ID_DIVISION, m_expression, right);
-    return *this;
-}
-
-
 
 BinaryOperation::BinaryOperation(BinaryOperation::Type op, const ExpressionAST &left, const ExpressionAST &right)
     : m_op(op), m_left(left), m_right(right) {}
@@ -43,22 +23,7 @@ ExpressionAST &Detail::CreateNegativeNode(ExpressionAST &leftExpression, const E
     return leftExpression = ExpressionAST(UnaryOperation(Lexer::ID_SUBTRACTION, rightExpression));
 }
 
-ExpressionAST &Detail::CreateAdditionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
+ExpressionAST &Detail::CreateBinaryNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression, Lexer::Id operation)
 {
-    return leftExpression.addition(rightExpression);
-}
-
-ExpressionAST &Detail::CreateSubtractionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
-{
-    return leftExpression.subtraction(rightExpression);
-}
-
-ExpressionAST &Detail::CreateMultiplicationNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
-{
-    return leftExpression.multiplication(rightExpression);
-}
-
-ExpressionAST &Detail::CreateDivisionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
-{
-    return leftExpression.division(rightExpression);
+    return leftExpression.binaryOperation(rightExpression, operation);
 }

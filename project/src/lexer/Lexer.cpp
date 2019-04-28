@@ -4,8 +4,6 @@ using namespace Intr;
 
 Lexer::Lexer()
 {
-    //some of it require modifications
-    //https://stackoverflow.com/questions/13395453/how-to-combine-boostspiritlex-boostspiritqi
     doubleLiteral = lex::token_def<double>("(([1-9][0-9]*)|0{1})(\\.\\d+)", ID_DOUBLE_LITERAL);
     intLiteral = lex::token_def<std::int32_t>("([1-9][0-9]*)|0{1}", ID_INT_LITERAL);
     boolLiteral = lex::token_def<bool>("(false)|(true)", ID_BOOL_LITERAL);
@@ -27,8 +25,8 @@ Lexer::Lexer()
     logicalAnd = lex::token_def<>("\\&\\&", ID_LOGICAL_AND);
     logicalOr = lex::token_def<>("\\|\\|", ID_LOGICAL_OR);
 
-    greater = lex::token_def<>("<", ID_LESSER);
-    lesser = lex::token_def<>(">", ID_GRAETER);
+    greater = lex::token_def<>("<", ID_IS_LESSER);
+    lesser = lex::token_def<>(">", ID_IS_GRAETER);
 
     equality = lex::token_def<>("==", ID_EQUALITY);
 

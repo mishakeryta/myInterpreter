@@ -46,10 +46,7 @@ namespace Intr
         ExpressionAST(const Expr &expr)
           : m_expression(expr) {}
 
-        ExpressionAST &addition(const ExpressionAST &rightExpression);
-        ExpressionAST &subtraction(const ExpressionAST &rightExpression);
-        ExpressionAST &multiplication(const ExpressionAST &rightExpression);
-        ExpressionAST &division(const ExpressionAST &rightExpression);
+        ExpressionAST &binaryOperation(const ExpressionAST &right, Lexer::Id operation);
 
         const Type& expression() const { return m_expression; }
 
@@ -57,6 +54,8 @@ namespace Intr
         Type m_expression;
     };
 
+
+    //workaround, batter solution is possible to implement
     namespace Detail
     {
         template<class Expr>
@@ -64,25 +63,14 @@ namespace Intr
         {
             return leftExpression = rightExpression;
         }
+        ExpressionAST &CreateBinaryNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression, Lexer::Id operation);
 
         ExpressionAST &CreateNegativeNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression);
-
-        ExpressionAST &CreateAdditionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression);
-
-        ExpressionAST &CreateSubtractionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression);
-
-        ExpressionAST &CreateMultiplicationNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression);
-
-        ExpressionAST &CreateDivisionNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression);
-
     };
 
     BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateRegularNode, Detail::CreateRegularNode, 2);
     BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateNegativeNode, Detail::CreateNegativeNode, 2);
-    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateAdditionNode, Detail::CreateAdditionNode, 2);
-    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateSubtractionNode, Detail::CreateSubtractionNode, 2);
-    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateMultiplicationNode, Detail::CreateMultiplicationNode, 2);
-    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateDivisionNode, Detail::CreateDivisionNode, 2);
+    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateBinaryNode, Detail::CreateBinaryNode, 3);
 
     class BinaryOperation
     {
