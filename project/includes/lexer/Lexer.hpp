@@ -4,14 +4,16 @@
 #include <string>
 #include <cstdint>
 
+
 #include <boost/spirit/include/lex_lexertl.hpp>
 
 namespace Intr
 {
 
     namespace lex = boost::spirit::lex;
+    namespace qi = boost::spirit::qi;
 
-    using TokenType = lex::lexertl::token<std::string::iterator>;
+    using TokenType = lex::lexertl::token<std::string::iterator,  boost::mpl::vector<bool, std::int32_t, double, std::string>>;
     using LexerType = lex::lexertl::actor_lexer<TokenType>;
 
     class Lexer :
@@ -46,7 +48,7 @@ namespace Intr
             ID_MULTIPLICATION,
             ID_DIVISION,
 
-            ID_SPACE,
+            ID_WHITESPACE,
 
             ID_IDENTIFIER,
             ID_ANY
@@ -66,7 +68,7 @@ namespace Intr
         lex::token_def<> isGreater, isLesser, isEqual;
         lex::token_def<> addition, subtraction;
         lex::token_def<> division, multiplication;
-        lex::token_def<> space;
+        lex::token_def<> whitespace;
         lex::token_def<std::string> identifier;
         lex::token_def<std::string> any;
 	};

@@ -20,16 +20,18 @@ using namespace Intr;
 
 int main()
 {
-    std::string str = "2+1>3*2(&&)3+2<6/2";
+    std::string str = "2+1>3*2&&3 +2<6/2";
     Intr::Lexer lexerFunctor;
     Intr::ExpressionGrammar exprGrammar(lexerFunctor);
-    auto begin = std::begin(str);
-    ExpressionAST val;
-    Intr::lex::tokenize_and_parse(begin, std::end(str), lexerFunctor, exprGrammar, val);
+    auto itr = std::begin(str);
+    auto begin = lexerFunctor.begin(itr, str.end());
+    auto end = lexerFunctor.end();
+    ExpressionAST ast;
+    Intr::qi::phrase_parse(begin, end, exprGrammar, Intr::qi::in_state("skip")[lexerFunctor.self], ast);
 
-    std::cout << (begin == std::end(str));
 
-    boost::apply_visitor(Helper::ExpressionASTPrinter(), val.expression());
+
+    boost::apply_visitor(Helper::ExpressionASTPrinter(), ast.expression());
 
     return 0;
 }

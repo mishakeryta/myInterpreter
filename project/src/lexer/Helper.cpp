@@ -47,8 +47,8 @@ std::string Intr::Helper::LexerIdToString(Lexer::id_type id)
         return ENUM_TO_CSTR(Lexer::ID_MULTIPLICATION);
     case Lexer::ID_DIVISION:
         return ENUM_TO_CSTR(Lexer::ID_DIVISION);
-    case Lexer::ID_SPACE:
-        return ENUM_TO_CSTR(Lexer::ID_SPACE);
+    case Lexer::ID_WHITESPACE:
+        return ENUM_TO_CSTR(Lexer::ID_WHITESPACE);
     case Lexer::ID_IDENTIFIER:
         return ENUM_TO_CSTR(Lexer::ID_IDENTIFIER);
     case Lexer::ID_ANY:

@@ -36,7 +36,7 @@ ExpressionGrammar::ExpressionGrammar(const Lexer& lexer) : ExpressionGrammar::ba
 
     m_nontrivialTerm  =         m_factor                                     [CreateRegularNode(_val, _1)] >>
             *((lexer.multiplication >> m_factor    [CreateBinaryNode(_val, _1, val(Lexer::ID_MULTIPLICATION))]) |
-            (lexer.division >> m_factor           [CreateBinaryNode(_val, _1,val(Lexer::ID_DIVISION))])
+            (lexer.division >> m_factor           [CreateBinaryNode(_val, _1, val(Lexer::ID_DIVISION))])
             );
 
     m_factor =
