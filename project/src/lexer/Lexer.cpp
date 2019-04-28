@@ -8,7 +8,7 @@ Lexer::Lexer()
     //https://stackoverflow.com/questions/13395453/how-to-combine-boostspiritlex-boostspiritqi
     doubleLiteral = lex::token_def<double>("(([1-9][0-9]*)|0{1})(\\.\\d+)", ID_DOUBLE_LITERAL);
     intLiteral = lex::token_def<std::int32_t>("([1-9][0-9]*)|0{1}", ID_INT_LITERAL);
-    boolLiteral = lex::token_def<std::string>("(false)|(true)", ID_BOOL_LITERAL);
+    boolLiteral = lex::token_def<bool>("(false)|(true)", ID_BOOL_LITERAL);
 
     ifStatement = lex::token_def<>("if", ID_IF_STATEMENT);
     whileStatement = lex::token_def<>("while", ID_WHILE_STATEMENT);
@@ -21,14 +21,22 @@ Lexer::Lexer()
 
     statementEnd = lex::token_def<>(";", ID_STATEMENT_END);
 
+
+    assignment = lex::token_def<>("=", ID_ASSIGNMENT);
+
+    logicalAnd = lex::token_def<>("\\&\\&", ID_LOGICAL_AND);
+    logicalOr = lex::token_def<>("\\|\\|", ID_LOGICAL_OR);
+
+    greater = lex::token_def<>("<", ID_LESSER);
+    lesser = lex::token_def<>(">", ID_GRAETER);
+
+    equality = lex::token_def<>("==", ID_EQUALITY);
+
     addition = lex::token_def<>("\\+", ID_ADDITION);
     subtraction = lex::token_def<>("\\-", ID_SUBTRACTION);
 
     multiplication = lex::token_def<>("\\*", ID_MULTIPLICATION);
     division = lex::token_def<>("\\/", ID_DIVISION);
-
-    assignment = lex::token_def<>("=", ID_ASSIGNMENT);
-    equality = lex::token_def<>("==", ID_EQUALITY);
 
     space = lex::token_def<>("(\\s)+", ID_SPACE);
 
@@ -44,7 +52,9 @@ Lexer::Lexer()
             scopeBegin | scopeEnd |
             parenthesisBegin | parenthesisEnd |
             statementEnd |
-            assignment | equality |
+            assignment |
+            logicalOr | logicalAnd |
+            greater | lesser | equality |
             addition | subtraction |
             multiplication | division |
             space |

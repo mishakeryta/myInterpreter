@@ -33,7 +33,12 @@ namespace Intr
             ID_PARENTHESIS_END,
             ID_STATEMENT_END,
 
+
             ID_ASSIGNMENT,
+            ID_LOGICAL_OR,
+            ID_LOGICAL_AND,
+            ID_GRAETER,
+            ID_LESSER,
             ID_EQUALITY,
 
             ID_ADDITION,
@@ -51,12 +56,14 @@ namespace Intr
 
         lex::token_def<double> doubleLiteral;
         lex::token_def<std::int32_t> intLiteral;
-        lex::token_def<std::string> boolLiteral;
+        lex::token_def<bool> boolLiteral;
         lex::token_def<> ifStatement, whileStatement;
         lex::token_def<> scopeBegin, scopeEnd;
         lex::token_def<> parenthesisBegin, parenthesisEnd;
         lex::token_def<> statementEnd;
-        lex::token_def<> assignment, equality;
+        lex::token_def<> assignment;
+        lex::token_def<> logicalOr, logicalAnd;
+        lex::token_def<> greater, lesser, equality;
         lex::token_def<> addition, subtraction;
         lex::token_def<> division, multiplication;
         lex::token_def<> space;
