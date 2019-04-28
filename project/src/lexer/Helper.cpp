@@ -7,10 +7,12 @@ std::string Intr::Helper::LexerIdToString(Lexer::id_type id)
     using Lexer = Intr::Lexer;
 
     switch(id) {
-    case Lexer::ID_DOUBLE_NUMBER:
-        return ENUM_TO_CSTR(Lexer::ID_DOUBLE_NUMBER);
-    case Lexer::ID_INT_NUMBER:
-        return ENUM_TO_CSTR(Lexer::ID_INT_NUMBER);
+    case Lexer::ID_DOUBLE_LITERAL:
+        return ENUM_TO_CSTR(Lexer::ID_DOUBLE_LITERAL);
+    case Lexer::ID_INT_LITERAL:
+        return ENUM_TO_CSTR(Lexer::ID_INT_LITERAL);
+    case Lexer::ID_BOOL_LITERAL:
+        return ENUM_TO_CSTR(Lexer::ID_BOOL_LITERAL);
     case Lexer::ID_IF_STATEMENT:
         return ENUM_TO_CSTR(Lexer::ID_IF_STATEMENT);
     case Lexer::ID_WHILE_STATEMENT:

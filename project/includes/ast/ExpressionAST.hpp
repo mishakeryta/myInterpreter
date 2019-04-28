@@ -2,6 +2,7 @@
 #define EXPRESSIONAST_HPP
 
 #include "lexer/Lexer.hpp"
+#include "ast/Literal.hpp"
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
@@ -10,25 +11,34 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_function.hpp>
 #include <boost/phoenix/function/adapt_function.hpp>
+#include <boost/mpl/vector.hpp>
+#include <boost/mpl/back_inserter.hpp>
+#include <boost/mpl/copy.hpp>
 
 #include <memory>
 
 namespace Intr
 {
+    namespace mpl = boost::mpl;
+
     class BinaryOperation;
     class UnaryOperation;
     class Nil { };
-
     class ExpressionAST
     {
+        using ExpressionTypes = mpl::vector<
+                Nil,
+                boost::recursive_wrapper<ExpressionAST>,
+                boost::recursive_wrapper<BinaryOperation>,
+                boost::recursive_wrapper<UnaryOperation>
+            >::type;
+        using LiteralTypes = Intr::LiteralTypes;
     public:
-       using Type = boost::variant<
-                Nil // can't happen!
-              , int
-              , boost::recursive_wrapper<ExpressionAST>
-              , boost::recursive_wrapper<BinaryOperation>
-              , boost::recursive_wrapper<UnaryOperation>
-            >;
+        using Type = boost::make_variant_over<mpl::copy<
+                    ExpressionTypes,
+                    mpl::back_inserter<LiteralTypes>
+                >::type>::type;
+
 
         ExpressionAST();
 

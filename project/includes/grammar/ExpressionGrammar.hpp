@@ -22,7 +22,7 @@ namespace Intr
 
     private:
 
-        RuleType m_expression, m_term, m_factor;
+        RuleType m_expression, m_term, m_factor, m_literal;
     };
 };
 

@@ -27,5 +27,5 @@ namespace  Detail {
 IntNumberGrammar::IntNumberGrammar(const Lexer &lexer) : IntNumberGrammar::base_type(m_literal)
 {
    using boost::phoenix::construct;
-   m_literal = lexer.intNumber[qi::_val = qi::_1];
+   m_literal = lexer.intLiteral[qi::_val = qi::_1];
 }

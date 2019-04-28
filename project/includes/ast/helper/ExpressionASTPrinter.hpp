@@ -3,6 +3,10 @@
 
 #include "ast/ExpressionAST.hpp"
 
+#include <boost/mpl/vector.hpp>
+#include <boost/mpl/contains.hpp>
+#include <boost/utility/enable_if.hpp>
+
 namespace Intr
 {
     namespace  Helper
@@ -11,7 +15,11 @@ namespace Intr
         {
         public:
             void operator()(Nil) const { }
-            void operator()(int n) const;
+
+            template<typename T>
+            typename boost::enable_if<boost::mpl::contains< LiteralTypes, T >>::type
+            operator()(const T &n) const { std::cout << n; }
+
 
             void operator()(const ExpressionAST &ast) const;
 

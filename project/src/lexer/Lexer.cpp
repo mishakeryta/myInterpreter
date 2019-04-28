@@ -6,8 +6,9 @@ Lexer::Lexer()
 {
     //some of it require modifications
     //https://stackoverflow.com/questions/13395453/how-to-combine-boostspiritlex-boostspiritqi
-    doubleNumber = lex::token_def<double>("(([1-9][0-9]*)|0{1})(\\.\\d+)", ID_DOUBLE_NUMBER);
-    intNumber = lex::token_def<std::int32_t>("([1-9][0-9]*)|0{1}", ID_INT_NUMBER);
+    doubleLiteral = lex::token_def<double>("(([1-9][0-9]*)|0{1})(\\.\\d+)", ID_DOUBLE_LITERAL);
+    intLiteral = lex::token_def<std::int32_t>("([1-9][0-9]*)|0{1}", ID_INT_LITERAL);
+    boolLiteral = lex::token_def<std::string>("(false)|(true)", ID_BOOL_LITERAL);
 
     ifStatement = lex::token_def<>("if", ID_IF_STATEMENT);
     whileStatement = lex::token_def<>("while", ID_WHILE_STATEMENT);
@@ -37,8 +38,8 @@ Lexer::Lexer()
     //order is important due to mutually exclusive regex
     //for example number could be a part of indetifier
     this->self =
-            doubleNumber |
-            intNumber |
+            doubleLiteral | intLiteral |
+            boolLiteral |
             ifStatement |  whileStatement |
             scopeBegin | scopeEnd |
             parenthesisBegin | parenthesisEnd |

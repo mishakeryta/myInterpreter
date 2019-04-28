@@ -18,7 +18,7 @@ int main()
         std::cout << " "  << Intr::Helper::LexerIdToString(t.id()) << " ";
 		return true;
 	};
-    std::string str = "00 12(*)   - 12 a 123 _ ad {0012}ife2112{if}12while===";
+    std::string str = "00 12(*)  false  - 12 a 123 _ ad {0012}ife2112{if}12while===";
 
     auto begin = std::begin(str);
     tokenize(begin, std::end(str), lexerFunctor, tokenProcessor);

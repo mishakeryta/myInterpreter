@@ -20,8 +20,9 @@ namespace Intr
 	public:
 		enum Id
 		{
-            ID_DOUBLE_NUMBER = lex::min_token_id + 1,
-            ID_INT_NUMBER,
+            ID_DOUBLE_LITERAL = lex::min_token_id + 1,
+            ID_INT_LITERAL,
+            ID_BOOL_LITERAL,
 
             ID_IF_STATEMENT,
             ID_WHILE_STATEMENT,
@@ -47,9 +48,10 @@ namespace Intr
 		};
 
         Lexer();
-	//FIXME: will uncomment this when it will be suporrted on grammar 
-        lex::token_def<double> doubleNumber;
-        lex::token_def<std::int32_t> intNumber;
+
+        lex::token_def<double> doubleLiteral;
+        lex::token_def<std::int32_t> intLiteral;
+        lex::token_def<std::string> boolLiteral;
         lex::token_def<> ifStatement, whileStatement;
         lex::token_def<> scopeBegin, scopeEnd;
         lex::token_def<> parenthesisBegin, parenthesisEnd;

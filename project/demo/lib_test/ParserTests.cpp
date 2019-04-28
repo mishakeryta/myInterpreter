@@ -2,7 +2,7 @@
 #include "grammar/ExpressionGrammar.hpp"
 #include "grammar/LiteralGrammar.hpp"
 #include "ast/helper/ExpressionASTPrinter.hpp"
-#include "evaluator/ExpressionEvaluator.hpp"
+
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
@@ -20,7 +20,7 @@ using namespace Intr;
 
 int main()
 {
-    std::string str = "2+(3*2)";
+    std::string str = "true";
     Intr::Lexer lexerFunctor;
     Intr::ExpressionGrammar exprGrammar(lexerFunctor);
     auto begin = std::begin(str);
@@ -30,6 +30,6 @@ int main()
     std::cout << (begin == std::end(str));
 
     boost::apply_visitor(Helper::ExpressionASTPrinter(), val.expression());
-    std::cout << boost::apply_visitor(ExpressionEvaluator(), val.expression());
+
     return 0;
 }
