@@ -37,9 +37,9 @@ namespace Intr
             ID_ASSIGNMENT,
             ID_LOGICAL_OR,
             ID_LOGICAL_AND,
-            ID_IS_GRAETER,
+            ID_IS_GREATER,
             ID_IS_LESSER,
-            ID_EQUALITY,
+            ID_IS_EQUAL,
 
             ID_ADDITION,
             ID_SUBTRACTION,
@@ -63,7 +63,7 @@ namespace Intr
         lex::token_def<> statementEnd;
         lex::token_def<> assignment;
         lex::token_def<> logicalOr, logicalAnd;
-        lex::token_def<> greater, lesser, equality;
+        lex::token_def<> isGreater, isLesser, isEqual;
         lex::token_def<> addition, subtraction;
         lex::token_def<> division, multiplication;
         lex::token_def<> space;

@@ -20,7 +20,7 @@ using namespace Intr;
 
 int main()
 {
-    std::string str = "2";
+    std::string str = "2+1>3*2(&&)3+2<6/2";
     Intr::Lexer lexerFunctor;
     Intr::ExpressionGrammar exprGrammar(lexerFunctor);
     auto begin = std::begin(str);

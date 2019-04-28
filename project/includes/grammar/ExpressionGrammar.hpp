@@ -1,5 +1,5 @@
-#ifndef PARSER_HPP
-#define PARSER_HPP
+#ifndef EXPRESSIONGRAMMAR_HPP
+#define EXPRESSIONGRAMMAR_HPP
 
 #include "lexer/Lexer.hpp"
 #include "ast/ExpressionAST.hpp"
@@ -21,9 +21,9 @@ namespace Intr
 
     private:
 
-        RuleType m_expression, logicalTerm ,m_arithmeticTerm, m_factor, m_literal;
+        RuleType m_expression, m_logicalTerm ,m_arithmeticTerm, m_nontrivialTerm, m_factor, m_literal;
     };
 };
 
 
-#endif//PARSER_HPP
+#endif // EXPRESSIONGRAMMARHPP

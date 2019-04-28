@@ -25,10 +25,10 @@ Lexer::Lexer()
     logicalAnd = lex::token_def<>("\\&\\&", ID_LOGICAL_AND);
     logicalOr = lex::token_def<>("\\|\\|", ID_LOGICAL_OR);
 
-    greater = lex::token_def<>("<", ID_IS_LESSER);
-    lesser = lex::token_def<>(">", ID_IS_GRAETER);
+    isGreater = lex::token_def<>("<", ID_IS_LESSER);
+    isLesser = lex::token_def<>(">", ID_IS_GREATER);
 
-    equality = lex::token_def<>("==", ID_EQUALITY);
+    isEqual= lex::token_def<>("==", ID_IS_EQUAL);
 
     addition = lex::token_def<>("\\+", ID_ADDITION);
     subtraction = lex::token_def<>("\\-", ID_SUBTRACTION);
@@ -52,7 +52,7 @@ Lexer::Lexer()
             statementEnd |
             assignment |
             logicalOr | logicalAnd |
-            greater | lesser | equality |
+            isGreater | isLesser | isEqual |
             addition | subtraction |
             multiplication | division |
             space |
