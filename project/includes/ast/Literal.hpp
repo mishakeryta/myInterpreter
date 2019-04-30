@@ -15,6 +15,7 @@ namespace Intr
     namespace  mpl = boost::mpl;
     using LiteralTypes  = mpl::vector<
             std::int32_t,
+            double,
             bool>::type
         ;
 

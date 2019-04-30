@@ -3,6 +3,7 @@
 #include <boost/spirit/include/qi_action.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/phoenix/core/value.hpp>
+#include <boost/phoenix/object/static_cast.hpp>
 
 #include <iostream>
 
@@ -15,6 +16,7 @@ ExpressionGrammar::ExpressionGrammar(const Lexer& lexer) : ExpressionGrammar::ba
     using qi::_val;
     using qi::_1;
     using boost::phoenix::val;
+    using boost::phoenix::static_cast_;
 
 
     m_expression = m_logicalTerm                                 [CreateRegularNode(_val, _1)] >>
@@ -46,5 +48,6 @@ ExpressionGrammar::ExpressionGrammar(const Lexer& lexer) : ExpressionGrammar::ba
             |   (lexer.addition >> m_factor                      [CreateRegularNode(_val, _1)])
             ;
 
-    m_literal = (lexer.intLiteral|lexer.boolLiteral) [CreateRegularNode(_val, _1)];
+    m_literal = (lexer.intLiteral|lexer.doubleLiteral) [CreateRegularNode(_val, _1)]|
+                lexer.boolLiteral[CreateRegularNode(_val, static_cast_<bool>(_1))];
 }

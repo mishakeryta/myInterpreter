@@ -36,10 +36,9 @@ Lexer::Lexer()
     multiplication = lex::token_def<>("\\*", ID_MULTIPLICATION);
     division = lex::token_def<>("\\/", ID_DIVISION);
 
-    whitespace = lex::token_def<>("(\\s)+", ID_WHITESPACE);
-
     identifier = lex::token_def <std::string> ("[_a-zA-Z][_a-zA-Z0-9]*", ID_IDENTIFIER);
-    any = lex::token_def <std::string>(".", ID_ANY);
+
+    whitespace = lex::token_def<>("\\s+", ID_WHITESPACE);
 
     //order is important due to mutually exclusive regex
     //for example number could be a part of indetifier
@@ -56,5 +55,6 @@ Lexer::Lexer()
             addition | subtraction |
             multiplication | division |
             identifier | any;
+
     this->self("skip") = whitespace;
 }

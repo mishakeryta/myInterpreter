@@ -8,6 +8,7 @@
 
 #include <boost/mpl/contains.hpp>
 #include <boost/utility/enable_if.hpp>
+#include <boost/utility/compare_pointees.hpp>
 
 
 namespace Intr
