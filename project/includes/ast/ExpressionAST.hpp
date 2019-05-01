@@ -4,12 +4,8 @@
 #include "lexer/Lexer.hpp"
 #include "ast/Literal.hpp"
 
-#include <boost/config/warning_disable.hpp>
-#include <boost/spirit/include/qi.hpp>
 #include <boost/variant/recursive_variant.hpp>
 #include <boost/variant/apply_visitor.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_function.hpp>
 #include <boost/phoenix/function/adapt_function.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/back_inserter.hpp>
@@ -54,24 +50,6 @@ namespace Intr
         Type m_expression;
     };
 
-
-    //workaround, batter solution is possible to implement
-    namespace Detail
-    {
-        template<class Expr>
-        ExpressionAST &CreateRegularNode(ExpressionAST &leftExpression, const Expr &rightExpression)
-        {
-            return leftExpression = rightExpression;
-        }
-        ExpressionAST &CreateBinaryNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression, Lexer::Id operation);
-
-        ExpressionAST &CreateNegativeNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression);
-    };
-
-    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateRegularNode, Detail::CreateRegularNode, 2);
-    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateNegativeNode, Detail::CreateNegativeNode, 2);
-    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateBinaryNode, Detail::CreateBinaryNode, 3);
-
     class BinaryOperation
     {
     public:
@@ -103,5 +81,23 @@ namespace Intr
         Type m_op;
         ExpressionAST m_subject;
     };
+
+    namespace Detail
+    {
+        template<class Expr>
+        ExpressionAST &CreateRegularNode(ExpressionAST &leftExpression, const Expr &rightExpression)
+        {
+            return leftExpression = rightExpression;
+        }
+        ExpressionAST &CreateBinaryNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression, Lexer::Id operation);
+
+        ExpressionAST &CreateNegativeNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression);
+    };
+
+    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateRegularNode, Detail::CreateRegularNode, 2);
+    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateNegativeNode, Detail::CreateNegativeNode, 2);
+    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateBinaryNode, Detail::CreateBinaryNode, 3);
+
+
 };
 #endif // EXPRESSIONAST_HPP

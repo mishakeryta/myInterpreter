@@ -1,5 +1,6 @@
 file ( GLOB AST_SOURCES
     ExpressionAST.cpp
+    StatementAST.cpp
     Literal.cpp
     helper/ExpressionASTPrinter.cpp )
 
