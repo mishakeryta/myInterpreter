@@ -17,7 +17,7 @@ Lexer::Lexer()
     parenthesisBegin = lex::token_def<lex::omit>("\\(", ID_PARENTHESIS_BEGIN);
     parenthesisEnd = lex::token_def<lex::omit>("\\)", ID_PARENTHESIS_END);
 
-    statementEnd = lex::token_def<lex::omit>(";", ID_STATEMENT_END);
+    statementEnd = lex::token_def<lex::omit>(';', ID_STATEMENT_END);
 
 
     assignment = lex::token_def<lex::omit>("=", ID_ASSIGNMENT);

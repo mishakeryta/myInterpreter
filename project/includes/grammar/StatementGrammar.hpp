@@ -3,8 +3,11 @@
 
 #include "grammar/ExpressionGrammar.hpp"
 
+
+
 namespace Intr
 {
+    class StatementAST;
 
     class StatementGrammar :
             public qi::grammar<Lexer::iterator_type, Skipper>
@@ -18,7 +21,8 @@ namespace Intr
 
     private:
         RuleType<> m_statement;
-        RuleType<ExpressionAST()> m_expression;
+        RuleType<StatementAST()> m_assignment;
+        ExpressionGrammar m_expression;
     };
 
 };

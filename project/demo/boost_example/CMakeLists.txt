@@ -4,4 +4,4 @@
 
 file(GLOB STATEMENT_GRAMMAR_TEST_SOURCES StatementGrammarTest.cpp)
 
-#add_executable( StatementGrammar ${STATEMENT_GRAMMAR_TEST_SOURCES} )
+add_executable( StatementGrammar ${STATEMENT_GRAMMAR_TEST_SOURCES} )
