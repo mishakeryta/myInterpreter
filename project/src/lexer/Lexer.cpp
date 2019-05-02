@@ -8,37 +8,37 @@ Lexer::Lexer()
     intLiteral = lex::token_def<std::int32_t>("([1-9][0-9]*)|0{1}", ID_INT_LITERAL);
     boolLiteral = lex::token_def<bool>("(false)|(true)", ID_BOOL_LITERAL);
 
-    ifStatement = lex::token_def<>("if", ID_IF_STATEMENT);
-    whileStatement = lex::token_def<>("while", ID_WHILE_STATEMENT);
+    ifStatement = lex::token_def<lex::omit>("if", ID_IF_STATEMENT);
+    whileStatement = lex::token_def<lex::omit>("while", ID_WHILE_STATEMENT);
 
-    scopeBegin = lex::token_def<>("\\{", ID_SCOPE_BEGIN);
-    scopeEnd = lex::token_def<>("\\}", ID_SCOPE_END);
+    scopeBegin = lex::token_def<lex::omit>("\\{", ID_SCOPE_BEGIN);
+    scopeEnd = lex::token_def<lex::omit>("\\}", ID_SCOPE_END);
 
-    parenthesisBegin = lex::token_def<>("\\(", ID_PARENTHESIS_BEGIN);
-    parenthesisEnd = lex::token_def<>("\\)", ID_PARENTHESIS_END);
+    parenthesisBegin = lex::token_def<lex::omit>("\\(", ID_PARENTHESIS_BEGIN);
+    parenthesisEnd = lex::token_def<lex::omit>("\\)", ID_PARENTHESIS_END);
 
-    statementEnd = lex::token_def<>(";", ID_STATEMENT_END);
+    statementEnd = lex::token_def<lex::omit>(";", ID_STATEMENT_END);
 
 
-    assignment = lex::token_def<>("=", ID_ASSIGNMENT);
+    assignment = lex::token_def<lex::omit>("=", ID_ASSIGNMENT);
 
-    logicalAnd = lex::token_def<>("\\&\\&", ID_LOGICAL_AND);
-    logicalOr = lex::token_def<>("\\|\\|", ID_LOGICAL_OR);
+    logicalAnd = lex::token_def<lex::omit>("\\&\\&", ID_LOGICAL_AND);
+    logicalOr = lex::token_def<lex::omit>("\\|\\|", ID_LOGICAL_OR);
 
-    isGreater = lex::token_def<>("<", ID_IS_LESSER);
-    isLesser = lex::token_def<>(">", ID_IS_GREATER);
+    isGreater = lex::token_def<lex::omit>("<", ID_IS_LESSER);
+    isLesser = lex::token_def<lex::omit>(">", ID_IS_GREATER);
 
-    isEqual= lex::token_def<>("==", ID_IS_EQUAL);
+    isEqual= lex::token_def<lex::omit>("==", ID_IS_EQUAL);
 
-    addition = lex::token_def<>("\\+", ID_ADDITION);
-    subtraction = lex::token_def<>("\\-", ID_SUBTRACTION);
+    addition = lex::token_def<lex::omit>("\\+", ID_ADDITION);
+    subtraction = lex::token_def<lex::omit>("\\-", ID_SUBTRACTION);
 
-    multiplication = lex::token_def<>("\\*", ID_MULTIPLICATION);
-    division = lex::token_def<>("\\/", ID_DIVISION);
+    multiplication = lex::token_def<lex::omit>("\\*", ID_MULTIPLICATION);
+    division = lex::token_def<lex::omit>("\\/", ID_DIVISION);
 
     identifier = lex::token_def <std::string> ("[_a-zA-Z][_a-zA-Z0-9]*", ID_IDENTIFIER);
 
-    whitespace = lex::token_def<>("\\s+", ID_WHITESPACE);
+    whitespace = lex::token_def<lex::omit>("\\s+", ID_WHITESPACE);
 
     //order is important due to mutually exclusive regex
     //for example number could be a part of indetifier

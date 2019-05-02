@@ -2,4 +2,6 @@
 #set( EXTRA_LIBS ${EXTRA_LIBS} LibExtras )
 #set( EXTRA_LIBS ${EXTRA_LIBS} LibCubic )
 
-add_executable( StatementGrammar StatementGrammar.cpp)
+file(GLOB STATEMENT_GRAMMAR_TEST_SOURCES StatementGrammarTest.cpp)
+
+#add_executable( StatementGrammar ${STATEMENT_GRAMMAR_TEST_SOURCES} )

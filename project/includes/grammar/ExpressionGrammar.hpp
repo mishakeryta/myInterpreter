@@ -14,9 +14,9 @@ namespace Intr
     using Skipper = qi::in_state_skipper<Lexer::lexer_def>;
 
     class ExpressionGrammar :
-            public qi::grammar<Lexer::iterator_type, ExpressionAST(), Skipper>
+            public qi::grammar<Lexer::iterator_type, Skipper, ExpressionAST()>
     {
-        using RuleType = qi::rule<iterator_type, ExpressionAST(), Skipper>;
+        using RuleType = qi::rule<Lexer::iterator_type, Skipper, ExpressionAST()>;
 
     public:
         ExpressionGrammar(const Lexer& lexer);
