@@ -1,4 +1,4 @@
-#include "lexer/Helper.hpp"
+#include "lexer/helper/LexerIdToString.hpp"
 
 #define ENUM_TO_CSTR(enum_id) (#enum_id)
 

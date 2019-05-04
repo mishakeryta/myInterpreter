@@ -6,6 +6,7 @@
 
 
 #include <boost/spirit/include/lex_lexertl.hpp>
+#include <boost/phoenix/function/function.hpp>
 
 namespace Intr
 {
@@ -22,6 +23,7 @@ namespace Intr
 	public:
 		enum Id
 		{
+            ID_BEGIN = lex::min_token_id + 1,
             ID_DOUBLE_LITERAL = lex::min_token_id + 1,
             ID_INT_LITERAL,
             ID_BOOL_LITERAL,
@@ -51,7 +53,9 @@ namespace Intr
             ID_WHITESPACE,
 
             ID_IDENTIFIER,
+            ID_END,
             ID_ANY
+
 		};
 
         Lexer();

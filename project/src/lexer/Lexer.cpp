@@ -1,5 +1,7 @@
 #include "lexer/Lexer.hpp"
 
+#include <boost/phoenix/function/function.hpp>
+
 using namespace Intr;
 
 Lexer::Lexer()

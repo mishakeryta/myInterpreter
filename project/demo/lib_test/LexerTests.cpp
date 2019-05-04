@@ -1,27 +1,31 @@
 #include "lexer/Lexer.hpp"
-#include "lexer/Helper.hpp"
+#include "lexer/helper/LexerIdGrammar.hpp"
+#include "lexer/helper/LexerIdToString.hpp"
+#include "grammar/ExpressionGrammar.hpp"
+
+#include <boost/spirit/include/lex_tokenize_and_parse_attr.hpp>
+#include <boost/spirit/include/qi.hpp>
+#include <boost/phoenix/object/static_cast.hpp>
 #include <string>
 #include <iostream>
 #include <exception>
-
-#define ENUM_TO_CSTR(enum_id) (#enum_id)
-
-
 
 int main()
 {
 	using namespace Intr::lex;
 
+    namespace  qi = boost::spirit::qi;
+    namespace  lex = boost::spirit::lex;
+
     Intr::Lexer lexerFunctor;
-    auto tokenProcessor = [] (Intr::TokenType t)
+    auto tokenProcessor = [] (auto t)
 	{
-        std::cout << " "  << Intr::Helper::LexerIdToString(t.id()) << " ";
+        std::cout << " "  << Intr::Helper::LexerIdToString(t) << " ";
 		return true;
 	};
     std::string str = "00 12(*)  <true > &&|| - 12 a 123 _ ad {0012}ife2112{if}12while===";
 
     auto begin = std::begin(str);
-    tokenize(begin, std::end(str), lexerFunctor, tokenProcessor);
+    lex::tokenize_and_phrase_parse(begin, end(str), lexerFunctor, *Intr::LexerIdGrammar()[tokenProcessor], qi::in_state("skip")[lexerFunctor.self]);
 
-	std::cin.get();
 }

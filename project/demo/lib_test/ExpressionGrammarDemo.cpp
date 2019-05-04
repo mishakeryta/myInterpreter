@@ -1,4 +1,4 @@
-#include "lexer/Helper.hpp"
+#include "lexer/helper/LexerIdToString.hpp"
 #include "grammar/ExpressionGrammar.hpp"
 #include "grammar/LiteralGrammar.hpp"
 #include "ast/helper/ExpressionASTPrinter.hpp"
