@@ -11,3 +11,8 @@ build/*
 
 #QtCretator project files 
 *.user
+*.autosave
+*.diff
+*.orig
+compile_commands.json
+

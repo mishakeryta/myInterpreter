@@ -1,67 +1,31 @@
 #include "lexer/Lexer.hpp"
+#include "lexer/helper/LexerIdGrammar.hpp"
+#include "lexer/helper/LexerIdToString.hpp"
+#include "grammar/ExpressionGrammar.hpp"
+
+#include <boost/spirit/include/lex_tokenize_and_parse_attr.hpp>
+#include <boost/spirit/include/qi.hpp>
+#include <boost/phoenix/object/static_cast.hpp>
 #include <string>
 #include <iostream>
 #include <exception>
-
-#define ENUM_TO_CSTR(enum_id) (#enum_id)
-
-
-std::string IdToStr(Intr::Lexer::id_type id)
-{
-    using Lexer = Intr::Lexer;
-    switch(id) {
-    case Lexer::ID_DOUBLE_NUMBER:
-        return ENUM_TO_CSTR(Lexer::ID_DOUBLE_NUMBER);
-    case Lexer::ID_INT_NUMBER:
-        return ENUM_TO_CSTR(Lexer::ID_INT_NUMBER);
-    case Lexer::ID_IF_STATEMENT:
-        return ENUM_TO_CSTR(Lexer::ID_IF_STATEMENT);
-    case Lexer::ID_WHILE_STATEMENT:
-        return ENUM_TO_CSTR(Lexer::ID_WHILE_STATEMENT);
-    case Lexer::ID_SCOPE_BEGIN:
-        return ENUM_TO_CSTR(Lexer::ID_SCOPE_BEGIN);
-    case Lexer::ID_SCOPE_END:
-        return ENUM_TO_CSTR(Lexer::ID_SCOPE_END);
-    case Lexer::ID_PARENTHESIS_BEGIN:
-        return ENUM_TO_CSTR(Lexer::ID_PARENTHESIS_BEGIN);
-    case Lexer::ID_PARENTHESIS_END:
-        return ENUM_TO_CSTR(Lexer::ID_PARENTHESIS_END);
-    case Lexer::ID_STATEMENT_END:
-        return ENUM_TO_CSTR(Lexer::ID_STATEMENT_END);
-    case Lexer::ID_ASSIGNMENT:
-        return ENUM_TO_CSTR(Lexer::ID_ASSIGNMENT);
-    case Lexer::ID_EQUALITY:
-        return ENUM_TO_CSTR(Lexer::ID_EQUALITY);
-    case Lexer::ID_ADDITION:
-        return ENUM_TO_CSTR(Lexer::ID_ADDITION);
-    case Lexer::ID_SUBTRACTION:
-        return ENUM_TO_CSTR(Lexer::ID_SUBTRACTION);
-    case Lexer::ID_MULTIPLICATION:
-        return ENUM_TO_CSTR(Lexer::ID_MULTIPLICATION);
-    case Lexer::ID_DIVISION:
-        return ENUM_TO_CSTR(Lexer::ID_DIVISION);
-    case Lexer::ID_IDENTIFIER:
-        return ENUM_TO_CSTR(Lexer::ID_IDENTIFIER);
-    case Lexer::ID_ANY:
-        return ENUM_TO_CSTR(Lexer::ID_ANY);
-    }
-    throw std::runtime_error("Unknown lex id");
-}
 
 int main()
 {
 	using namespace Intr::lex;
 
-    Intr::Lexer lexerFunctor;
-    auto tokenProcessor = [] (Intr::TokenType t)
-	{
-        std::cout << " "  << IdToStr(t.id()) << " ";
+    namespace  qi = boost::spirit::qi;
+    namespace  lex = boost::spirit::lex;
 
+    Intr::Lexer lexerFunctor;
+    auto tokenProcessor = [] (auto t)
+	{
+        std::cout << " "  << Intr::Helper::LexerIdToString(t) << " ";
 		return true;
 	};
-    std::string str = "-12a123_ad{12}ife2112{if}12while===";
+    std::string str = "00 12(*)  <true > &&|| - 12 a 123 _ ad {0012}ife2112{if}12while===";
 
     auto begin = std::begin(str);
-    tokenize(begin, std::end(str), lexerFunctor, tokenProcessor);
-	std::cin.get();
+    lex::tokenize_and_phrase_parse(begin, end(str), lexerFunctor, *Intr::LexerIdGrammar()[tokenProcessor], qi::in_state("skip")[lexerFunctor.self]);
+
 }
