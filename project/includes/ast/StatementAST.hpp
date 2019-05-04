@@ -18,34 +18,33 @@ namespace Intr
     {
     public:
         AssignmentStatement(const std::string &idetifier, const ExpressionAST &value);
-        const std::string &indetidier() { return m_identifier; }
-        const ExpressionAST &value() { return m_value; }
+        const std::string &idetidier() const { return m_identifier; }
+        const ExpressionAST &value() const { return m_value; }
 
     private:
         std::string m_identifier;
         ExpressionAST m_value;
     };
 
-    class ModificationStatement:
-            public AssignmentStatement
-    {
-    public:
-        ModificationStatement(const std::string &indetifier, const ExpressionAST &value);
-    };
+//    class ModificationStatement:
+//            public AssignmentStatement
+//    {
+//    public:
+//        ModificationStatement(const std::string &indetifier, const ExpressionAST &value);
+//    };
 
-    class DeclarationStatement:
-            public AssignmentStatement
-    {
-    public:
-        DeclarationStatement(const std::string &indetifier, const ExpressionAST &value);
-    };
+//    class DeclarationStatement:
+//            public AssignmentStatement
+//    {
+//    public:
+//        DeclarationStatement(const std::string &indetifier, const ExpressionAST &value);
+//    };
 
     class StatementAST
     {
     public:
         using Type = boost::variant<Nil,
-            DeclarationStatement,
-            ModificationStatement>;
+            AssignmentStatement>;
 //            boost::recursive_wrapper<IfStatement>,
 //            boost::recursive_wrapper<WhileStatement>,
 //            boost::recursive_wrapper<AssignmentStatement>,
@@ -67,10 +66,16 @@ namespace Intr
 
     namespace Detail
     {
-        StatementAST &CreateModificationStatement(StatementAST &statement, const std::string &indetifier, const ExpressionAST &value);
+    template<class State>
+    StatementAST &CreateStatementNode(StatementAST &leftExpression, const State &rightExpression)
+    {
+        return leftExpression = rightExpression;
+    }
+        StatementAST &CreateAssignmentStatement(StatementAST &statement, const std::string &indetifier, const ExpressionAST &value);
     };
 
-    BOOST_PHOENIX_ADAPT_FUNCTION(StatementAST &, CreateModificationStatement, Detail::CreateModificationStatement, 3);
+    BOOST_PHOENIX_ADAPT_FUNCTION(StatementAST &, CreateStatementNode, Detail::CreateStatementNode, 2);
+    BOOST_PHOENIX_ADAPT_FUNCTION(StatementAST &, CreateAssignmentStatement, Detail::CreateAssignmentStatement, 3);
 
 };
 

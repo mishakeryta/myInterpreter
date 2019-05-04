@@ -8,7 +8,9 @@
 
 using namespace Intr;
 
-
+Helper::ExpressionASTPrinter::ExpressionASTPrinter(std::ostream& out)
+    :m_out(out)
+{}
 
 void Helper::ExpressionASTPrinter::operator()(const Intr::ExpressionAST &ast) const
 {

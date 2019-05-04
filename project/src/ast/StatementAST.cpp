@@ -17,18 +17,10 @@ AssignmentStatement::AssignmentStatement(const std::string &idetifier, const Exp
     m_identifier(idetifier), m_value(value)
 {}
 
-ModificationStatement::ModificationStatement(const std::string &indetifier, const ExpressionAST &value) :
-    AssignmentStatement(indetifier, value)
-{}
 
-DeclarationStatement::DeclarationStatement(const std::string &indetifier, const ExpressionAST &value) :
-    AssignmentStatement(indetifier, value)
-{}
-
-
-StatementAST &Detail::CreateModificationStatement(StatementAST &statement, const std::string &indetifier, const ExpressionAST &value)
+StatementAST &Detail::CreateAssignmentStatement(StatementAST &statement, const std::string &indetifier, const ExpressionAST &value)
 {
-    statement = StatementAST(ModificationStatement(indetifier, value));
+    statement = StatementAST(AssignmentStatement(indetifier, value));
     return statement;
 }
 
