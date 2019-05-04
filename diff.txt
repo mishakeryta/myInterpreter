@@ -1,0 +1,328 @@
+diff --git a/project/demo/CMakeLists.txt b/project/demo/CMakeLists.txt
+index de2dad3..8251034 100644
+--- a/project/demo/CMakeLists.txt
++++ b/project/demo/CMakeLists.txt
+@@ -1,2 +1,2 @@
+-add_subdirectory(boost_example)
++#add_subdirectory(boost_example)
+ add_subdirectory(lib_test)
+diff --git a/project/demo/lib_test/CMakeLists.txt b/project/demo/lib_test/CMakeLists.txt
+index c7907d0..dbcd60a 100644
+--- a/project/demo/lib_test/CMakeLists.txt
++++ b/project/demo/lib_test/CMakeLists.txt
+@@ -1,6 +1,6 @@
+ 
+-#add_executable( LexerTests LexerTests.cpp )
+-#target_link_libraries( LexerTests  LibLexer )
++add_executable( LexerTests LexerTests.cpp )
++target_link_libraries( LexerTests  LibLexer )
+ 
+ add_executable( ExpressionGrammarTests ExpressionGrammarDemo.cpp )
+ target_link_libraries( ExpressionGrammarTests LibGrammar )
+@@ -8,6 +8,6 @@ target_link_libraries( ExpressionGrammarTests LibGrammar )
+ #add_executable( ExpressionEvaluatorTests ExpressionEvaluatorTests.cpp )
+ #target_link_libraries( ExpressionEvaluatorTests LibEvaluator)
+ 
+-add_executable( StatementGrammarDemo StatementGrammarDemo.cpp )
+-target_link_libraries( StatementGrammarDemo LibGrammar  )
++#add_executable( StatementGrammarDemo StatementGrammarDemo.cpp )
++#target_link_libraries( StatementGrammarDemo LibGrammar  )
+ 
+diff --git a/project/demo/lib_test/ExpressionGrammarDemo.cpp b/project/demo/lib_test/ExpressionGrammarDemo.cpp
+index c0b4e08..2df9bd1 100644
+--- a/project/demo/lib_test/ExpressionGrammarDemo.cpp
++++ b/project/demo/lib_test/ExpressionGrammarDemo.cpp
+@@ -15,7 +15,7 @@
+ #include <iostream>
+ #include <vector>
+ #include <string>
+-
++#include <algorithm>
+ using namespace Intr;
+ 
+ int main()
+@@ -28,9 +28,12 @@ int main()
+     auto end = lexerFunctor.end();
+     ExpressionAST ast;
+     std::string skip = "skip";
++
++    std::for_each(begin, end, [](TokenType t) { std::cout << t.id() << ' ';});
++
+     Intr::qi::phrase_parse(begin, end, exprGrammar, Intr::qi::in_state(skip)[lexerFunctor.self], ast);
+ 
+-    boost::apply_visitor(Helper::ExpressionASTPrinter(), ast.expression());
++    //boost::apply_visitor(HExpressionASTPrinter(), ast.expression());
+ 
+     return 0;
+ }
+diff --git a/project/demo/lib_test/LexerTests.cpp b/project/demo/lib_test/LexerTests.cpp
+index 1d13e61..ad8195b 100644
+--- a/project/demo/lib_test/LexerTests.cpp
++++ b/project/demo/lib_test/LexerTests.cpp
+@@ -4,9 +4,6 @@
+ #include <iostream>
+ #include <exception>
+ 
+-#define ENUM_TO_CSTR(enum_id) (#enum_id)
+-
+-
+ 
+ int main()
+ {
+diff --git a/project/includes/ast/StatementAST.hpp b/project/includes/ast/StatementAST.hpp
+index 81bfbe8..5fc50ab 100644
+--- a/project/includes/ast/StatementAST.hpp
++++ b/project/includes/ast/StatementAST.hpp
+@@ -18,39 +18,20 @@ namespace Intr
+     {
+     public:
+         AssignmentStatement(const std::string &idetifier, const ExpressionAST &value);
+-        const std::string &indetidier() { return m_identifier; }
+-        const ExpressionAST &value() { return m_value; }
++        const std::string &indetidier() const { return m_identifier; }
++        const ExpressionAST &value() const { return m_value; }
+ 
+     private:
+         std::string m_identifier;
+         ExpressionAST m_value;
+     };
+ 
+-    class ModificationStatement:
+-            public AssignmentStatement
+-    {
+-    public:
+-        ModificationStatement(const std::string &indetifier, const ExpressionAST &value);
+-    };
+-
+-    class DeclarationStatement:
+-            public AssignmentStatement
+-    {
+-    public:
+-        DeclarationStatement(const std::string &indetifier, const ExpressionAST &value);
+-    };
+ 
+     class StatementAST
+     {
+     public:
+         using Type = boost::variant<Nil,
+-            DeclarationStatement,
+-            ModificationStatement>;
+-//            boost::recursive_wrapper<IfStatement>,
+-//            boost::recursive_wrapper<WhileStatement>,
+-//            boost::recursive_wrapper<AssignmentStatement>,
+-//            boost::recursive_wrapper<StatementList>>;
+-
++            AssignmentStatement>;
+ 
+         StatementAST();
+ 
+@@ -67,10 +48,10 @@ namespace Intr
+ 
+     namespace Detail
+     {
+-        StatementAST &CreateModificationStatement(StatementAST &statement, const std::string &indetifier, const ExpressionAST &value);
++        StatementAST &CreateAssignmentStatement(StatementAST &statement, const std::string &indetifier, const ExpressionAST &value);
+     };
+ 
+-    BOOST_PHOENIX_ADAPT_FUNCTION(StatementAST &, CreateModificationStatement, Detail::CreateModificationStatement, 3);
++    BOOST_PHOENIX_ADAPT_FUNCTION(StatementAST &, CreateAssignmentStatement, Detail::CreateAssignmentStatement, 3);
+ 
+ };
+ 
+diff --git a/project/includes/ast/helper/ExpressionASTPrinter.hpp b/project/includes/ast/helper/ExpressionASTPrinter.hpp
+index 05bf9e9..825785a 100644
+--- a/project/includes/ast/helper/ExpressionASTPrinter.hpp
++++ b/project/includes/ast/helper/ExpressionASTPrinter.hpp
+@@ -6,6 +6,8 @@
+ #include <boost/mpl/contains.hpp>
+ #include <boost/utility/enable_if.hpp>
+ 
++#include <ostream>
++
+ namespace Intr
+ {
+     namespace  Helper
+@@ -13,11 +15,14 @@ namespace Intr
+         class ExpressionASTPrinter
+         {
+         public:
++
++            ExpressionASTPrinter(std::ostream &out);
++
+             void operator()(Nil) const { }
+ 
+             template<typename Lit>
+             typename boost::enable_if<boost::mpl::contains< LiteralTypes, Lit >>::type
+-            operator()(const Lit &value) const { std::cout << value; }
++            operator()(const Lit &value) const { m_out << value; }
+ 
+ 
+             void operator()(const ExpressionAST &ast) const;
+@@ -25,6 +30,9 @@ namespace Intr
+             void operator()(const BinaryOperation &binary) const;
+ 
+             void operator()(UnaryOperation &unary) const;
++
++        private:
++            std::ostream &m_out;
+         };
+     };
+ };
+diff --git a/project/includes/ast/helper/StatementASTPrinter.hpp b/project/includes/ast/helper/StatementASTPrinter.hpp
+index a3ccd8d..d4f6d02 100644
+--- a/project/includes/ast/helper/StatementASTPrinter.hpp
++++ b/project/includes/ast/helper/StatementASTPrinter.hpp
+@@ -22,19 +22,12 @@ namespace Intr
+         public:
+             using ResultType = result_type;
+             StatementASTPrinter(std::ostream& out);
+-
+             ResultType operator()(Nil) const { }
+-
+-
+-            ResultType operator()(const DeclarationStatement &declaration) const;
+-
+-            ResultType operator()(const ModificationStatement &midification) const;
++            ResultType operator()(const AssignmentStatement &declaration) const;
+ 
+         private:
+             std::string calculateAlign() const;
+ 
+-            ResultType printAssignment(const std::string &type, const AssignmentStatement &assignment);
+-
+             ExpressionASTPrinter m_exrpessionPrinter;
+             std::ostream &m_out;
+             std::size_t m_nestingCount;
+diff --git a/project/includes/grammar/StatementGrammar.hpp b/project/includes/grammar/StatementGrammar.hpp
+index 4af48a5..df3ee15 100644
+--- a/project/includes/grammar/StatementGrammar.hpp
++++ b/project/includes/grammar/StatementGrammar.hpp
+@@ -10,7 +10,7 @@ namespace Intr
+     class StatementAST;
+ 
+     class StatementGrammar :
+-            public qi::grammar<Lexer::iterator_type, Skipper>
++            public qi::grammar<Lexer::iterator_type, Skipper, StatementAST()>
+     {
+         template<class T = qi::unused_type>
+         using RuleType = qi::rule<Lexer::iterator_type, Skipper, T>;
+@@ -20,7 +20,7 @@ namespace Intr
+         StatementGrammar(const Lexer& lexer);
+ 
+     private:
+-        RuleType<> m_statement;
++        RuleType<StatementAST()> m_statement;
+         RuleType<StatementAST()> m_assignment;
+         ExpressionGrammar m_expression;
+     };
+diff --git a/project/src/ast/CMakeLists.txt b/project/src/ast/CMakeLists.txt
+index c98cc81..da25586 100644
+--- a/project/src/ast/CMakeLists.txt
++++ b/project/src/ast/CMakeLists.txt
+@@ -2,7 +2,8 @@ file ( GLOB AST_SOURCES
+     ExpressionAST.cpp
+     StatementAST.cpp
+     Literal.cpp
+-    helper/ExpressionASTPrinter.cpp )
++    helper/ExpressionASTPrinter.cpp
++    helper/StatementASTPrinter.cpp)
+ 
+ add_library( LibAST STATIC ${AST_SOURCES})
+ target_link_libraries( LibAST LibLexer)
+diff --git a/project/src/ast/StatementAST.cpp b/project/src/ast/StatementAST.cpp
+index a852a5b..fec4785 100644
+--- a/project/src/ast/StatementAST.cpp
++++ b/project/src/ast/StatementAST.cpp
+@@ -7,8 +7,6 @@
+ 
+ using namespace Intr;
+ 
+-
+-
+ StatementAST::StatementAST() :
+     m_statements(Nil())
+ {}
+@@ -17,18 +15,10 @@ AssignmentStatement::AssignmentStatement(const std::string &idetifier, const Exp
+     m_identifier(idetifier), m_value(value)
+ {}
+ 
+-ModificationStatement::ModificationStatement(const std::string &indetifier, const ExpressionAST &value) :
+-    AssignmentStatement(indetifier, value)
+-{}
+-
+-DeclarationStatement::DeclarationStatement(const std::string &indetifier, const ExpressionAST &value) :
+-    AssignmentStatement(indetifier, value)
+-{}
+-
+ 
+-StatementAST &Detail::CreateModificationStatement(StatementAST &statement, const std::string &indetifier, const ExpressionAST &value)
++StatementAST &Detail::CreateAssignmentStatement(StatementAST &statement, const std::string &indetifier, const ExpressionAST &value)
+ {
+-    statement = StatementAST(ModificationStatement(indetifier, value));
++    statement = StatementAST(AssignmentStatement(indetifier, value));
+     return statement;
+ }
+ 
+diff --git a/project/src/ast/helper/ExpressionASTPrinter.cpp b/project/src/ast/helper/ExpressionASTPrinter.cpp
+index 8ed7efb..4c64cf4 100644
+--- a/project/src/ast/helper/ExpressionASTPrinter.cpp
++++ b/project/src/ast/helper/ExpressionASTPrinter.cpp
+@@ -8,7 +8,9 @@
+ 
+ using namespace Intr;
+ 
+-
++Helper::ExpressionASTPrinter::ExpressionASTPrinter(std::ostream &out) :
++    m_out(out)
++{ }
+ 
+ void Helper::ExpressionASTPrinter::operator()(const Intr::ExpressionAST &ast) const
+ {
+diff --git a/project/src/ast/helper/StatementASTPrinter.cpp b/project/src/ast/helper/StatementASTPrinter.cpp
+index 2659a4e..d0f71e2 100644
+--- a/project/src/ast/helper/StatementASTPrinter.cpp
++++ b/project/src/ast/helper/StatementASTPrinter.cpp
+@@ -13,18 +13,11 @@ Helper::StatementASTPrinter::StatementASTPrinter(std::ostream &out) :
+     m_out(out)
+ { }
+ 
+-Helper::StatementASTPrinter::ResultType Intr::Helper::StatementASTPrinter::operator()(const Intr::DeclarationStatement &declaration) const
++Helper::StatementASTPrinter::ResultType Intr::Helper::StatementASTPrinter::operator()(const Intr::AssignmentStatement &assignment) const
+ {
+     std::string align = '\n' + calculateAlign();
+-    m_out << align << "Declaration of: " << declaration.indetidier() << " Expression: ";
+-    boost::apply_visitor(m_exrpessionPrinter, declaration.value());
+-}
+-
+-Helper::StatementASTPrinter::ResultType  Intr::Helper::StatementASTPrinter::operator()(const ModificationStatement &midification) const
+-{
+-    std::string align = '\n' + calculateAlign();
+-    m_out << align << "Declaration of: " << midification.indetidier() << " Expression: ";
+-    boost::apply_visitor(m_exrpessionPrinter, midification.value());
++    m_out << align << "Assignment of: " << assignment.indetidier() << " Expression: ";
++    boost::apply_visitor(m_exrpessionPrinter, assignment.value().expression());
+ }
+ 
+ 
+@@ -33,9 +26,3 @@ std::string Helper::StatementASTPrinter::calculateAlign() const
+     return std::string(m_nestingCount, ' ');
+ }
+ 
+-void StatementASTPrinter::printAssignment(const std::string &type, const AssignmentStatement &assignment)
+-{
+-    std::string align = '\n' + calculateAlign();
+-    m_out << align << type << assignment.indetidier() << " Expression: ";
+-    boost::apply_visitor(m_exrpessionPrinter, assignment.value());
+-}
+diff --git a/project/src/grammar/StatementGrammar.cpp b/project/src/grammar/StatementGrammar.cpp
+index 12bfbe5..76f5182 100644
+--- a/project/src/grammar/StatementGrammar.cpp
++++ b/project/src/grammar/StatementGrammar.cpp
+@@ -18,6 +18,5 @@ Intr::StatementGrammar::StatementGrammar(const Intr::Lexer &lexer) : StatementGr
+     using boost::phoenix::val;
+     using boost::phoenix::static_cast_;
+ 
+-    m_statement = m_assignment;
+-    m_assignment = (lexer.identifier >> lexer.assignment >> m_expression >> lexer.statementEnd)[CreateModificationStatement(_val, _1, _2)];
++    m_assignment = (lexer.identifier >> lexer.assignment >> m_expression >> lexer.statementEnd)[CreateAssignmentStatement(_val, _1, _2)];
+ }
