@@ -20,6 +20,7 @@ namespace Intr
         StatementGrammar(const Lexer& lexer);
 
     private:
+        RuleType<StatementAST()> m_statementList;
         RuleType<StatementAST()> m_statement;
         RuleType<StatementAST()> m_assignment;
         ExpressionGrammar m_expression;
