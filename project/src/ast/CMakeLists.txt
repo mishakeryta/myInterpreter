@@ -2,6 +2,7 @@ file ( GLOB AST_SOURCES
     ExpressionAST.cpp
     StatementAST.cpp
     Literal.cpp
+    Identifire.cpp
     helper/StatementASTPrinter.cpp
     helper/ExpressionASTPrinter.cpp )
 

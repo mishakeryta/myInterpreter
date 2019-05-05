@@ -41,6 +41,7 @@ namespace Intr
             ResultType operator()(std::int32_t literal1, double literal2) const;
             ResultType operator()(double  literal1, double literal2) const;
             ResultType operator()(bool literal1, bool literal2) const;
+            ResultType operator()(std::string literal1, std::string literal2) const;
 
             template<class Lit1, class Lit2>
             ResultType operator()(Lit1 leftVal, Lit2 rightVal) const;
@@ -56,6 +57,7 @@ namespace Intr
             bool isEqual(double leftLiteral, std::int32_t rightLiteral) const;
             bool isEqual(std::int32_t leftLiteral, double rightLiteral) const;
             bool isEqual(double leftLiteral, double rightLiteral) const;
+            bool isEqual(std::string leftLiteral, std::string rightLiteral) const;
 
             BinaryOperation::Type m_op;
 
@@ -76,6 +78,22 @@ namespace Intr
         BinaryOperationEvaluator::ResultType BinaryOperationEvaluator::operator()(double literal1, double literal2) const
         {
             return calculate<double, double>(literal1, literal2);
+        }
+        BinaryOperationEvaluator::ResultType BinaryOperationEvaluator::operator()(std::string literal1, std::string literal2) const
+        {
+            switch (m_op)
+            {
+            case Lexer::ID_ADDITION:
+                return literal1 + literal2;
+            case Lexer::ID_IS_LESSER:
+                return literal1 < literal2;
+            case Lexer::ID_IS_GREATER:
+                return literal1 > literal2;
+            case Lexer::ID_IS_EQUAL:
+                return isEqual(literal1, literal2);
+            default:
+                throw std::logic_error("Unknown operation for string");
+            }
         }
 
         BinaryOperationEvaluator::ResultType BinaryOperationEvaluator::operator()(bool literal1, bool literal2) const
@@ -155,6 +173,10 @@ namespace Intr
         {
             return std::abs(leftLiteral - rightLiteral) < DOUBLE_EPS;
         }
+        bool BinaryOperationEvaluator::isEqual(std::string leftLiteral, std::string rightLiteral) const
+        {
+            return leftLiteral == rightLiteral;
+        }
     };
 };
 
@@ -173,6 +195,11 @@ ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(const Intr::Unar
         throw std::logic_error("Unknown unary operation");
 
     return  boost::apply_visitor(*this, unary.subject().expression());
+}
+
+ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(const Identifire &name) const
+{
+    std::cout << "we are in ExpressionEvaluator and it not still work:" << name.name();
 }
 
 
