@@ -3,10 +3,10 @@
 
 
 #include "ast/ExpressionAST.hpp"
-#include "ast/Identifire.hpp"
+#include "ast/Identifier.hpp"
+#include "evaluator/VariableStack.hpp"
 
 #include <boost/variant/static_visitor.hpp>
-
 #include <boost/mpl/contains.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/utility/compare_pointees.hpp>
@@ -20,6 +20,8 @@ namespace Intr
     public:
         using ResultType = result_type;
 
+        ExpressionEvaluator() = default;
+
         ResultType operator()(Nil) const;
 
         template<typename Lit>
@@ -32,7 +34,7 @@ namespace Intr
 
         ResultType operator()(const UnaryOperation &unary) const;
 
-        ResultType operator()(const Identifire &name) const;
+        ResultType operator()(const Identifier &name) const;
     };
 };
 #endif //EXPRESSIONASTPRINTER_HPP

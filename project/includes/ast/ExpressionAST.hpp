@@ -3,7 +3,7 @@
 
 #include "lexer/Lexer.hpp"
 #include "ast/Literal.hpp"
-#include "ast/Identifire.hpp"
+#include "ast/Identifier.hpp"
 
 #include <boost/variant/recursive_variant.hpp>
 #include <boost/variant/apply_visitor.hpp>
@@ -25,7 +25,7 @@ namespace Intr
     {
         using ExpressionTypes = mpl::vector<
                 Nil,
-                Identifire,
+                Identifier,
                 boost::recursive_wrapper<ExpressionAST>,
                 boost::recursive_wrapper<BinaryOperation>,
                 boost::recursive_wrapper<UnaryOperation>

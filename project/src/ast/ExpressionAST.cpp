@@ -29,5 +29,5 @@ ExpressionAST &Detail::CreateBinaryNode(ExpressionAST &leftExpression, const Exp
 
 ExpressionAST &Detail::CreateIdentifire(ExpressionAST &leftExpression, const std::string &name)
 {
-    return leftExpression = Identifire(name);
+    return leftExpression = Identifier(name);
 }

@@ -2,7 +2,7 @@
 #define EXPRESSIONASTPRINTER_HPP
 
 #include "ast/ExpressionAST.hpp"
-#include "ast/Identifire.hpp"
+#include "ast/Identifier.hpp"
 
 #include <boost/mpl/contains.hpp>
 #include <boost/utility/enable_if.hpp>
@@ -29,7 +29,7 @@ namespace Intr
 
             void operator()(UnaryOperation &unary) const;
 
-            void operator()(const Identifire &name) const;
+            void operator()(const Identifier &name) const;
         private:
             std::ostream& m_out;
         };

@@ -197,9 +197,10 @@ ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(const Intr::Unar
     return  boost::apply_visitor(*this, unary.subject().expression());
 }
 
-ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(const Identifire &name) const
+ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(const Identifier &name) const
 {
     std::cout << "we are in ExpressionEvaluator and it not still work:" << name.name();
+    return 0;
 }
 
 
