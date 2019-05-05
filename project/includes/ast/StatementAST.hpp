@@ -9,9 +9,8 @@
 #include <vector>
 namespace Intr
 {
-          //impl
-    class IfStatement{};
-    class WhileStatement{};
+    class IfStatement;
+    class WhileStatement;
     class StatementList;
 
     class AssignmentStatement
@@ -31,10 +30,10 @@ namespace Intr
     public:
         using Type = boost::variant<Nil,
                 AssignmentStatement,
-                boost::recursive_wrapper<StatementList>>;
-//            boost::recursive_wrapper<IfStatement>,
-//            boost::recursive_wrapper<WhileStatement>,
-//            boost::recursive_wrapper<AssignmentStatement>,
+                boost::recursive_wrapper<StatementList>,
+                boost::recursive_wrapper<IfStatement>,
+                boost::recursive_wrapper<WhileStatement>>;
+
 
 
         StatementAST();
@@ -67,6 +66,35 @@ namespace Intr
         Type m_statements;
     };
 
+    class CondiotionStatement
+    {
+    public:
+        const ExpressionAST &value() const { return m_value; }
+        const StatementAST & trueBlock() const  { return m_trueBlock; }
+    protected:
+        CondiotionStatement(const ExpressionAST& value, const StatementAST& trueBlock);
+    private:
+        ExpressionAST m_value;
+        StatementAST m_trueBlock;
+    };
+
+    class IfStatement :
+            public CondiotionStatement
+    {
+    public:
+        IfStatement(const ExpressionAST& value, const StatementAST& trueBlock, const StatementAST& falseBlock = StatementAST());
+        const StatementAST & falseBlock() const { return m_falseBlock; }
+    private:
+        StatementAST m_falseBlock;
+    };
+
+    class WhileStatement :
+        public CondiotionStatement
+    {
+    public:
+        WhileStatement(const ExpressionAST& value, const StatementAST& trueBlock);
+    };
+
 
     namespace Detail
     {
@@ -75,14 +103,19 @@ namespace Intr
         {
             return leftStatement = rightStatement;
         }
-        StatementAST &AppendStatementList(StatementAST& statementList, const StatementAST &newStatement);
         StatementAST &CreateAssignmentStatement(StatementAST &statement, const std::string &indetifier, const ExpressionAST &value);
+        StatementAST &AppendStatementList(StatementAST &statementList, const StatementAST &newStatement);
+        StatementAST &CreateIfStatement(StatementAST &statement, const ExpressionAST &value, const StatementAST& trueBlock, const StatementAST& falseBlock = StatementAST());
+        StatementAST &CreateWhileStatement(StatementAST &statement, const ExpressionAST &value, const StatementAST& trueBlock);
     };
 
-    BOOST_PHOENIX_ADAPT_FUNCTION(StatementAST &, AppendStatementList, Detail::AppendStatementList, 2);
+
     BOOST_PHOENIX_ADAPT_FUNCTION(StatementAST &, CreateStatementNode, Detail::CreateStatementNode, 2);
     BOOST_PHOENIX_ADAPT_FUNCTION(StatementAST &, CreateAssignmentStatement, Detail::CreateAssignmentStatement, 3);
-
+    BOOST_PHOENIX_ADAPT_FUNCTION(StatementAST &, AppendStatementList, Detail::AppendStatementList, 2);
+    BOOST_PHOENIX_ADAPT_FUNCTION(StatementAST &, CreateIfStatement, Detail::CreateIfStatement, 3);
+    BOOST_PHOENIX_ADAPT_FUNCTION(StatementAST &, CreateIfStatement, Detail::CreateIfStatement, 4);
+    BOOST_PHOENIX_ADAPT_FUNCTION(StatementAST &, CreateWhileStatement, Detail::CreateWhileStatement, 3);
 };
 
 

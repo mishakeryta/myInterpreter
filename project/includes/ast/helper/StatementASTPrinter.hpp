@@ -23,7 +23,8 @@ namespace Intr
 
             ResultType operator()(const AssignmentStatement &assign);
             ResultType operator()(const StatementList &list);
-
+            ResultType operator()(const IfStatement &statement);
+            ResultType operator()(const WhileStatement &statement);
         private:
             std::string calculateAlign() const;
 

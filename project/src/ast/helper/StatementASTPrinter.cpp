@@ -16,7 +16,7 @@ StatementASTPrinter::StatementASTPrinter(std::ostream &out) :
 StatementASTPrinter::ResultType StatementASTPrinter::operator()(const AssignmentStatement &assign)
 {
     std::string align = '\n' + calculateAlign();
-    m_out << align << "Declaration of: " << assign.identidier() << " Expression: ";
+    m_out << align << "Assignment: " << assign.identifier() << " Expression: ";
     boost::apply_visitor(m_exrpessionPrinter, assign.value().expression());
 }
 
@@ -27,6 +27,33 @@ StatementASTPrinter::ResultType StatementASTPrinter::operator()(const StatementL
         boost::apply_visitor(*this, ast.statement());
 }
 
+StatementASTPrinter::ResultType StatementASTPrinter::operator()(const IfStatement &statement)
+{
+    std::string align = '\n' + calculateAlign();
+
+    m_out << align << "If condition :";
+    boost::apply_visitor(m_exrpessionPrinter, statement.value().expression());
+
+    ++m_nestingCount;
+    boost::apply_visitor(*this, statement.trueBlock().statement());
+
+    m_out << align << "Else :";
+    boost::apply_visitor(*this, statement.falseBlock().statement());
+    --m_nestingCount;
+}
+
+StatementASTPrinter::ResultType StatementASTPrinter::operator()(const WhileStatement &statement)
+{
+    std::string align = '\n' + calculateAlign();
+
+    m_out << align << "While condition :";
+    boost::apply_visitor(m_exrpessionPrinter, statement.value().expression());
+
+    ++m_nestingCount;
+    boost::apply_visitor(*this, statement.trueBlock().statement());
+
+    --m_nestingCount;
+}
 
 std::string StatementASTPrinter::calculateAlign() const
 {
