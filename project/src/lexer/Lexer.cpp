@@ -15,6 +15,7 @@ Lexer::Lexer()
     boolLiteral = lex::token_def<bool>("(false)|(true)", ID_BOOL_LITERAL);
 
     ifStatement = lex::token_def<lex::omit>("if", ID_IF_STATEMENT);
+    elseStatement = lex::token_def<lex::omit>("else", ID_ELSE_STATEMENT);
     whileStatement = lex::token_def<lex::omit>("while", ID_WHILE_STATEMENT);
 
     scopeBegin = lex::token_def<lex::omit>("\\{", ID_SCOPE_BEGIN);
@@ -42,6 +43,8 @@ Lexer::Lexer()
     multiplication = lex::token_def<lex::omit>("\\*", ID_MULTIPLICATION);
     division = lex::token_def<lex::omit>("\\/", ID_DIVISION);
 
+    print = lex::token_def<lex::omit>("print", ID_PRINT);
+
     identifier = lex::token_def <std::string> ("[_a-zA-Z][_a-zA-Z0-9]*", ID_IDENTIFIER);
 
     whitespace = lex::token_def<lex::omit>("\\s+", ID_WHITESPACE);
@@ -52,7 +55,7 @@ Lexer::Lexer()
             stringLiteral[lex::_val = construct<std::string>(lex::_start + 1, lex::_end - 1)]
             | doubleLiteral |
             intLiteral | boolLiteral |
-            ifStatement |  whileStatement |
+            ifStatement | elseStatement|  whileStatement |
             scopeBegin | scopeEnd |
             parenthesisBegin | parenthesisEnd |
             statementEnd |
@@ -61,6 +64,7 @@ Lexer::Lexer()
             isGreater | isLesser | isEqual |
             addition | subtraction |
             multiplication | division |
+            print |
             identifier | any;
 
     this->self("skip") = whitespace;
