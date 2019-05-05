@@ -42,7 +42,8 @@ ExpressionGrammar::ExpressionGrammar(const Lexer& lexer) : ExpressionGrammar::ba
             );
 
     m_factor =
-                m_literal                                        [CreateRegularNode(_val, _1)]
+                m_identifire                                     [CreateRegularNode(_val, _1)]
+            |   m_literal                                        [CreateRegularNode(_val, _1)]
             |   (lexer.parenthesisBegin >> m_expression          [CreateRegularNode(_val, _1)] >> lexer.parenthesisEnd)
             |   (lexer.subtraction >> m_factor                   [CreateNegativeNode(_val, _1)])
             |   (lexer.addition >> m_factor                      [CreateRegularNode(_val, _1)])
@@ -50,4 +51,5 @@ ExpressionGrammar::ExpressionGrammar(const Lexer& lexer) : ExpressionGrammar::ba
 
     m_literal = (lexer.intLiteral|lexer.doubleLiteral|lexer.stringLiteral) [CreateRegularNode(_val, _1)]|
                 lexer.boolLiteral[CreateRegularNode(_val, static_cast_<bool>(_1))];
+    m_identifire = lexer.identifier[CreateIdentifire(_val, _1)];
 }

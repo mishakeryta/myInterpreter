@@ -20,7 +20,7 @@ using namespace Intr;
 
 int main()
 {
-    std::string str = "\"str1\"==\"str2\"";
+    std::string str = "str1==\"asd\"";
     Intr::Lexer lexerFunctor;
     Intr::ExpressionGrammar exprGrammar(lexerFunctor);
     auto itr = std::begin(str);
