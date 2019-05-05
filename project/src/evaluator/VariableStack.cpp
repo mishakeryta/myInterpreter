@@ -31,7 +31,6 @@ namespace  Intr
         VariableModificator::ResultType VariableModificator::operator()(Lit &val, const Lit &newValue)
         {
             val = newValue;
-            std::cout << "\nTrue";
             return  true;
 
         }
@@ -46,6 +45,7 @@ namespace  Intr
             return false;
         }
     }
+
 
     bool VariableStack::assign(const std::string &name, const Literal & value)
     {
@@ -68,7 +68,11 @@ namespace  Intr
 
         auto variableIterator = m_variables.find(name);
         if(variableIterator == std::end(m_variables))
+        {
+            std::cout << "Stic";
             return (*variableIterator).second;
+        }
+        std::cout << "not finded";
 
         if(m_parent)
             return m_parent->findVariable(name);

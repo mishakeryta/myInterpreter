@@ -11,6 +11,7 @@ namespace Intr
 
     StatementEvaluator::StatementEvaluator(std::ostream &out, VariableStack& parentStack) :
         m_variableStack(parentStack),
+        m_exrpessionEvaluator(m_variableStack),
         m_out(out)
     {}
 
