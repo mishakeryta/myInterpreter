@@ -11,3 +11,5 @@ target_link_libraries( LexerTests  LibLexer )
 add_executable( StatementGrammarDemo StatementGrammarDemo.cpp )
 target_link_libraries( StatementGrammarDemo LibGrammar  )
 
+add_executable( StatementEvaluatorDemo StatementEvaluatorDemo.cpp )
+target_link_libraries( StatementEvaluatorDemo LibEvaluator )
