@@ -7,6 +7,8 @@ std::string Intr::Helper::LexerIdToString(Lexer::id_type id)
     using Lexer = Intr::Lexer;
 
     switch(id) {
+    case Lexer::ID_STRING_LITERAL:
+        return ENUM_TO_CSTR(Lexer::ID_STRING_LITERAL);
     case Lexer::ID_DOUBLE_LITERAL:
         return ENUM_TO_CSTR(Lexer::ID_DOUBLE_LITERAL);
     case Lexer::ID_INT_LITERAL:
@@ -15,6 +17,8 @@ std::string Intr::Helper::LexerIdToString(Lexer::id_type id)
         return ENUM_TO_CSTR(Lexer::ID_BOOL_LITERAL);
     case Lexer::ID_IF_STATEMENT:
         return ENUM_TO_CSTR(Lexer::ID_IF_STATEMENT);
+    case Lexer::ID_ELSE_STATEMENT:
+        return ENUM_TO_CSTR(Lexer::ID_ELSE_STATEMENT);
     case Lexer::ID_WHILE_STATEMENT:
         return ENUM_TO_CSTR(Lexer::ID_WHILE_STATEMENT);
     case Lexer::ID_SCOPE_BEGIN:
@@ -49,6 +53,8 @@ std::string Intr::Helper::LexerIdToString(Lexer::id_type id)
         return ENUM_TO_CSTR(Lexer::ID_DIVISION);
     case Lexer::ID_WHITESPACE:
         return ENUM_TO_CSTR(Lexer::ID_WHITESPACE);
+    case Lexer::ID_PRINT:
+        return ENUM_TO_CSTR(Lexer::ID_PRINT);
     case Lexer::ID_IDENTIFIER:
         return ENUM_TO_CSTR(Lexer::ID_IDENTIFIER);
     case Lexer::ID_ANY:

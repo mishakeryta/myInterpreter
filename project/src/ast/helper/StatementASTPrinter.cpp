@@ -8,6 +8,7 @@
 using namespace Intr;
 using namespace Helper;
 
+
 StatementASTPrinter::StatementASTPrinter(std::ostream &out) :
     m_exrpessionPrinter(out),
     m_out(out)

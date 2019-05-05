@@ -23,7 +23,7 @@ namespace Intr
 
     private:
 
-        RuleType m_expression, m_logicalTerm ,m_arithmeticTerm, m_nontrivialTerm, m_factor, m_literal;
+        RuleType m_expression, m_logicalTerm ,m_arithmeticTerm, m_nontrivialTerm, m_factor, m_literal, m_identifire;
     };
 };
 

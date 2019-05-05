@@ -3,6 +3,7 @@
 
 #include "lexer/Lexer.hpp"
 #include "ast/Literal.hpp"
+#include "ast/Identifire.hpp"
 
 #include <boost/variant/recursive_variant.hpp>
 #include <boost/variant/apply_visitor.hpp>
@@ -24,6 +25,7 @@ namespace Intr
     {
         using ExpressionTypes = mpl::vector<
                 Nil,
+                Identifire,
                 boost::recursive_wrapper<ExpressionAST>,
                 boost::recursive_wrapper<BinaryOperation>,
                 boost::recursive_wrapper<UnaryOperation>
@@ -90,14 +92,13 @@ namespace Intr
             return leftExpression = rightExpression;
         }
         ExpressionAST &CreateBinaryNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression, Lexer::Id operation);
-
         ExpressionAST &CreateNegativeNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression);
+        ExpressionAST &CreateIdentifire(ExpressionAST &leftExpression, const std::string &name);
     };
 
     BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateRegularNode, Detail::CreateRegularNode, 2);
     BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateNegativeNode, Detail::CreateNegativeNode, 2);
     BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateBinaryNode, Detail::CreateBinaryNode, 3);
-
-
+    BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateIdentifire, Detail::CreateIdentifire, 2);
 };
 #endif // EXPRESSIONAST_HPP

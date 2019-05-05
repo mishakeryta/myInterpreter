@@ -17,7 +17,6 @@ UnaryOperation::UnaryOperation(UnaryOperation::Type op, const ExpressionAST &sub
     : m_op(op), m_subject(subject) {}
 
 
-
 ExpressionAST &Detail::CreateNegativeNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression)
 {
     return leftExpression = ExpressionAST(UnaryOperation(Lexer::ID_SUBTRACTION, rightExpression));
@@ -26,4 +25,9 @@ ExpressionAST &Detail::CreateNegativeNode(ExpressionAST &leftExpression, const E
 ExpressionAST &Detail::CreateBinaryNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression, Lexer::Id operation)
 {
     return leftExpression.binaryOperation(rightExpression, operation);
+}
+
+ExpressionAST &Detail::CreateIdentifire(ExpressionAST &leftExpression, const std::string &name)
+{
+    return leftExpression = Identifire(name);
 }

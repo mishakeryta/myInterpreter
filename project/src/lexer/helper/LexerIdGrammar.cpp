@@ -13,11 +13,13 @@ LexerIdGrammar::LexerIdGrammar() :
 {
 
         m_lexerId =
-        (qi::tokenid(Lexer::ID_DOUBLE_LITERAL) |
+        (qi::tokenid(Lexer::ID_STRING_LITERAL) |
+        qi::tokenid(Lexer::ID_DOUBLE_LITERAL) |
         qi::tokenid(Lexer::ID_INT_LITERAL) |
         qi::tokenid(Lexer::ID_BOOL_LITERAL)|
 
         qi::tokenid(Lexer::ID_IF_STATEMENT) |
+        qi::tokenid(Lexer::ID_ELSE_STATEMENT) |
         qi::tokenid(Lexer::ID_WHILE_STATEMENT) |
 
         qi::tokenid(Lexer::ID_SCOPE_BEGIN) |
@@ -37,5 +39,6 @@ LexerIdGrammar::LexerIdGrammar() :
         qi::tokenid(Lexer::ID_SUBTRACTION) |
         qi::tokenid(Lexer::ID_MULTIPLICATION) |
         qi::tokenid(Lexer::ID_DIVISION) |
+        qi::tokenid(Lexer::ID_PRINT) |
         qi::tokenid(Lexer::ID_IDENTIFIER))[qi::_val = qi::_1];
 }

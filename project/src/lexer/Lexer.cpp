@@ -1,16 +1,21 @@
 #include "lexer/Lexer.hpp"
 
 #include <boost/phoenix/function/function.hpp>
+#include <boost/phoenix/object/construct.hpp>
 
 using namespace Intr;
 
 Lexer::Lexer()
 {
+    using boost::phoenix::construct;
+
+    stringLiteral = lex::token_def<std::string>(("\\\"([^\\\"]|\\.)*\\\""), ID_STRING_LITERAL);
     doubleLiteral = lex::token_def<double>("(([1-9][0-9]*)|0{1})(\\.\\d+)", ID_DOUBLE_LITERAL);
     intLiteral = lex::token_def<std::int32_t>("([1-9][0-9]*)|0{1}", ID_INT_LITERAL);
     boolLiteral = lex::token_def<bool>("(false)|(true)", ID_BOOL_LITERAL);
 
     ifStatement = lex::token_def<lex::omit>("if", ID_IF_STATEMENT);
+    elseStatement = lex::token_def<lex::omit>("else", ID_ELSE_STATEMENT);
     whileStatement = lex::token_def<lex::omit>("while", ID_WHILE_STATEMENT);
 
     scopeBegin = lex::token_def<lex::omit>("\\{", ID_SCOPE_BEGIN);
@@ -38,6 +43,8 @@ Lexer::Lexer()
     multiplication = lex::token_def<lex::omit>("\\*", ID_MULTIPLICATION);
     division = lex::token_def<lex::omit>("\\/", ID_DIVISION);
 
+    print = lex::token_def<lex::omit>("print", ID_PRINT);
+
     identifier = lex::token_def <std::string> ("[_a-zA-Z][_a-zA-Z0-9]*", ID_IDENTIFIER);
 
     whitespace = lex::token_def<lex::omit>("\\s+", ID_WHITESPACE);
@@ -45,9 +52,10 @@ Lexer::Lexer()
     //order is important due to mutually exclusive regex
     //for example number could be a part of indetifier
     this->self =
-            doubleLiteral | intLiteral |
-            boolLiteral |
-            ifStatement |  whileStatement |
+            stringLiteral[lex::_val = construct<std::string>(lex::_start + 1, lex::_end - 1)]
+            | doubleLiteral |
+            intLiteral | boolLiteral |
+            ifStatement | elseStatement|  whileStatement |
             scopeBegin | scopeEnd |
             parenthesisBegin | parenthesisEnd |
             statementEnd |
@@ -56,6 +64,7 @@ Lexer::Lexer()
             isGreater | isLesser | isEqual |
             addition | subtraction |
             multiplication | division |
+            print |
             identifier | any;
 
     this->self("skip") = whitespace;

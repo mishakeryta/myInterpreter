@@ -3,6 +3,7 @@
 
 
 #include "ast/ExpressionAST.hpp"
+#include "ast/Identifire.hpp"
 
 #include <boost/variant/static_visitor.hpp>
 
@@ -30,6 +31,8 @@ namespace Intr
         ResultType operator()(const BinaryOperation &binary) const;
 
         ResultType operator()(const UnaryOperation &unary) const;
+
+        ResultType operator()(const Identifire &name) const;
     };
 };
 #endif //EXPRESSIONASTPRINTER_HPP

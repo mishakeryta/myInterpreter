@@ -2,6 +2,7 @@
 #define EXPRESSIONASTPRINTER_HPP
 
 #include "ast/ExpressionAST.hpp"
+#include "ast/Identifire.hpp"
 
 #include <boost/mpl/contains.hpp>
 #include <boost/utility/enable_if.hpp>
@@ -27,6 +28,8 @@ namespace Intr
             void operator()(const BinaryOperation &binary) const;
 
             void operator()(UnaryOperation &unary) const;
+
+            void operator()(const Identifire &name) const;
         private:
             std::ostream& m_out;
         };

@@ -33,3 +33,9 @@ void Helper::ExpressionASTPrinter::operator()(Intr::UnaryOperation &unary) const
     std::cout << ')';
 }
 
+void Helper::ExpressionASTPrinter::operator()(const Identifire &name) const
+{
+    std::cout << "ident: (" << name.name() << ')';
+}
+
+
