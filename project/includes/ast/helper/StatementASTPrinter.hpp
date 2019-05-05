@@ -5,8 +5,7 @@
 #include "ast/StatementAST.hpp"
 #include "ast/helper/ExpressionASTPrinter.hpp"
 #include <ostream>
-#include "ast/StatementAST.hpp"
-#include "ast/helper/ExpressionASTPrinter.hpp"
+
 namespace Intr
 {
     namespace  Helper
@@ -20,16 +19,17 @@ namespace Intr
 
             ResultType operator()(Nil) { }
 
-
             ResultType operator()(const AssignmentStatement &assign);
+            ResultType operator()(const StatementList &list);
+            ResultType operator()(const IfStatement &statement);
+            ResultType operator()(const WhileStatement &statement);
 
         private:
             std::string calculateAlign() const;
 
             ExpressionASTPrinter m_exrpessionPrinter;
             std::ostream& m_out;
-            mutable std::size_t m_nestingCount;
-
+            std::size_t m_nestingCount = 0;
         };
     };
 };

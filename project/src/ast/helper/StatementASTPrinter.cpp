@@ -8,20 +8,55 @@
 using namespace Intr;
 using namespace Helper;
 
-Helper::StatementASTPrinter::StatementASTPrinter(std::ostream &out) :
+
+StatementASTPrinter::StatementASTPrinter(std::ostream &out) :
     m_exrpessionPrinter(out),
     m_out(out)
 { }
 
-Helper::StatementASTPrinter::ResultType  Intr::Helper::StatementASTPrinter::operator()(const AssignmentStatement &assign)
+StatementASTPrinter::ResultType StatementASTPrinter::operator()(const AssignmentStatement &assign)
 {
     std::string align = '\n' + calculateAlign();
-    m_out << align << "Declaration of: " << assign.idetidier() << " Expression: ";
+    m_out << align << "Assignment: " << assign.identifier() << " Expression: ";
     boost::apply_visitor(m_exrpessionPrinter, assign.value().expression());
 }
 
+StatementASTPrinter::ResultType StatementASTPrinter::operator()(const StatementList &list)
+{
+    const StatementList::Type &statements = list.statements();
+    for(const StatementAST &ast: statements)
+        boost::apply_visitor(*this, ast.statement());
+}
 
-std::string Helper::StatementASTPrinter::calculateAlign() const
+StatementASTPrinter::ResultType StatementASTPrinter::operator()(const IfStatement &statement)
+{
+    std::string align = '\n' + calculateAlign();
+
+    m_out << align << "If condition :";
+    boost::apply_visitor(m_exrpessionPrinter, statement.value().expression());
+
+    ++m_nestingCount;
+    boost::apply_visitor(*this, statement.trueBlock().statement());
+
+    m_out << align << "Else :";
+    boost::apply_visitor(*this, statement.falseBlock().statement());
+    --m_nestingCount;
+}
+
+StatementASTPrinter::ResultType StatementASTPrinter::operator()(const WhileStatement &statement)
+{
+    std::string align = '\n' + calculateAlign();
+
+    m_out << align << "While condition :";
+    boost::apply_visitor(m_exrpessionPrinter, statement.value().expression());
+
+    ++m_nestingCount;
+    boost::apply_visitor(*this, statement.trueBlock().statement());
+
+    --m_nestingCount;
+}
+
+std::string StatementASTPrinter::calculateAlign() const
 {
     return std::string(m_nestingCount, ' ');
 }
