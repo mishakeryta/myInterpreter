@@ -13,7 +13,8 @@ LexerIdGrammar::LexerIdGrammar() :
 {
 
         m_lexerId =
-        (qi::tokenid(Lexer::ID_DOUBLE_LITERAL) |
+        (qi::tokenid(Lexer::ID_STRING_LITERAL) |
+        qi::tokenid(Lexer::ID_DOUBLE_LITERAL) |
         qi::tokenid(Lexer::ID_INT_LITERAL) |
         qi::tokenid(Lexer::ID_BOOL_LITERAL)|
 

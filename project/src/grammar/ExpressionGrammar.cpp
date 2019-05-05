@@ -48,6 +48,6 @@ ExpressionGrammar::ExpressionGrammar(const Lexer& lexer) : ExpressionGrammar::ba
             |   (lexer.addition >> m_factor                      [CreateRegularNode(_val, _1)])
             ;
 
-    m_literal = (lexer.intLiteral|lexer.doubleLiteral) [CreateRegularNode(_val, _1)]|
+    m_literal = (lexer.intLiteral|lexer.doubleLiteral|lexer.stringLiteral) [CreateRegularNode(_val, _1)]|
                 lexer.boolLiteral[CreateRegularNode(_val, static_cast_<bool>(_1))];
 }

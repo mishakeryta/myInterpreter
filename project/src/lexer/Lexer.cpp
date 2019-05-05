@@ -1,11 +1,15 @@
 #include "lexer/Lexer.hpp"
 
 #include <boost/phoenix/function/function.hpp>
+#include <boost/phoenix/object/construct.hpp>
 
 using namespace Intr;
 
 Lexer::Lexer()
 {
+    using boost::phoenix::construct;
+
+    stringLiteral = lex::token_def<std::string>(("\\\"([^\\\"]|\\.)*\\\""), ID_STRING_LITERAL);
     doubleLiteral = lex::token_def<double>("(([1-9][0-9]*)|0{1})(\\.\\d+)", ID_DOUBLE_LITERAL);
     intLiteral = lex::token_def<std::int32_t>("([1-9][0-9]*)|0{1}", ID_INT_LITERAL);
     boolLiteral = lex::token_def<bool>("(false)|(true)", ID_BOOL_LITERAL);
@@ -45,8 +49,9 @@ Lexer::Lexer()
     //order is important due to mutually exclusive regex
     //for example number could be a part of indetifier
     this->self =
-            doubleLiteral | intLiteral |
-            boolLiteral |
+            stringLiteral[lex::_val = construct<std::string>(lex::_start + 1, lex::_end - 1)]
+            | doubleLiteral |
+            intLiteral | boolLiteral |
             ifStatement |  whileStatement |
             scopeBegin | scopeEnd |
             parenthesisBegin | parenthesisEnd |

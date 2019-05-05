@@ -7,6 +7,8 @@ std::string Intr::Helper::LexerIdToString(Lexer::id_type id)
     using Lexer = Intr::Lexer;
 
     switch(id) {
+    case Lexer::ID_STRING_LITERAL:
+        return ENUM_TO_CSTR(Lexer::ID_STRING_LITERAL);
     case Lexer::ID_DOUBLE_LITERAL:
         return ENUM_TO_CSTR(Lexer::ID_DOUBLE_LITERAL);
     case Lexer::ID_INT_LITERAL:
