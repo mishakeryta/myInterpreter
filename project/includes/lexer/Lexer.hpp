@@ -57,6 +57,7 @@ namespace Intr
             ID_PRINT,
 
             ID_IDENTIFIER,
+            ID_COMA,
             ID_END,
             ID_ANY
 
@@ -80,6 +81,7 @@ namespace Intr
         lex::token_def<lex::omit> whitespace;
         lex::token_def<lex::omit> print;
         lex::token_def<std::string> identifier;
+        lex::token_def<lex::omit> coma;
         lex::token_def<std::string> any;
 	};
 };

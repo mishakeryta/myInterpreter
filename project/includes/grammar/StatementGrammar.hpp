@@ -25,6 +25,7 @@ namespace Intr
                 m_statement,
                 m_assignment,
                 m_ifStatement,
+                m_printStatement,
                 m_whileStatement;
 
         ExpressionGrammar m_expression;

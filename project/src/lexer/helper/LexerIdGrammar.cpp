@@ -40,5 +40,6 @@ LexerIdGrammar::LexerIdGrammar() :
         qi::tokenid(Lexer::ID_MULTIPLICATION) |
         qi::tokenid(Lexer::ID_DIVISION) |
         qi::tokenid(Lexer::ID_PRINT) |
+        qi::tokenid(Lexer::ID_COMA) |
         qi::tokenid(Lexer::ID_IDENTIFIER))[qi::_val = qi::_1];
 }

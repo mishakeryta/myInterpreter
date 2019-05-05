@@ -47,6 +47,8 @@ Lexer::Lexer()
 
     identifier = lex::token_def <std::string> ("[_a-zA-Z][_a-zA-Z0-9]*", ID_IDENTIFIER);
 
+    coma = lex::token_def <lex::omit> (",", ID_COMA);
+
     whitespace = lex::token_def<lex::omit>("\\s+", ID_WHITESPACE);
 
     //order is important due to mutually exclusive regex
@@ -65,7 +67,7 @@ Lexer::Lexer()
             addition | subtraction |
             multiplication | division |
             print |
-            identifier | any;
+            identifier | coma | any;
 
     this->self("skip") = whitespace;
 }

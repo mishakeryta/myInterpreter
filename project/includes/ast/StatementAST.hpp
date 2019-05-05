@@ -13,6 +13,7 @@ namespace Intr
     class WhileStatement;
     class StatementList;
 
+
     class AssignmentStatement
     {
     public:
@@ -25,11 +26,23 @@ namespace Intr
         ExpressionAST m_value;
     };
 
+    class PrintStatement
+    {
+    public:
+        PrintStatement(const ExpressionAST &value);
+        //
+        //
+        //add code here
+        //
+        //
+    };
+
     class StatementAST
     {
     public:
         using Type = boost::variant<Nil,
                 AssignmentStatement,
+                PrintStatement,
                 boost::recursive_wrapper<StatementList>,
                 boost::recursive_wrapper<IfStatement>,
                 boost::recursive_wrapper<WhileStatement>>;
@@ -107,6 +120,7 @@ namespace Intr
         StatementAST &AppendStatementList(StatementAST &statementList, const StatementAST &newStatement);
         StatementAST &CreateIfStatement(StatementAST &statement, const ExpressionAST &value, const StatementAST& trueBlock, const StatementAST& falseBlock = StatementAST());
         StatementAST &CreateWhileStatement(StatementAST &statement, const ExpressionAST &value, const StatementAST& trueBlock);
+        StatementAST &CreatePrintStatement(StatementAST &statement, const ExpressionAST &value);
     };
 
 
@@ -116,6 +130,7 @@ namespace Intr
     BOOST_PHOENIX_ADAPT_FUNCTION(StatementAST &, CreateIfStatement, Detail::CreateIfStatement, 3);
     BOOST_PHOENIX_ADAPT_FUNCTION(StatementAST &, CreateIfStatement, Detail::CreateIfStatement, 4);
     BOOST_PHOENIX_ADAPT_FUNCTION(StatementAST &, CreateWhileStatement, Detail::CreateWhileStatement, 3);
+    BOOST_PHOENIX_ADAPT_FUNCTION(StatementAST &, CreatePrintStatement, Detail::CreatePrintStatement, 2);
 };
 
 

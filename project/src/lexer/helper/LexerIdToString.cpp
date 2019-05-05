@@ -57,6 +57,8 @@ std::string Intr::Helper::LexerIdToString(Lexer::id_type id)
         return ENUM_TO_CSTR(Lexer::ID_PRINT);
     case Lexer::ID_IDENTIFIER:
         return ENUM_TO_CSTR(Lexer::ID_IDENTIFIER);
+    case Lexer::ID_COMA:
+        return ENUM_TO_CSTR(Lexer::ID_COMA);
     case Lexer::ID_ANY:
         return ENUM_TO_CSTR(Lexer::ID_ANY);
     }
