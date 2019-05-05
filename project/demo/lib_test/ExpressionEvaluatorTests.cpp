@@ -1,4 +1,3 @@
-#include "lexer/Helper.hpp"
 #include "grammar/ExpressionGrammar.hpp"
 #include "grammar/LiteralGrammar.hpp"
 #include "ast/helper/ExpressionASTPrinter.hpp"
@@ -21,7 +20,7 @@ using namespace Intr;
 
 int main()
 {
-    std::string str = "45 == 44.999999";
+    std::string str = "\"44\"==\"44\"";
     Intr::Lexer lexerFunctor;
     Intr::ExpressionGrammar exprGrammar(lexerFunctor);
     auto itr = std::begin(str);
@@ -30,7 +29,7 @@ int main()
     ExpressionAST ast;
     Intr::qi::phrase_parse(begin, end, exprGrammar, Intr::qi::in_state("skip")[lexerFunctor.self], ast);
 
-    boost::apply_visitor(Helper::ExpressionASTPrinter(), ast.expression());
+    boost::apply_visitor(Helper::ExpressionASTPrinter(std::cout), ast.expression());
 
     std::cout << boost::apply_visitor(ExpressionEvaluator(), ast.expression());
 
