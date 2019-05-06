@@ -27,6 +27,13 @@ namespace Intr
         throw std::logic_error("Cannot evaluate assignment operation");
     }
 
+    StatementEvaluator::ResultType StatementEvaluator::operator()(const PrintStatement &print)
+    {
+        LOG("\nPrint");
+        Literal value = boost::apply_visitor(m_exrpessionEvaluator, print.value().expression());
+        return 0;
+    }
+
     StatementEvaluator::ResultType StatementEvaluator::operator()(const StatementList &list)
     {
         const StatementList::Type &statements = list.statements();

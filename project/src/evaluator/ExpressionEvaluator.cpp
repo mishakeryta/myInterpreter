@@ -10,7 +10,7 @@ using namespace Intr;
 
 ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(Nil) const
 {
-    BOOST_ASSERT_MSG(true, "ExpressionEvaluator:: Nil never suppose to heppen");
+    //BOOST_ASSERT_MSG(true, "ExpressionEvaluator:: Nil never suppose to heppen");
     return 0;
 }
 

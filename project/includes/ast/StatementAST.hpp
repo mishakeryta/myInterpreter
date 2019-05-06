@@ -30,11 +30,9 @@ namespace Intr
     {
     public:
         PrintStatement(const ExpressionAST &value);
-        //
-        //
-        //add code here
-        //
-        //
+        const ExpressionAST &value() const { return m_value; }
+    private:
+        ExpressionAST m_value;
     };
 
     class StatementAST

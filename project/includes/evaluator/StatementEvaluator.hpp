@@ -23,6 +23,7 @@ namespace Intr
         ResultType operator()(const StatementList &list);
         ResultType operator()(const IfStatement &statement);
         ResultType operator()(const WhileStatement &statement);
+        ResultType operator()(const PrintStatement &statement);
 
     private:
         VariableStack m_variableStack;

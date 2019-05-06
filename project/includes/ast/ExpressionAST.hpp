@@ -94,6 +94,7 @@ namespace Intr
         ExpressionAST &CreateBinaryNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression, Lexer::Id operation);
         ExpressionAST &CreateNegativeNode(ExpressionAST &leftExpression, const ExpressionAST &rightExpression);
         ExpressionAST &CreateIdentifire(ExpressionAST &leftExpression, const std::string &name);
+        ExpressionAST &CreatePrintSstatement(ExpressionAST &leftExpression, const ExpressionAST &rightExpression);
     };
 
     BOOST_PHOENIX_ADAPT_FUNCTION(ExpressionAST &, CreateRegularNode, Detail::CreateRegularNode, 2);

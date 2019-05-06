@@ -90,6 +90,10 @@ namespace  Intr
         m_identifier(idetifier), m_value(value)
     {}
 
+    PrintStatement::PrintStatement(const ExpressionAST &value) :
+        m_value(value)
+    {}
+
 
     StatementAST &Detail::CreateAssignmentStatement(StatementAST &statement, const std::string &indetifier, const ExpressionAST &value)
     {
@@ -105,6 +109,10 @@ namespace  Intr
     StatementAST &Detail::CreateWhileStatement(StatementAST &statement, const ExpressionAST &value, const StatementAST &trueBlock)
     {
        return statement = WhileStatement(value, trueBlock);
+    }
+    StatementAST &Detail::CreatePrintStatement(StatementAST &statement, const ExpressionAST &value)
+    {
+       return statement = StatementAST(PrintStatement(value));
     }
 
 };

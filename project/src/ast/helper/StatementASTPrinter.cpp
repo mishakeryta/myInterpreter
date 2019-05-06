@@ -21,6 +21,13 @@ StatementASTPrinter::ResultType StatementASTPrinter::operator()(const Assignment
     boost::apply_visitor(m_exrpessionPrinter, assign.value().expression());
 }
 
+StatementASTPrinter::ResultType StatementASTPrinter::operator()(const PrintStatement &print)
+{
+    std::string align = '\n' + calculateAlign();
+    m_out << align << "Print: ";
+    boost::apply_visitor(m_exrpessionPrinter, print.value().expression());
+}
+
 StatementASTPrinter::ResultType StatementASTPrinter::operator()(const StatementList &list)
 {
     const StatementList::Type &statements = list.statements();
@@ -55,6 +62,8 @@ StatementASTPrinter::ResultType StatementASTPrinter::operator()(const WhileState
 
     --m_nestingCount;
 }
+
+
 
 std::string StatementASTPrinter::calculateAlign() const
 {
