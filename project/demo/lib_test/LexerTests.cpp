@@ -23,7 +23,7 @@ int main()
         std::cout << " "  << Intr::Helper::LexerIdToString(t) << " ";
 		return true;
 	};
-    std::string str = " print else 00 print, a a \"aa\", else 12(*) \"qsad12 %$3lr oasd\"  <true \"ASD  M<>/QO12847UHADSOJ \"> &&|| - 12 a 123 _ ad {0012}ife2112{if}12while===";
+    std::string str = " print else 00 print, a a R\"aa\", else 12(*) \"\\qsad12 %$3lr oasd\\\"  <true \"ASD  M<>/QO12847UHADSOJ \"> &&|| - 12 a 123 _ ad {0012}ife2112{if}12while===";
 
     auto begin = std::begin(str);
     lex::tokenize_and_phrase_parse(begin, end(str), lexerFunctor, *Intr::LexerIdGrammar()[tokenProcessor], qi::in_state("skip")[lexerFunctor.self]);

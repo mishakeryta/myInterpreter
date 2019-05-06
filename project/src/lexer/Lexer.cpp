@@ -8,7 +8,7 @@ using namespace Intr;
 Lexer::Lexer()
 {
     using boost::phoenix::construct;
-
+    regexStringLiteral = lex::token_def<std::string>(("R\\\"([^\\\"]|\\.)*\\\""), ID_REGEX_STRING_LITERAL);
     stringLiteral = lex::token_def<std::string>(("\\\"([^\\\"]|\\.)*\\\""), ID_STRING_LITERAL);
     doubleLiteral = lex::token_def<double>("(([1-9][0-9]*)|0{1})(\\.\\d+)", ID_DOUBLE_LITERAL);
     intLiteral = lex::token_def<std::int32_t>("([1-9][0-9]*)|0{1}", ID_INT_LITERAL);
@@ -54,8 +54,9 @@ Lexer::Lexer()
     //order is important due to mutually exclusive regex
     //for example number could be a part of indetifier
     this->self =
-            stringLiteral[lex::_val = construct<std::string>(lex::_start + 1, lex::_end - 1)]
-            | doubleLiteral |
+            regexStringLiteral[lex::_val = construct<std::string>(lex::_start + 2, lex::_end - 2)]|
+            stringLiteral[lex::_val = construct<std::string>(lex::_start + 1, lex::_end - 1)]|            
+            doubleLiteral |
             intLiteral | boolLiteral |
             ifStatement | elseStatement|  whileStatement |
             scopeBegin | scopeEnd |

@@ -24,7 +24,8 @@ namespace Intr
 		enum Id
 		{
             ID_BEGIN = lex::min_token_id + 1,
-            ID_STRING_LITERAL = lex::min_token_id + 1,
+            ID_REGEX_STRING_LITERAL = lex::min_token_id + 1,
+            ID_STRING_LITERAL,
             ID_DOUBLE_LITERAL,
             ID_INT_LITERAL,
             ID_BOOL_LITERAL,
@@ -66,6 +67,7 @@ namespace Intr
         Lexer();
 
         lex::token_def<std::string> stringLiteral;
+        lex::token_def<std::string> regexStringLiteral;
         lex::token_def<double> doubleLiteral;
         lex::token_def<std::int32_t> intLiteral;
         lex::token_def<bool> boolLiteral;
