@@ -15,7 +15,8 @@ Lexer::Lexer()
     boolLiteral = lex::token_def<bool>("(false)|(true)", ID_BOOL_LITERAL);
 
     ifStatement = lex::token_def<lex::omit>("if", ID_IF_STATEMENT);
-    elseStatement = lex::token_def<lex::omit>("else", ID_ELSE_STATEMENT);
+    elseStatement = lex::token_def<lex::omit>("else\\s+", ID_ELSE_STATEMENT);
+    scopeElseStatement = lex::token_def<lex::omit>("else", ID_SCOPE_ELSE_STATEMENT);
     whileStatement = lex::token_def<lex::omit>("while", ID_WHILE_STATEMENT);
 
     scopeBegin = lex::token_def<lex::omit>("\\{", ID_SCOPE_BEGIN);
@@ -57,7 +58,7 @@ Lexer::Lexer()
             stringLiteral[lex::_val = construct<std::string>(lex::_start + 1, lex::_end - 1)]
             | doubleLiteral |
             intLiteral | boolLiteral |
-            ifStatement | elseStatement|  whileStatement |
+            ifStatement | scopeElseStatement | elseStatement|  whileStatement |
             scopeBegin | scopeEnd |
             parenthesisBegin | parenthesisEnd |
             statementEnd |

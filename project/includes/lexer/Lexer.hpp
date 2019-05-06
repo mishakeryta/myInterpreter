@@ -31,6 +31,7 @@ namespace Intr
 
             ID_IF_STATEMENT,
             ID_ELSE_STATEMENT,
+            ID_SCOPE_ELSE_STATEMENT,
             ID_WHILE_STATEMENT,
 
             ID_SCOPE_BEGIN,
@@ -69,7 +70,7 @@ namespace Intr
         lex::token_def<double> doubleLiteral;
         lex::token_def<std::int32_t> intLiteral;
         lex::token_def<bool> boolLiteral;
-        lex::token_def<lex::omit> ifStatement, whileStatement, elseStatement;
+        lex::token_def<lex::omit> ifStatement, whileStatement, elseStatement, scopeElseStatement;
         lex::token_def<lex::omit> scopeBegin, scopeEnd;
         lex::token_def<lex::omit> parenthesisBegin, parenthesisEnd;
         lex::token_def<lex::omit> statementEnd;

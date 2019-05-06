@@ -44,9 +44,6 @@ namespace Intr
                 boost::recursive_wrapper<StatementList>,
                 boost::recursive_wrapper<IfStatement>,
                 boost::recursive_wrapper<WhileStatement>>;
-
-
-
         StatementAST();
 
         template <class Stmt>
@@ -95,6 +92,7 @@ namespace Intr
     public:
         IfStatement(const ExpressionAST& value, const StatementAST& trueBlock, const StatementAST& falseBlock = StatementAST());
         const StatementAST & falseBlock() const { return m_falseBlock; }
+        IfStatement& setFalseBlock(const StatementAST& block);
     private:
         StatementAST m_falseBlock;
     };

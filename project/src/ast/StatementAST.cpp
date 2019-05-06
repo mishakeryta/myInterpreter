@@ -70,6 +70,13 @@ namespace  Intr
         m_falseBlock(falseBlock)
     {}
 
+    IfStatement &IfStatement::setFalseBlock(const StatementAST &block)
+    {
+        m_falseBlock = block;
+        return *this;
+    }
+
+
     WhileStatement::WhileStatement(const ExpressionAST &value, const StatementAST &trueBlock) :
                 CondiotionStatement (value, trueBlock)
     {}
@@ -101,7 +108,7 @@ namespace  Intr
         return statement;
     }
 
-    StatementAST &Detail::CreateIfStatement(StatementAST &statement, const ExpressionAST &value, const StatementAST &trueBlock, const StatementAST &falseBlock)
+    StatementAST &Detail::CreateIfStatement(StatementAST &statement, const ExpressionAST &value, const StatementAST &trueBlock, const StatementAST& falseBlock)
     {
         return statement = IfStatement(value, trueBlock, falseBlock);
     }

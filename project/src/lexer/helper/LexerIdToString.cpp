@@ -17,6 +17,8 @@ std::string Intr::Helper::LexerIdToString(Lexer::id_type id)
         return ENUM_TO_CSTR(Lexer::ID_BOOL_LITERAL);
     case Lexer::ID_IF_STATEMENT:
         return ENUM_TO_CSTR(Lexer::ID_IF_STATEMENT);
+    case Lexer::ID_SCOPE_ELSE_STATEMENT:
+        return ENUM_TO_CSTR(Lexer::ID_SCOPE_ELSE_STATEMENT);
     case Lexer::ID_ELSE_STATEMENT:
         return ENUM_TO_CSTR(Lexer::ID_ELSE_STATEMENT);
     case Lexer::ID_WHILE_STATEMENT:

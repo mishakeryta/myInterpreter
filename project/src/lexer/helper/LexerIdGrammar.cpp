@@ -20,6 +20,7 @@ LexerIdGrammar::LexerIdGrammar() :
 
         qi::tokenid(Lexer::ID_IF_STATEMENT) |
         qi::tokenid(Lexer::ID_ELSE_STATEMENT) |
+        qi::tokenid(Lexer::ID_SCOPE_ELSE_STATEMENT)|
         qi::tokenid(Lexer::ID_WHILE_STATEMENT) |
 
         qi::tokenid(Lexer::ID_SCOPE_BEGIN) |

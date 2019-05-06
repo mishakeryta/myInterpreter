@@ -25,6 +25,8 @@ namespace Intr
                 m_statement,
                 m_assignment,
                 m_ifStatement,
+                m_ifElseStatement,
+                m_elseBlock,
                 m_printStatement,
                 m_whileStatement;
 

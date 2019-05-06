@@ -46,6 +46,7 @@ int main()
         std::cout << *var;
     }*/
     std::string str = "str2 = 4; str1 = str2 ; print(str1); ";
+
     Intr::Lexer lexerFunctor;
     auto itr = std::begin(str);
     auto begin = lexerFunctor.begin(itr, str.end());
