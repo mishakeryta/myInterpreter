@@ -8,6 +8,11 @@
 
 using namespace Intr;
 
+
+ExpressionEvaluator::ExpressionEvaluator(VariableStack &variableStack) :
+    m_variableStack(variableStack)
+{}
+
 ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(Nil) const
 {
     //BOOST_ASSERT_MSG(true, "ExpressionEvaluator:: Nil never suppose to heppen");
@@ -197,10 +202,13 @@ ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(const Intr::Unar
     return  boost::apply_visitor(*this, unary.subject().expression());
 }
 
-ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(const Identifier &name) const
+ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(const Identifier &id)
 {
-    std::cout << "we are in ExpressionEvaluator and it not still work:" << name.name();
+    auto variable = m_variableStack.findVariable(id.name());
+    if(variable)
+        return *variable;
     return 0;
+    throw std::logic_error("Undefined variable");
 }
 
 

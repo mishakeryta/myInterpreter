@@ -21,8 +21,9 @@ namespace Intr
 
         bool assign(const std::string &name, const Literal & value);
 
-    private:
         boost::optional<Literal&> findVariable(const std::string &name);
+
+    private:
         VariableStack& addVariable(const std::string& name, const Literal &value);
 
         Container m_variables;
