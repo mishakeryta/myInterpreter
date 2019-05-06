@@ -1,6 +1,7 @@
 #include "evaluator/Printer.hpp"
 
-Printer::Printer(std::ostream &out) :
+Printer::Printer(std::ostream &out, Intr::VariableStack &variableStack) :
+    m_expessionEvaluator(variableStack),
     m_out(out)
 {}
 

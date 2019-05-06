@@ -207,7 +207,7 @@ ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(const Identifier
     auto variable = m_variableStack.findVariable(id.name());
     if(variable)
         return *variable;
-    return 0;
+
     throw std::logic_error("Undefined variable");
 }
 

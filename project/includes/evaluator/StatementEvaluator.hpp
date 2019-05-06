@@ -4,6 +4,7 @@
 #include "ast/StatementAST.hpp"
 #include "evaluator/ExpressionEvaluator.hpp"
 #include "evaluator/VariableStack.hpp"
+#include "evaluator/Printer.hpp"
 
 #include <ostream>
 

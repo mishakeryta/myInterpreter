@@ -37,10 +37,6 @@ boost::optional<Literal&> test1()
     return test();
 }
 
-
-
-
-
 int main()
 {
 /*   auto var = test1();
@@ -49,13 +45,7 @@ int main()
     {
         std::cout << *var;
     }*/
-
-
-<<<<<<< HEAD
-    std::string str = "fdg=3+1;";
-=======
-    std::string str = "var1 = 2;var2 = var1;";
->>>>>>> 9ed586801117c94e45080c75bd5c61812e845f20
+    std::string str = "str2 = 4; str1 = str2 ; print(str1); ";
     Intr::Lexer lexerFunctor;
     auto itr = std::begin(str);
     auto begin = lexerFunctor.begin(itr, str.end());

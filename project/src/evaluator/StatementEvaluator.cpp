@@ -2,7 +2,7 @@
 #include "evaluator/ExpressionEvaluator.hpp"
 #include "ast/helper/ExpressionASTPrinter.hpp"
 
-#define LOG(val) (std::cout << val);
+#include "Logger.hpp"
 
 namespace Intr
 {
@@ -29,12 +29,6 @@ namespace Intr
         throw std::logic_error("Cannot evaluate assignment operation");
     }
 
-    StatementEvaluator::ResultType StatementEvaluator::operator()(const PrintStatement &print)
-    {
-        LOG("\nPrint");
-        Literal value = boost::apply_visitor(m_exrpessionEvaluator, print.value().expression());
-        return 0;
-    }
 
     StatementEvaluator::ResultType StatementEvaluator::operator()(const StatementList &list)
     {
@@ -86,4 +80,12 @@ namespace Intr
         }
         return 0;
     }
+
+    StatementEvaluator::ResultType StatementEvaluator::operator()(const PrintStatement &print)
+    {
+        LOG("\nPrint");
+        Printer(m_out, m_variableStack).print(print.value());
+        return 0;
+    }
+
 };
