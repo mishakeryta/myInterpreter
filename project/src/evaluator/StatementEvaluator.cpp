@@ -1,16 +1,19 @@
 #include "evaluator/StatementEvaluator.hpp"
 #include "evaluator/ExpressionEvaluator.hpp"
+#include "ast/helper/ExpressionASTPrinter.hpp"
 
 #define LOG(val) (std::cout << val);
 
 namespace Intr
 {
     StatementEvaluator::StatementEvaluator(std::ostream &out) :
+        m_exrpessionEvaluator(m_variableStack),
         m_out(out)
     {}
 
     StatementEvaluator::StatementEvaluator(std::ostream &out, VariableStack& parentStack) :
         m_variableStack(parentStack),
+        m_exrpessionEvaluator(m_variableStack),
         m_out(out)
     {}
 
@@ -18,7 +21,6 @@ namespace Intr
 
     StatementEvaluator::ResultType StatementEvaluator::operator()(const AssignmentStatement &assign)
     {
-        LOG("\nAssignment");
         Literal value = boost::apply_visitor(m_exrpessionEvaluator, assign.value().expression());
         if(m_variableStack.assign(assign.identifier(), value))
         {

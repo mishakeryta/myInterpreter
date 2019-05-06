@@ -21,6 +21,7 @@ namespace Intr
         using ResultType = result_type;
 
         ExpressionEvaluator() = default;
+        ExpressionEvaluator(VariableStack& variableStack);
 
         ResultType operator()(Nil) const;
 
@@ -34,7 +35,9 @@ namespace Intr
 
         ResultType operator()(const UnaryOperation &unary) const;
 
-        ResultType operator()(const Identifier &name) const;
+        ResultType operator()(const Identifier &id);
+    private:
+        VariableStack m_variableStack;
     };
 };
 #endif //EXPRESSIONASTPRINTER_HPP
