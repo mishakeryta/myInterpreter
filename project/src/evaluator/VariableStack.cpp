@@ -40,7 +40,6 @@ namespace  Intr
         {
             (void) val;
             (void) newValue;
-            std::cout << "\nFalse";
 
             return false;
         }
@@ -60,19 +59,14 @@ namespace  Intr
             return false;
         }
         addVariable(name, value);
-        return false;
+        return true;
     }
 
     boost::optional<Literal &> VariableStack::findVariable(const std::string &name)
     {
-
         auto variableIterator = m_variables.find(name);
-        if(variableIterator == std::end(m_variables))
-        {
-            std::cout << "Stic";
-            return (*variableIterator).second;
-        }
-        std::cout << "not finded";
+        if(variableIterator != std::end(m_variables))
+            return variableIterator->second;
 
         if(m_parent)
             return m_parent->findVariable(name);
