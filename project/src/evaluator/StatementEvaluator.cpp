@@ -45,7 +45,7 @@ namespace Intr
         public:
             using ResultType = result_type;
 
-            ResultType  operator()(bool val) const { return val;}
+            ResultType  operator()(bool val) const { LOG("\nCondition: " << val); return val;}
 
             template<class Lit>
             ResultType operator()(const Lit &val) const
@@ -71,12 +71,13 @@ namespace Intr
 
     StatementEvaluator::ResultType StatementEvaluator::operator()(const WhileStatement &statement)
     {
-        Literal codiotion = boost::apply_visitor(m_exrpessionEvaluator, statement.value().expression());
+        Literal codition = boost::apply_visitor(m_exrpessionEvaluator, statement.value().expression());
         Detail::CoditionChecker checker;
-        while(boost::apply_visitor(checker, codiotion))
+        while(boost::apply_visitor(checker, codition))
         {
             StatementEvaluator evaluator(m_out, m_variableStack);
             boost::apply_visitor(evaluator, statement.trueBlock().statement());
+            codition = boost::apply_visitor(m_exrpessionEvaluator, statement.value().expression());
         }
         return 0;
     }

@@ -20,6 +20,7 @@ class Interpreter
         bool createAST(std::string& code, StatementAST& ast);
         StatementEvaluator evaluator;
         std::vector<std::string> m_files;
+        std::ostream& m_out;
 
     };
 };

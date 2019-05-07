@@ -20,7 +20,7 @@ using namespace Intr;
 
 int main()
 {
-    std::string str = "\"44\"==\"44\"";
+    std::string str = "44 > 44";
     Intr::Lexer lexerFunctor;
     Intr::ExpressionGrammar exprGrammar(lexerFunctor);
     auto itr = std::begin(str);
@@ -31,7 +31,8 @@ int main()
 
     boost::apply_visitor(Helper::ExpressionASTPrinter(std::cout), ast.expression());
 
-    std::cout << boost::apply_visitor(ExpressionEvaluator(), ast.expression());
+    ExpressionEvaluator evaluator;
+    std::cout << boost::apply_visitor(evaluator, ast.expression());
 
 
     return 0;

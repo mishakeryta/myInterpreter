@@ -141,6 +141,7 @@ namespace Intr
             case Lexer::ID_IS_GREATER:
                 return bool(leftLiteral > rightLiteral);
             case Lexer::ID_IS_LESSER:
+
                 return bool(leftLiteral < rightLiteral);
             case Lexer::ID_IS_EQUAL:
                 return isEqual(leftLiteral, rightLiteral);

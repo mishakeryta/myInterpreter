@@ -33,8 +33,8 @@ Lexer::Lexer()
     logicalAnd = lex::token_def<lex::omit>("\\&\\&", ID_LOGICAL_AND);
     logicalOr = lex::token_def<lex::omit>("\\|\\|", ID_LOGICAL_OR);
 
-    isGreater = lex::token_def<lex::omit>("<", ID_IS_LESSER);
-    isLesser = lex::token_def<lex::omit>(">", ID_IS_GREATER);
+    isGreater = lex::token_def<lex::omit>(">",ID_IS_GREATER);
+    isLesser = lex::token_def<lex::omit>("<", ID_IS_LESSER);
 
     isEqual= lex::token_def<lex::omit>("==", ID_IS_EQUAL);
 

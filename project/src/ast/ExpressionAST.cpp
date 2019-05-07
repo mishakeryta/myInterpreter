@@ -1,4 +1,5 @@
 #include "ast/ExpressionAST.hpp"
+#include "lexer/helper/LexerIdToString.hpp"
 #include <iostream>
 using namespace Intr;
 ExpressionAST::ExpressionAST()

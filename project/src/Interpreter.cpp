@@ -1,6 +1,9 @@
 #include "Interpreter.hpp"
+
+//#define LOG_ENABLE
 #include "Logger.hpp"
 #include "grammar/StatementGrammar.hpp"
+#include "ast/helper/StatementASTPrinter.hpp"
 
 #include <boost/spirit/include/qi_parse.hpp>
 
@@ -11,7 +14,8 @@ namespace Intr
 {
     Interpreter::Interpreter(std::string path,std::ostream &out):
         evaluator(out),
-        m_files{path}
+        m_files{path},
+        m_out(out)
     {}
 
     int Interpreter::execute()
@@ -30,7 +34,7 @@ namespace Intr
             {
 
 #ifdef LOG_ENABLE
-                out << "\nFile: " << file;
+                m_out << "\nFile: " << file;
                 Intr::Helper::StatementASTPrinter printer(m_out);
                 boost::apply_visitor(printer, ast.statement());
 #endif
