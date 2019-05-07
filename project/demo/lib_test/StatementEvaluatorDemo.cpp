@@ -45,7 +45,7 @@ int main()
     {
         std::cout << *var;
     }*/
-    std::string str = "str2 = 4; str1 = str2 ; print(str1); ";
+    std::string str = "str2 = 4;str1 = 3 ;if( str2 == 4){ str1 = str2;} print(str1); ";
     Intr::Lexer lexerFunctor;
     auto itr = std::begin(str);
     auto begin = lexerFunctor.begin(itr, str.end());
@@ -59,8 +59,8 @@ int main()
     Intr::Helper::StatementASTPrinter printer(std::cout);
     boost::apply_visitor(printer, ast.statement());
 
-    Intr::StatementEvaluator evaluator(std::cout);
-    boost::apply_visitor(evaluator, ast.statement());
+   // Intr::StatementEvaluator evaluator(std::cout);
+   // boost::apply_visitor(evaluator, ast.statement());
 
     return 0;
 

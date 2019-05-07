@@ -9,24 +9,30 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "evaluator/Regex.hpp"
+#include <boost/regex.hpp>
 
 using namespace Intr;
 
+
+
 int main()
 {
-    std::string str = "fdg=3+1;fdg=2-3;if(2+3>2-1) \n{fgt = 2-4; while(2<1) fgt = 2-1; }";
-    Intr::Lexer lexerFunctor;
-    auto itr = std::begin(str);
-    auto begin = lexerFunctor.begin(itr, str.end());
-    auto end = lexerFunctor.end();
-    Intr::StatementGrammar statementGrammar(lexerFunctor);
-    std::string skip = "skip";
-    StatementAST ast;
-    Intr::qi::phrase_parse(begin, end, statementGrammar, Intr::qi::in_state(skip)[lexerFunctor.self], ast);
-    std::cout << (begin == end);
+    //    std::string str = "fdg=3+1;fdg=2-3;if(2+3>2-1) \n{fgt = 2-4; while(2<1) fgt = 2-1; }";
+    //    Intr::Lexer lexerFunctor;
+    //    auto itr = std::begin(str);
+    //    auto begin = lexerFunctor.begin(itr, str.end());
+    //    auto end = lexerFunctor.end();
+    //    Intr::StatementGrammar statementGrammar(lexerFunctor);
+    //    std::string skip = "skip";
+    //    StatementAST ast;
+    //    Intr::qi::phrase_parse(begin, end, statementGrammar, Intr::qi::in_state(skip)[lexerFunctor.self], ast);
+    //    std::cout << (begin == end);
 
-    auto p = Helper::StatementASTPrinter(std::cout);
-    boost::apply_visitor(p, ast.statement());
-
+    //    auto p = Helper::StatementASTPrinter(std::cout);
+    //    boost::apply_visitor(p, ast.statement());
+    std::string str1 = "fasfw";
+    std::string str2 = "(.*)a(.*)";
+    reg(str1, str2);
     return 0;
 }

@@ -1,6 +1,7 @@
 file (GLOB EVALUATOR_SOURCES
     ExpressionEvaluator.cpp
     StatementEvaluator.cpp
+    Regex.cpp
     Printer.cpp
     VariableStack.cpp)
 

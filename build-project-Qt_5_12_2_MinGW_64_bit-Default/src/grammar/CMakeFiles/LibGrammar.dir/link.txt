@@ -1,0 +1,2 @@
+D:\qt\Tools\mingw730_64\bin\ar.exe qc libLibGrammar.a  CMakeFiles/LibGrammar.dir/ExpressionGrammar.cpp.obj CMakeFiles/LibGrammar.dir/LiteralGrammar.cpp.obj CMakeFiles/LibGrammar.dir/StatementGrammar.cpp.obj
+D:\qt\Tools\mingw730_64\bin\ranlib.exe libLibGrammar.a

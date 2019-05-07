@@ -1,0 +1,2 @@
+D:\qt\Tools\mingw730_64\bin\ar.exe qc libLibEvaluator.a  CMakeFiles/LibEvaluator.dir/ExpressionEvaluator.cpp.obj CMakeFiles/LibEvaluator.dir/StatementEvaluator.cpp.obj CMakeFiles/LibEvaluator.dir/Regex.cpp.obj CMakeFiles/LibEvaluator.dir/Printer.cpp.obj CMakeFiles/LibEvaluator.dir/VariableStack.cpp.obj
+D:\qt\Tools\mingw730_64\bin\ranlib.exe libLibEvaluator.a

@@ -1,0 +1,2 @@
+D:\qt\Tools\mingw730_64\bin\ar.exe qc libLibAST.a  CMakeFiles/LibAST.dir/ExpressionAST.cpp.obj CMakeFiles/LibAST.dir/StatementAST.cpp.obj CMakeFiles/LibAST.dir/Literal.cpp.obj CMakeFiles/LibAST.dir/Identifier.cpp.obj CMakeFiles/LibAST.dir/helper/StatementASTPrinter.cpp.obj CMakeFiles/LibAST.dir/helper/ExpressionASTPrinter.cpp.obj
+D:\qt\Tools\mingw730_64\bin\ranlib.exe libLibAST.a
