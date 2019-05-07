@@ -1,0 +1,7 @@
+
+row = 0;
+while(row < 10)
+{
+	print(row);
+	print("\n");
+}

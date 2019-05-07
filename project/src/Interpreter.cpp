@@ -1,6 +1,6 @@
 #include "Interpreter.hpp"
 
-//#define LOG_ENABLE
+#define LOG_ENABLE
 #include "Logger.hpp"
 #include "grammar/StatementGrammar.hpp"
 #include "ast/helper/StatementASTPrinter.hpp"
@@ -37,6 +37,7 @@ namespace Intr
                 m_out << "\nFile: " << file;
                 Intr::Helper::StatementASTPrinter printer(m_out);
                 boost::apply_visitor(printer, ast.statement());
+                m_out << "\n\n";
 #endif
                 boost::apply_visitor(evaluator, ast.statement());
             }
