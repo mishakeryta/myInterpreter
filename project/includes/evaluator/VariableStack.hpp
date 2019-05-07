@@ -6,6 +6,7 @@
 
 #include <map>
 #include <string>
+#include <memory>
 
 namespace Intr
 {
@@ -13,7 +14,7 @@ namespace Intr
 
     class VariableStack
     {
-        using Container = std::map<std::string, Literal>;
+        using Container = std::map<std::string, std::unique_ptr<Literal>>;
     public:
 
         VariableStack();

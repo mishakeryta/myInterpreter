@@ -23,17 +23,17 @@ namespace Intr
         ExpressionEvaluator() = default;
         ExpressionEvaluator(VariableStack& variableStack);
 
-        ResultType operator()(Nil) const;
+        ResultType operator()(Nil);
 
         template<typename Lit>
         typename boost::enable_if<boost::mpl::contains< LiteralTypes, Lit >,ResultType>::type
-        operator()(const Lit &value) const{ return value; }
+        operator()(const Lit &value) { return value; }
 
-        ResultType operator()(const ExpressionAST &ast) const;
+        ResultType operator()(const ExpressionAST &ast);
 
-        ResultType operator()(const BinaryOperation &binary) const;
+        ResultType operator()(const BinaryOperation &binary);
 
-        ResultType operator()(const UnaryOperation &unary) const;
+        ResultType operator()(const UnaryOperation &unary);
 
         ResultType operator()(const Identifier &id);
     private:

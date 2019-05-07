@@ -45,7 +45,7 @@ int main()
     {
         std::cout << *var;
     }*/
-    std::string str = "str2 = 4; str1 = str2 ; print(str1); ";
+    std::string str = "str2 = 4; str1 = str2 +3 ;print(str1);print(\"\n\");print(str2); ";
 
     Intr::Lexer lexerFunctor;
     auto itr = std::begin(str);
