@@ -1,2 +1,0 @@
-D:\qt\Tools\mingw730_64\bin\ar.exe qc libLibLexer.a  CMakeFiles/LibLexer.dir/Lexer.cpp.obj CMakeFiles/LibLexer.dir/helper/LexerIdToString.cpp.obj CMakeFiles/LibLexer.dir/helper/LexerIdGrammar.cpp.obj
-D:\qt\Tools\mingw730_64\bin\ranlib.exe libLibLexer.a

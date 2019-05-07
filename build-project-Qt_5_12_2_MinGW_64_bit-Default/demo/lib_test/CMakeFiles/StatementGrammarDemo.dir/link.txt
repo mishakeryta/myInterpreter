@@ -1,3 +1,0 @@
-"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E remove -f CMakeFiles\StatementGrammarDemo.dir/objects.a
-D:\qt\Tools\mingw730_64\bin\ar.exe cr CMakeFiles\StatementGrammarDemo.dir/objects.a @CMakeFiles\StatementGrammarDemo.dir\objects1.rsp
-D:\qt\Tools\mingw730_64\bin\g++.exe    -Wl,--whole-archive CMakeFiles\StatementGrammarDemo.dir/objects.a -Wl,--no-whole-archive  -o StatementGrammarDemo.exe -Wl,--out-implib,libStatementGrammarDemo.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\StatementGrammarDemo.dir\linklibs.rsp

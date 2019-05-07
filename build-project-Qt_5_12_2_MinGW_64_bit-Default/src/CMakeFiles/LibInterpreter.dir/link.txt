@@ -1,2 +1,0 @@
-D:\qt\Tools\mingw730_64\bin\ar.exe qc libLibInterpreter.a  CMakeFiles/LibInterpreter.dir/Interpreter.cpp.obj
-D:\qt\Tools\mingw730_64\bin\ranlib.exe libLibInterpreter.a
