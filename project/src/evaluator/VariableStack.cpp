@@ -66,7 +66,7 @@ namespace  Intr
     {
         auto variableIterator = m_variables.find(name);
         if(variableIterator != std::end(m_variables))
-            return variableIterator->second;
+            return *variableIterator->second;
 
         if(m_parent)
             return m_parent->findVariable(name);
@@ -75,7 +75,7 @@ namespace  Intr
 
     VariableStack &VariableStack::addVariable(const std::string &name, const Literal &value)
     {
-        m_variables[name] = value;
+        m_variables[name] = std::make_unique<Literal>(value);
         return *this;
     }
 }

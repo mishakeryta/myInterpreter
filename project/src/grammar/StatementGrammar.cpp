@@ -23,7 +23,7 @@ Intr::StatementGrammar::StatementGrammar(const Intr::Lexer &lexer) : StatementGr
     m_scope = lexer.scopeBegin >> m_statementList[CreateStatementNode(_val, _1)] >> lexer.scopeEnd;
     m_statementList = m_statement[CreateStatementNode(_val, _1)] >> *m_statement[AppendStatementList(_val, _1)];
 
-    m_statement = (m_assignment | m_ifElseStatement| m_ifStatement | m_whileStatement )[CreateStatementNode(_val, _1)];
+    m_statement = (m_assignment | m_ifElseStatement| m_ifStatement | m_whileStatement | m_printStatement)[CreateStatementNode(_val, _1)];
 
     m_assignment = (lexer.identifier >> lexer.assignment >> m_expression >> lexer.statementEnd)[CreateAssignmentStatement(_val, _1, _2)];
     m_printStatement = (lexer.print >> lexer.parenthesisBegin >> m_expression >> lexer.parenthesisEnd >> lexer.statementEnd)[CreatePrintStatement(_val, _1)];

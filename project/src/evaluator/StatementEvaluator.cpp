@@ -64,9 +64,9 @@ namespace Intr
 
         StatementEvaluator evaluator(m_out, m_variableStack);
         if(boost::apply_visitor(checker, codiotion))
-            return boost::apply_visitor(*this, statement.trueBlock().statement());
+            return boost::apply_visitor(evaluator, statement.trueBlock().statement());
         else
-            return boost::apply_visitor(*this, statement.falseBlock().statement());
+            return boost::apply_visitor(evaluator, statement.falseBlock().statement());
     }
 
     StatementEvaluator::ResultType StatementEvaluator::operator()(const WhileStatement &statement)
@@ -83,7 +83,6 @@ namespace Intr
 
     StatementEvaluator::ResultType StatementEvaluator::operator()(const PrintStatement &print)
     {
-        LOG("\nPrint");
         Printer(m_out, m_variableStack).print(print.value());
         return 0;
     }

@@ -13,13 +13,13 @@ ExpressionEvaluator::ExpressionEvaluator(VariableStack &variableStack) :
     m_variableStack(variableStack)
 {}
 
-ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(Nil) const
+ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(Nil)
 {
     //BOOST_ASSERT_MSG(true, "ExpressionEvaluator:: Nil never suppose to heppen");
     return 0;
 }
 
-ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(const Intr::ExpressionAST &ast) const
+ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(const Intr::ExpressionAST &ast)
 {
     return boost::apply_visitor(*this, ast.expression());
 }
@@ -129,7 +129,7 @@ namespace Intr
             switch (m_op)
             {
             case Lexer::ID_ADDITION:
-                return rightLiteral + rightLiteral;
+                return leftLiteral + rightLiteral;
             case Lexer::ID_SUBTRACTION:
                 return leftLiteral - rightLiteral;
             case Lexer::ID_MULTIPLICATION:
@@ -185,7 +185,7 @@ namespace Intr
     };
 };
 
-ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(const Intr::BinaryOperation &expr) const
+ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(const Intr::BinaryOperation &expr)
 {
     ResultType leftVal = boost::apply_visitor(*this, expr.left().expression());
     ResultType rightVal = boost::apply_visitor(*this, expr.right().expression());
@@ -194,7 +194,7 @@ ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(const Intr::Bina
     return boost::apply_visitor(evaluator, leftVal, rightVal);
 }
 
-ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(const Intr::UnaryOperation &unary) const
+ExpressionEvaluator::ResultType ExpressionEvaluator::operator()(const Intr::UnaryOperation &unary)
 {
     if(unary.operation() != Lexer::ID_SUBTRACTION)
         throw std::logic_error("Unknown unary operation");
